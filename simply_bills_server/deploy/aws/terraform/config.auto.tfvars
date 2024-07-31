@@ -81,8 +81,8 @@ staging_autoscaling_desired_capacity = 1
 
 # The deployment bucket name needs to be unique and can only contain lower case
 # letters and dashes (no underscored allowed).
-deployment_bucket_name              = "simply-bills-deployment-2275023"
-public_storage_bucket_name          = "simply-bills-public-storage-2275023"
-private_storage_bucket_name         = "simply-bills-private-storage-2275023"
-public_storage_bucket_name_staging  = "simply-bills-public-storage-staging-2275023"
-private_storage_bucket_name_staging = "simply-bills-private-storage-staging-2275023"
+deployment_bucket_name              = "simply-bills-deployment-8153464"
+public_storage_bucket_name          = "simply-bills-public-storage-8153464"
+private_storage_bucket_name         = "simply-bills-private-storage-8153464"
+public_storage_bucket_name_staging  = "simply-bills-public-storage-staging-8153464"
+private_storage_bucket_name_staging = "simply-bills-private-storage-staging-8153464"

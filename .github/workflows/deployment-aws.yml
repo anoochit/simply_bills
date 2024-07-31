@@ -58,7 +58,7 @@ jobs:
         env:
           PROJECT_NAME: simply_bills
           AWS_NAME: simply-bills
-          DEPLOYMENT_BUCKET: simply-bills-deployment-2275023
+          DEPLOYMENT_BUCKET: simply-bills-deployment-8153464
           TARGET: ${{ github.event.inputs.target }}
         run: |
           # Deploy server to AWS
