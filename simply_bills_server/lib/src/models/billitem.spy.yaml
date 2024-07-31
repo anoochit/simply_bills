@@ -1,0 +1,7 @@
+class: BillItem
+table: bill_item
+fields:
+  product: Product?, relation(onUpdate=SetNull, onDelete=NoAction)
+  qt: double
+  unitPrice: double
+  total: double

@@ -1,0 +1,10 @@
+class: Bill
+table: bill
+fields:
+  referenceNo: String
+  billTo: User?, relation(onUpdate=SetNull, onDelete=NoAction)
+  items: List<BillItem>?
+  total: double
+  createdAt: DateTime
+  billBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
+  status: BillStatus

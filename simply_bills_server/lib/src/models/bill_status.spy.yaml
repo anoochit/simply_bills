@@ -1,0 +1,6 @@
+enum: BillStatus
+serialized: byName
+values:
+  - unpaid
+  - paid
+  - cancel

@@ -1,0 +1,6 @@
+enum: UserScope
+serialized: byName
+values:
+  - officer
+  - customer
+  - admin
