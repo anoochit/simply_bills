@@ -1,0 +1,9 @@
+class: Event
+table: event
+fields:
+  title: String
+  startDate: DateTime
+  endDate: DateTime
+  createdBy: User?, relation
+  createdAt: DateTime
+  publish: bool

@@ -1,0 +1,7 @@
+class: Post
+table: post
+fields:
+  title: String
+  createdBy: User?, relation
+  createdAt: DateTime
+  publish: bool

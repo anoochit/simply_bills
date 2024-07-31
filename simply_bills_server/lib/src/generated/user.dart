@@ -11,6 +11,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'protocol.dart' as _i3;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
   User._({
@@ -18,8 +19,9 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     required this.userInfoId,
     this.userInfo,
     required this.name,
-    required this.address,
-    required this.tel,
+    this.address,
+    this.telephone,
+    this.email,
     required this.scope,
   }) : super(id);
 
@@ -28,8 +30,9 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     required int userInfoId,
     _i2.UserInfo? userInfo,
     required String name,
-    required String address,
-    required String tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     required _i3.UserScope scope,
   }) = _UserImpl;
 
@@ -42,8 +45,11 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
           : _i2.UserInfo.fromJson(
               (jsonSerialization['userInfo'] as Map<String, dynamic>)),
       name: jsonSerialization['name'] as String,
-      address: jsonSerialization['address'] as String,
-      tel: jsonSerialization['tel'] as String,
+      address: (jsonSerialization['address'] as List?)
+          ?.map((e) => _i3.Address.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      telephone: jsonSerialization['telephone'] as String?,
+      email: jsonSerialization['email'] as String?,
       scope: _i3.UserScope.fromJson((jsonSerialization['scope'] as String)),
     );
   }
@@ -58,9 +64,11 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   String name;
 
-  String address;
+  List<_i3.Address>? address;
 
-  String tel;
+  String? telephone;
+
+  String? email;
 
   _i3.UserScope scope;
 
@@ -72,8 +80,9 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     int? userInfoId,
     _i2.UserInfo? userInfo,
     String? name,
-    String? address,
-    String? tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     _i3.UserScope? scope,
   });
   @override
@@ -83,8 +92,10 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
       'userInfoId': userInfoId,
       if (userInfo != null) 'userInfo': userInfo?.toJson(),
       'name': name,
-      'address': address,
-      'tel': tel,
+      if (address != null)
+        'address': address?.toJson(valueToJson: (v) => v.toJson()),
+      if (telephone != null) 'telephone': telephone,
+      if (email != null) 'email': email,
       'scope': scope.toJson(),
     };
   }
@@ -96,14 +107,22 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
       'userInfoId': userInfoId,
       if (userInfo != null) 'userInfo': userInfo?.toJsonForProtocol(),
       'name': name,
-      'address': address,
-      'tel': tel,
+      if (address != null)
+        'address': address?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      if (telephone != null) 'telephone': telephone,
+      if (email != null) 'email': email,
       'scope': scope.toJson(),
     };
   }
 
-  static UserInclude include({_i2.UserInfoInclude? userInfo}) {
-    return UserInclude._(userInfo: userInfo);
+  static UserInclude include({
+    _i2.UserInfoInclude? userInfo,
+    _i3.AddressIncludeList? address,
+  }) {
+    return UserInclude._(
+      userInfo: userInfo,
+      address: address,
+    );
   }
 
   static UserIncludeList includeList({
@@ -140,8 +159,9 @@ class _UserImpl extends User {
     required int userInfoId,
     _i2.UserInfo? userInfo,
     required String name,
-    required String address,
-    required String tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     required _i3.UserScope scope,
   }) : super._(
           id: id,
@@ -149,7 +169,8 @@ class _UserImpl extends User {
           userInfo: userInfo,
           name: name,
           address: address,
-          tel: tel,
+          telephone: telephone,
+          email: email,
           scope: scope,
         );
 
@@ -159,8 +180,9 @@ class _UserImpl extends User {
     int? userInfoId,
     Object? userInfo = _Undefined,
     String? name,
-    String? address,
-    String? tel,
+    Object? address = _Undefined,
+    Object? telephone = _Undefined,
+    Object? email = _Undefined,
     _i3.UserScope? scope,
   }) {
     return User(
@@ -169,8 +191,9 @@ class _UserImpl extends User {
       userInfo:
           userInfo is _i2.UserInfo? ? userInfo : this.userInfo?.copyWith(),
       name: name ?? this.name,
-      address: address ?? this.address,
-      tel: tel ?? this.tel,
+      address: address is List<_i3.Address>? ? address : this.address?.clone(),
+      telephone: telephone is String? ? telephone : this.telephone,
+      email: email is String? ? email : this.email,
       scope: scope ?? this.scope,
     );
   }
@@ -186,12 +209,12 @@ class UserTable extends _i1.Table {
       'name',
       this,
     );
-    address = _i1.ColumnString(
-      'address',
+    telephone = _i1.ColumnString(
+      'telephone',
       this,
     );
-    tel = _i1.ColumnString(
-      'tel',
+    email = _i1.ColumnString(
+      'email',
       this,
     );
     scope = _i1.ColumnEnum(
@@ -207,9 +230,13 @@ class UserTable extends _i1.Table {
 
   late final _i1.ColumnString name;
 
-  late final _i1.ColumnString address;
+  _i3.AddressTable? ___address;
 
-  late final _i1.ColumnString tel;
+  _i1.ManyRelation<_i3.AddressTable>? _address;
+
+  late final _i1.ColumnString telephone;
+
+  late final _i1.ColumnString email;
 
   late final _i1.ColumnEnum<_i3.UserScope> scope;
 
@@ -226,13 +253,44 @@ class UserTable extends _i1.Table {
     return _userInfo!;
   }
 
+  _i3.AddressTable get __address {
+    if (___address != null) return ___address!;
+    ___address = _i1.createRelationTable(
+      relationFieldName: '__address',
+      field: User.t.id,
+      foreignField: _i3.Address.t.$_userAddressUserId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.AddressTable(tableRelation: foreignTableRelation),
+    );
+    return ___address!;
+  }
+
+  _i1.ManyRelation<_i3.AddressTable> get address {
+    if (_address != null) return _address!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'address',
+      field: User.t.id,
+      foreignField: _i3.Address.t.$_userAddressUserId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.AddressTable(tableRelation: foreignTableRelation),
+    );
+    _address = _i1.ManyRelation<_i3.AddressTable>(
+      tableWithRelations: relationTable,
+      table: _i3.AddressTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _address!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
         userInfoId,
         name,
-        address,
-        tel,
+        telephone,
+        email,
         scope,
       ];
 
@@ -241,19 +299,31 @@ class UserTable extends _i1.Table {
     if (relationField == 'userInfo') {
       return userInfo;
     }
+    if (relationField == 'address') {
+      return __address;
+    }
     return null;
   }
 }
 
 class UserInclude extends _i1.IncludeObject {
-  UserInclude._({_i2.UserInfoInclude? userInfo}) {
+  UserInclude._({
+    _i2.UserInfoInclude? userInfo,
+    _i3.AddressIncludeList? address,
+  }) {
     _userInfo = userInfo;
+    _address = address;
   }
 
   _i2.UserInfoInclude? _userInfo;
 
+  _i3.AddressIncludeList? _address;
+
   @override
-  Map<String, _i1.Include?> get includes => {'userInfo': _userInfo};
+  Map<String, _i1.Include?> get includes => {
+        'userInfo': _userInfo,
+        'address': _address,
+      };
 
   @override
   _i1.Table get table => User.t;
@@ -282,7 +352,13 @@ class UserIncludeList extends _i1.IncludeList {
 class UserRepository {
   const UserRepository._();
 
+  final attach = const UserAttachRepository._();
+
   final attachRow = const UserAttachRowRepository._();
+
+  final detach = const UserDetachRepository._();
+
+  final detachRow = const UserDetachRowRepository._();
 
   Future<List<User>> find(
     _i1.Session session, {
@@ -436,6 +512,34 @@ class UserRepository {
   }
 }
 
+class UserAttachRepository {
+  const UserAttachRepository._();
+
+  Future<void> address(
+    _i1.Session session,
+    User user,
+    List<_i3.Address> address,
+  ) async {
+    if (address.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('address.id');
+    }
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
+    }
+
+    var $address = address
+        .map((e) => _i3.AddressImplicit(
+              e,
+              $_userAddressUserId: user.id,
+            ))
+        .toList();
+    await session.db.update<_i3.Address>(
+      $address,
+      columns: [_i3.Address.t.$_userAddressUserId],
+    );
+  }
+}
+
 class UserAttachRowRepository {
   const UserAttachRowRepository._();
 
@@ -455,6 +559,74 @@ class UserAttachRowRepository {
     await session.db.updateRow<User>(
       $user,
       columns: [User.t.userInfoId],
+    );
+  }
+
+  Future<void> address(
+    _i1.Session session,
+    User user,
+    _i3.Address address,
+  ) async {
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
+    }
+
+    var $address = _i3.AddressImplicit(
+      address,
+      $_userAddressUserId: user.id,
+    );
+    await session.db.updateRow<_i3.Address>(
+      $address,
+      columns: [_i3.Address.t.$_userAddressUserId],
+    );
+  }
+}
+
+class UserDetachRepository {
+  const UserDetachRepository._();
+
+  Future<void> address(
+    _i1.Session session,
+    List<_i3.Address> address,
+  ) async {
+    if (address.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $address = address
+        .map((e) => _i3.AddressImplicit(
+              e,
+              $_userAddressUserId: null,
+            ))
+        .toList();
+    await session.db.update<_i3.Address>(
+      $address,
+      columns: [_i3.Address.t.$_userAddressUserId],
+    );
+  }
+}
+
+class UserDetachRowRepository {
+  const UserDetachRowRepository._();
+
+  Future<void> address(
+    _i1.Session session,
+    _i3.Address address,
+  ) async {
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $address = _i3.AddressImplicit(
+      address,
+      $_userAddressUserId: null,
+    );
+    await session.db.updateRow<_i3.Address>(
+      $address,
+      columns: [_i3.Address.t.$_userAddressUserId],
     );
   }
 }

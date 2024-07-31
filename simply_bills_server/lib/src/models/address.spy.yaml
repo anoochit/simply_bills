@@ -1,0 +1,5 @@
+class: Address
+table: address
+fields:
+  address: String
+  address2: String

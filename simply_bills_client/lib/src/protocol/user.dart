@@ -18,8 +18,9 @@ abstract class User implements _i1.SerializableModel {
     required this.userInfoId,
     this.userInfo,
     required this.name,
-    required this.address,
-    required this.tel,
+    this.address,
+    this.telephone,
+    this.email,
     required this.scope,
   });
 
@@ -28,8 +29,9 @@ abstract class User implements _i1.SerializableModel {
     required int userInfoId,
     _i2.UserInfo? userInfo,
     required String name,
-    required String address,
-    required String tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     required _i3.UserScope scope,
   }) = _UserImpl;
 
@@ -42,8 +44,11 @@ abstract class User implements _i1.SerializableModel {
           : _i2.UserInfo.fromJson(
               (jsonSerialization['userInfo'] as Map<String, dynamic>)),
       name: jsonSerialization['name'] as String,
-      address: jsonSerialization['address'] as String,
-      tel: jsonSerialization['tel'] as String,
+      address: (jsonSerialization['address'] as List?)
+          ?.map((e) => _i3.Address.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      telephone: jsonSerialization['telephone'] as String?,
+      email: jsonSerialization['email'] as String?,
       scope: _i3.UserScope.fromJson((jsonSerialization['scope'] as String)),
     );
   }
@@ -59,9 +64,11 @@ abstract class User implements _i1.SerializableModel {
 
   String name;
 
-  String address;
+  List<_i3.Address>? address;
 
-  String tel;
+  String? telephone;
+
+  String? email;
 
   _i3.UserScope scope;
 
@@ -70,8 +77,9 @@ abstract class User implements _i1.SerializableModel {
     int? userInfoId,
     _i2.UserInfo? userInfo,
     String? name,
-    String? address,
-    String? tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     _i3.UserScope? scope,
   });
   @override
@@ -81,8 +89,10 @@ abstract class User implements _i1.SerializableModel {
       'userInfoId': userInfoId,
       if (userInfo != null) 'userInfo': userInfo?.toJson(),
       'name': name,
-      'address': address,
-      'tel': tel,
+      if (address != null)
+        'address': address?.toJson(valueToJson: (v) => v.toJson()),
+      if (telephone != null) 'telephone': telephone,
+      if (email != null) 'email': email,
       'scope': scope.toJson(),
     };
   }
@@ -101,8 +111,9 @@ class _UserImpl extends User {
     required int userInfoId,
     _i2.UserInfo? userInfo,
     required String name,
-    required String address,
-    required String tel,
+    List<_i3.Address>? address,
+    String? telephone,
+    String? email,
     required _i3.UserScope scope,
   }) : super._(
           id: id,
@@ -110,7 +121,8 @@ class _UserImpl extends User {
           userInfo: userInfo,
           name: name,
           address: address,
-          tel: tel,
+          telephone: telephone,
+          email: email,
           scope: scope,
         );
 
@@ -120,8 +132,9 @@ class _UserImpl extends User {
     int? userInfoId,
     Object? userInfo = _Undefined,
     String? name,
-    String? address,
-    String? tel,
+    Object? address = _Undefined,
+    Object? telephone = _Undefined,
+    Object? email = _Undefined,
     _i3.UserScope? scope,
   }) {
     return User(
@@ -130,8 +143,9 @@ class _UserImpl extends User {
       userInfo:
           userInfo is _i2.UserInfo? ? userInfo : this.userInfo?.copyWith(),
       name: name ?? this.name,
-      address: address ?? this.address,
-      tel: tel ?? this.tel,
+      address: address is List<_i3.Address>? ? address : this.address?.clone(),
+      telephone: telephone is String? ? telephone : this.telephone,
+      email: email is String? ? email : this.email,
       scope: scope ?? this.scope,
     );
   }
