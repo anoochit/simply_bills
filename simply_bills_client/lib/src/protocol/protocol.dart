@@ -12,8 +12,8 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'address.dart' as _i2;
 import 'bill.dart' as _i3;
-import 'bill_status.dart' as _i4;
-import 'billitem.dart' as _i5;
+import 'bill_item.dart' as _i4;
+import 'bill_status.dart' as _i5;
 import 'event.dart' as _i6;
 import 'example.dart' as _i7;
 import 'post.dart' as _i8;
@@ -24,8 +24,8 @@ import 'protocol.dart' as _i12;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
 export 'address.dart';
 export 'bill.dart';
+export 'bill_item.dart';
 export 'bill_status.dart';
-export 'billitem.dart';
 export 'event.dart';
 export 'example.dart';
 export 'post.dart';
@@ -53,11 +53,11 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i3.Bill) {
       return _i3.Bill.fromJson(data) as T;
     }
-    if (t == _i4.BillStatus) {
-      return _i4.BillStatus.fromJson(data) as T;
+    if (t == _i4.BillItem) {
+      return _i4.BillItem.fromJson(data) as T;
     }
-    if (t == _i5.BillItem) {
-      return _i5.BillItem.fromJson(data) as T;
+    if (t == _i5.BillStatus) {
+      return _i5.BillStatus.fromJson(data) as T;
     }
     if (t == _i6.Event) {
       return _i6.Event.fromJson(data) as T;
@@ -83,11 +83,11 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i3.Bill?>()) {
       return (data != null ? _i3.Bill.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i4.BillStatus?>()) {
-      return (data != null ? _i4.BillStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i4.BillItem?>()) {
+      return (data != null ? _i4.BillItem.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.BillItem?>()) {
-      return (data != null ? _i5.BillItem.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.BillStatus?>()) {
+      return (data != null ? _i5.BillStatus.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i6.Event?>()) {
       return (data != null ? _i6.Event.fromJson(data) : null) as T;
@@ -136,11 +136,11 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i3.Bill) {
       return 'Bill';
     }
-    if (data is _i4.BillStatus) {
-      return 'BillStatus';
-    }
-    if (data is _i5.BillItem) {
+    if (data is _i4.BillItem) {
       return 'BillItem';
+    }
+    if (data is _i5.BillStatus) {
+      return 'BillStatus';
     }
     if (data is _i6.Event) {
       return 'Event';
@@ -175,11 +175,11 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Bill') {
       return deserialize<_i3.Bill>(data['data']);
     }
-    if (data['className'] == 'BillStatus') {
-      return deserialize<_i4.BillStatus>(data['data']);
-    }
     if (data['className'] == 'BillItem') {
-      return deserialize<_i5.BillItem>(data['data']);
+      return deserialize<_i4.BillItem>(data['data']);
+    }
+    if (data['className'] == 'BillStatus') {
+      return deserialize<_i5.BillStatus>(data['data']);
     }
     if (data['className'] == 'Event') {
       return deserialize<_i6.Event>(data['data']);

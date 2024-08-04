@@ -14,8 +14,8 @@ import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'address.dart' as _i4;
 import 'bill.dart' as _i5;
-import 'bill_status.dart' as _i6;
-import 'billitem.dart' as _i7;
+import 'bill_item.dart' as _i6;
+import 'bill_status.dart' as _i7;
 import 'event.dart' as _i8;
 import 'example.dart' as _i9;
 import 'post.dart' as _i10;
@@ -25,8 +25,8 @@ import 'user_scope.dart' as _i13;
 import 'protocol.dart' as _i14;
 export 'address.dart';
 export 'bill.dart';
+export 'bill_item.dart';
 export 'bill_status.dart';
-export 'billitem.dart';
 export 'event.dart';
 export 'example.dart';
 export 'post.dart';
@@ -563,11 +563,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i5.Bill) {
       return _i5.Bill.fromJson(data) as T;
     }
-    if (t == _i6.BillStatus) {
-      return _i6.BillStatus.fromJson(data) as T;
+    if (t == _i6.BillItem) {
+      return _i6.BillItem.fromJson(data) as T;
     }
-    if (t == _i7.BillItem) {
-      return _i7.BillItem.fromJson(data) as T;
+    if (t == _i7.BillStatus) {
+      return _i7.BillStatus.fromJson(data) as T;
     }
     if (t == _i8.Event) {
       return _i8.Event.fromJson(data) as T;
@@ -593,11 +593,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i5.Bill?>()) {
       return (data != null ? _i5.Bill.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.BillStatus?>()) {
-      return (data != null ? _i6.BillStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.BillItem?>()) {
+      return (data != null ? _i6.BillItem.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.BillItem?>()) {
-      return (data != null ? _i7.BillItem.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.BillStatus?>()) {
+      return (data != null ? _i7.BillStatus.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i8.Event?>()) {
       return (data != null ? _i8.Event.fromJson(data) : null) as T;
@@ -649,11 +649,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i5.Bill) {
       return 'Bill';
     }
-    if (data is _i6.BillStatus) {
-      return 'BillStatus';
-    }
-    if (data is _i7.BillItem) {
+    if (data is _i6.BillItem) {
       return 'BillItem';
+    }
+    if (data is _i7.BillStatus) {
+      return 'BillStatus';
     }
     if (data is _i8.Event) {
       return 'Event';
@@ -688,11 +688,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Bill') {
       return deserialize<_i5.Bill>(data['data']);
     }
-    if (data['className'] == 'BillStatus') {
-      return deserialize<_i6.BillStatus>(data['data']);
-    }
     if (data['className'] == 'BillItem') {
-      return deserialize<_i7.BillItem>(data['data']);
+      return deserialize<_i6.BillItem>(data['data']);
+    }
+    if (data['className'] == 'BillStatus') {
+      return deserialize<_i7.BillStatus>(data['data']);
     }
     if (data['className'] == 'Event') {
       return deserialize<_i8.Event>(data['data']);
@@ -734,8 +734,8 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i4.Address.t;
       case _i5.Bill:
         return _i5.Bill.t;
-      case _i7.BillItem:
-        return _i7.BillItem.t;
+      case _i6.BillItem:
+        return _i6.BillItem.t;
       case _i8.Event:
         return _i8.Event.t;
       case _i10.Post:
