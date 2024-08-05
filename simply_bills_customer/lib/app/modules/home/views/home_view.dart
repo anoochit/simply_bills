@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../data/data/bottom_nav_items.dart';
 import '../controllers/home_controller.dart';
 import 'export.dart';
 
@@ -12,6 +13,8 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(navItems[controller.navIndex.value].title)),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
       ),
       body: Obx(

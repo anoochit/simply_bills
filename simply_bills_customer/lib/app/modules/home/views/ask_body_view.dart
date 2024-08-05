@@ -6,7 +6,7 @@ class AskBodyView extends GetView {
   const AskBodyView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'AskBodyView is working',
         style: TextStyle(fontSize: 20),

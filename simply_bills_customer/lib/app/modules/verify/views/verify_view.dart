@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/verify_controller.dart';
 
 class VerifyView extends GetView<VerifyController> {
-  const VerifyView({Key? key}) : super(key: key);
+  const VerifyView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

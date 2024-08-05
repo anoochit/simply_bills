@@ -2,26 +2,26 @@ name: simply_bills_customer
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project with Serverpod.
-environment: 
-  sdk: '>=3.4.3 <4.0.0'
+environment:
+  sdk: ">=3.4.3 <4.0.0"
 
-dependencies: 
-  serverpod_flutter: 2.0.2
+dependencies:
+  cupertino_icons: ^1.0.5
+  flutter:
+    sdk: flutter
+  get: 4.6.6
+  google_fonts: ^6.2.1
   serverpod_auth_email_flutter: 2.0.2
   serverpod_auth_shared_flutter: 2.0.2
   serverpod_chat_flutter: 2.0.2
-  cupertino_icons: ^1.0.5
-  get: 4.6.6
-  flutter: 
-    sdk: flutter
-  simply_bills_client: 
+  serverpod_flutter: 2.0.2
+  simply_bills_client:
     path: ../simply_bills_client
 
-dev_dependencies: 
-  flutter_lints: '>=3.0.0 <5.0.0'
-  flutter_test: 
+dev_dependencies:
+  flutter_lints: ">=3.0.0 <5.0.0"
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-

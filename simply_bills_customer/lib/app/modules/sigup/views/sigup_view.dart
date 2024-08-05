@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/sigup_controller.dart';
 
 class SigupView extends GetView<SigupController> {
-  const SigupView({Key? key}) : super(key: key);
+  const SigupView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
