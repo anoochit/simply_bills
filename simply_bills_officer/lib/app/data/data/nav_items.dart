@@ -11,6 +11,11 @@ List<NavItem> navItems = [
     selectedIcon: Icons.home,
   ),
   NavItem(
+    title: 'Bills',
+    icon: Icons.receipt_long_outlined,
+    selectedIcon: Icons.receipt_long,
+  ),
+  NavItem(
     title: 'Notifications',
     icon: Icons.notifications_outlined,
     selectedIcon: Icons.notifications,
