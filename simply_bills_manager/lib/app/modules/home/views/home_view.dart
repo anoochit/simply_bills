@@ -5,7 +5,6 @@ import 'package:simply_bills_manager/app/modules/home/views/address_body_view.da
 import 'package:simply_bills_manager/app/modules/home/views/bills_body_view.dart';
 import 'package:simply_bills_manager/app/modules/home/views/user_body_view.dart';
 
-import '../../../data/data/bottom_nav_items.dart';
 import '../../../data/data/nav_items.dart';
 import '../controllers/home_controller.dart';
 import 'reports_body_view.dart';
