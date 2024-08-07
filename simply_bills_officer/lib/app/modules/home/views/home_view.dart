@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_officer/app/modules/home/views/home_body_view.dart';
-import 'package:simply_bills_officer/app/modules/home/views/notification_body_view.dart';
-import 'package:simply_bills_officer/app/modules/home/views/support_body_view.dart';
 
-import '../../../data/data/bottom_nav_items.dart';
-import '../../../data/data/nav_items.dart';
+import '../../../data/data/bottom_nav.dart';
 import '../controllers/home_controller.dart';
+import 'bills_body_view.dart';
+import 'home_body_view.dart';
+import 'notificaion_body_view.dart';
+import 'support_body_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -15,28 +15,39 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => Text(navItems[controller.navIndex.value].title)),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Home'),
         surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
       ),
       body: Obx(
         () => IndexedStack(
           index: controller.navIndex.value,
-          children: const [
+          children: [
+            // home
             HomeBodyView(),
-            NotificationBodyView(),
+
+            // bills
+            BillsBodyView(),
+
+            // notification
+            NotificaionBodyView(),
+
+            // support
             SupportBodyView(),
           ],
         ),
       ),
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          onDestinationSelected: (value) => controller.navIndex.value = value,
+      bottomNavigationBar: Obx(() => NavigationBar(
           selectedIndex: controller.navIndex.value,
-          destinations: destinations,
-        ),
-      ),
+          onDestinationSelected: (value) => controller.navIndex.value = value,
+          destinations: List.generate(navItems.length, (index) {
+            return NavigationDestination(
+              icon: Icon(navItems[index].icon),
+              selectedIcon: Icon(navItems[index].selectedIcon),
+              label: navItems[index].title,
+            );
+          }))),
     );
   }
 }

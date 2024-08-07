@@ -8,20 +8,15 @@ class LabelDeviderView extends GetView {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        width: MediaQuery.sizeOf(context).width,
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.inversePrimary,
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+      child: Padding(
         padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.inversePrimary,
-          borderRadius: BorderRadius.circular(12.0),
-        ),
         child: Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+          child: Text(title),
         ),
       ),
     );

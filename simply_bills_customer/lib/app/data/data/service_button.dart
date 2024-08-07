@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/nav_item.dart';
 
-final serviceItems = [
+List<NavItem> serviceItems = [
   NavItem(
     title: 'Electric',
     icon: Icons.electric_bolt_outlined,
@@ -15,7 +15,7 @@ final serviceItems = [
   ),
   NavItem(
     title: 'Trash',
-    icon: Icons.delete_outline,
+    icon: Icons.delete_outlined,
     selectedIcon: Icons.delete,
   ),
   NavItem(
@@ -27,5 +27,5 @@ final serviceItems = [
     title: 'Cleaning',
     icon: Icons.cleaning_services_outlined,
     selectedIcon: Icons.cleaning_services,
-  )
+  ),
 ];

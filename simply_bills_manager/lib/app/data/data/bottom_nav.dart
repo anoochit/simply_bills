@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
 
 import '../models/nav_item.dart';
@@ -11,9 +9,24 @@ List<NavItem> navItems = [
     selectedIcon: Icons.home,
   ),
   NavItem(
+    title: 'Reports',
+    icon: Icons.pie_chart_outline_outlined,
+    selectedIcon: Icons.pie_chart,
+  ),
+  NavItem(
     title: 'Bills',
     icon: Icons.receipt_long_outlined,
     selectedIcon: Icons.receipt_long,
+  ),
+  NavItem(
+    title: 'Users',
+    icon: Icons.account_circle_outlined,
+    selectedIcon: Icons.account_circle,
+  ),
+  NavItem(
+    title: 'Address',
+    icon: Icons.alternate_email_outlined,
+    selectedIcon: Icons.alternate_email,
   ),
   NavItem(
     title: 'Notifications',

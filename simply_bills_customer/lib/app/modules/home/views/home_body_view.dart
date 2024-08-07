@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import '../../../data/data/service_items.dart';
-import '../../../widgets/views/address_buttons_view.dart';
-import '../../../widgets/views/grid_buttons_view.dart';
+
+import '../../../widgets/views/address_button_view.dart';
 import '../../../widgets/views/label_devider_view.dart';
+import '../../../widgets/views/service_button_view.dart';
 
 class HomeBodyView extends GetView {
   const HomeBodyView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           // address
-          const AddressButtonsView(items: []),
+          AddressButtonView(items: ['item 1', 'item 2']),
 
-          // service label
-          const LabelDeviderView(title: 'Our services'),
+          // label devider
+          LabelDeviderView(title: 'Our services'),
 
           // service buttons
-          GridButtonsView(items: serviceItems),
+          ServiceButtonView(),
         ],
       ),
     );
