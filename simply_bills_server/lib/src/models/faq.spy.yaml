@@ -1,9 +1,9 @@
-class: Event
-table: event
+class: Faq
+table: faq
 fields:
-  title: String
-  startDate: DateTime
-  endDate: DateTime
+  question: String
+  answer: String
+  type: FaqType
   createdBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
   createdAt: DateTime
   publish: bool

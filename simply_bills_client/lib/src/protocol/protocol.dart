@@ -16,22 +16,24 @@ import 'bill_item.dart' as _i4;
 import 'bill_status.dart' as _i5;
 import 'event.dart' as _i6;
 import 'example.dart' as _i7;
-import 'post.dart' as _i8;
-import 'product.dart' as _i9;
-import 'user.dart' as _i10;
-import 'user_scope.dart' as _i11;
-import 'protocol.dart' as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'faq.dart' as _i8;
+import 'faq_type.dart' as _i9;
+import 'post.dart' as _i10;
+import 'product.dart' as _i11;
+import 'user.dart' as _i12;
+import 'protocol.dart' as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
 export 'bill_status.dart';
 export 'event.dart';
 export 'example.dart';
+export 'faq.dart';
+export 'faq_type.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
-export 'user_scope.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -65,17 +67,20 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i7.Example) {
       return _i7.Example.fromJson(data) as T;
     }
-    if (t == _i8.Post) {
-      return _i8.Post.fromJson(data) as T;
+    if (t == _i8.Faq) {
+      return _i8.Faq.fromJson(data) as T;
     }
-    if (t == _i9.Product) {
-      return _i9.Product.fromJson(data) as T;
+    if (t == _i9.FaqType) {
+      return _i9.FaqType.fromJson(data) as T;
     }
-    if (t == _i10.User) {
-      return _i10.User.fromJson(data) as T;
+    if (t == _i10.Post) {
+      return _i10.Post.fromJson(data) as T;
     }
-    if (t == _i11.UserScope) {
-      return _i11.UserScope.fromJson(data) as T;
+    if (t == _i11.Product) {
+      return _i11.Product.fromJson(data) as T;
+    }
+    if (t == _i12.User) {
+      return _i12.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data) : null) as T;
@@ -95,30 +100,33 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i7.Example?>()) {
       return (data != null ? _i7.Example.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Post?>()) {
-      return (data != null ? _i8.Post.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.Faq?>()) {
+      return (data != null ? _i8.Faq.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Product?>()) {
-      return (data != null ? _i9.Product.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.FaqType?>()) {
+      return (data != null ? _i9.FaqType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.User?>()) {
-      return (data != null ? _i10.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.Post?>()) {
+      return (data != null ? _i10.Post.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.UserScope?>()) {
-      return (data != null ? _i11.UserScope.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.Product?>()) {
+      return (data != null ? _i11.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i12.BillItem>?>()) {
+    if (t == _i1.getType<_i12.User?>()) {
+      return (data != null ? _i12.User.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i13.BillItem>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i12.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i13.BillItem>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i12.Address>?>()) {
+    if (t == _i1.getType<List<_i13.Address>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i12.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i13.Address>(e)).toList()
           : null) as dynamic;
     }
     try {
-      return _i13.Protocol().deserialize<T>(data, t);
+      return _i14.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -126,7 +134,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i13.Protocol().getClassNameForObject(data);
+    className = _i14.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -148,17 +156,20 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i7.Example) {
       return 'Example';
     }
-    if (data is _i8.Post) {
+    if (data is _i8.Faq) {
+      return 'Faq';
+    }
+    if (data is _i9.FaqType) {
+      return 'FaqType';
+    }
+    if (data is _i10.Post) {
       return 'Post';
     }
-    if (data is _i9.Product) {
+    if (data is _i11.Product) {
       return 'Product';
     }
-    if (data is _i10.User) {
+    if (data is _i12.User) {
       return 'User';
-    }
-    if (data is _i11.UserScope) {
-      return 'UserScope';
     }
     return super.getClassNameForObject(data);
   }
@@ -167,7 +178,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i13.Protocol().deserializeByClassName(data);
+      return _i14.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i2.Address>(data['data']);
@@ -187,17 +198,20 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Example') {
       return deserialize<_i7.Example>(data['data']);
     }
+    if (data['className'] == 'Faq') {
+      return deserialize<_i8.Faq>(data['data']);
+    }
+    if (data['className'] == 'FaqType') {
+      return deserialize<_i9.FaqType>(data['data']);
+    }
     if (data['className'] == 'Post') {
-      return deserialize<_i8.Post>(data['data']);
+      return deserialize<_i10.Post>(data['data']);
     }
     if (data['className'] == 'Product') {
-      return deserialize<_i9.Product>(data['data']);
+      return deserialize<_i11.Product>(data['data']);
     }
     if (data['className'] == 'User') {
-      return deserialize<_i10.User>(data['data']);
-    }
-    if (data['className'] == 'UserScope') {
-      return deserialize<_i11.UserScope>(data['data']);
+      return deserialize<_i12.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

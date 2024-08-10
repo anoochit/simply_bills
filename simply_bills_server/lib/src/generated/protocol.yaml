@@ -1,2 +1,8 @@
+customerEnpoint:
+  - updateToCustomerScope:
 example:
   - hello:
+managerEnpoint:
+  - updateManagerScope:
+  - updateOfficerScope:
+officerEnpoint:

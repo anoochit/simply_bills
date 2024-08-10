@@ -22,7 +22,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     this.address,
     this.telephone,
     this.email,
-    required this.scope,
   }) : super(id);
 
   factory User({
@@ -33,7 +32,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    required _i3.UserScope scope,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -50,7 +48,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
           .toList(),
       telephone: jsonSerialization['telephone'] as String?,
       email: jsonSerialization['email'] as String?,
-      scope: _i3.UserScope.fromJson((jsonSerialization['scope'] as String)),
     );
   }
 
@@ -70,8 +67,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   String? email;
 
-  _i3.UserScope scope;
-
   @override
   _i1.Table get table => t;
 
@@ -83,7 +78,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    _i3.UserScope? scope,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -96,7 +90,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
         'address': address?.toJson(valueToJson: (v) => v.toJson()),
       if (telephone != null) 'telephone': telephone,
       if (email != null) 'email': email,
-      'scope': scope.toJson(),
     };
   }
 
@@ -111,7 +104,6 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
         'address': address?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       if (telephone != null) 'telephone': telephone,
       if (email != null) 'email': email,
-      'scope': scope.toJson(),
     };
   }
 
@@ -162,7 +154,6 @@ class _UserImpl extends User {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    required _i3.UserScope scope,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
@@ -171,7 +162,6 @@ class _UserImpl extends User {
           address: address,
           telephone: telephone,
           email: email,
-          scope: scope,
         );
 
   @override
@@ -183,7 +173,6 @@ class _UserImpl extends User {
     Object? address = _Undefined,
     Object? telephone = _Undefined,
     Object? email = _Undefined,
-    _i3.UserScope? scope,
   }) {
     return User(
       id: id is int? ? id : this.id,
@@ -194,7 +183,6 @@ class _UserImpl extends User {
       address: address is List<_i3.Address>? ? address : this.address?.clone(),
       telephone: telephone is String? ? telephone : this.telephone,
       email: email is String? ? email : this.email,
-      scope: scope ?? this.scope,
     );
   }
 }
@@ -217,11 +205,6 @@ class UserTable extends _i1.Table {
       'email',
       this,
     );
-    scope = _i1.ColumnEnum(
-      'scope',
-      this,
-      _i1.EnumSerialization.byName,
-    );
   }
 
   late final _i1.ColumnInt userInfoId;
@@ -237,8 +220,6 @@ class UserTable extends _i1.Table {
   late final _i1.ColumnString telephone;
 
   late final _i1.ColumnString email;
-
-  late final _i1.ColumnEnum<_i3.UserScope> scope;
 
   _i2.UserInfoTable get userInfo {
     if (_userInfo != null) return _userInfo!;
@@ -291,7 +272,6 @@ class UserTable extends _i1.Table {
         name,
         telephone,
         email,
-        scope,
       ];
 
   @override

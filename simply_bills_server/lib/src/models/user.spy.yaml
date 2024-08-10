@@ -6,7 +6,6 @@ fields:
   address: List<Address>?, relation
   telephone: String?
   email: String?
-  scope: UserScope
 
 indexes:
   user_library_unique_idx:

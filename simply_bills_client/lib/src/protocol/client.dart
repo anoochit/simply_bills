@@ -14,6 +14,21 @@ import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 import 'protocol.dart' as _i4;
 
 /// {@category Endpoint}
+class EndpointCustomerEnpoint extends _i1.EndpointRef {
+  EndpointCustomerEnpoint(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'customerEnpoint';
+
+  _i2.Future<_i3.UserInfo?> updateToCustomerScope() =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'customerEnpoint',
+        'updateToCustomerScope',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointExample extends _i1.EndpointRef {
   EndpointExample(_i1.EndpointCaller caller) : super(caller);
 
@@ -25,6 +40,36 @@ class EndpointExample extends _i1.EndpointRef {
         'hello',
         {'name': name},
       );
+}
+
+/// {@category Endpoint}
+class EndpointManagerEnpoint extends _i1.EndpointRef {
+  EndpointManagerEnpoint(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'managerEnpoint';
+
+  _i2.Future<_i3.UserInfo?> updateManagerScope(int userId) =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'managerEnpoint',
+        'updateManagerScope',
+        {'userId': userId},
+      );
+
+  _i2.Future<_i3.UserInfo?> updateOfficerScope(int userId) =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'managerEnpoint',
+        'updateOfficerScope',
+        {'userId': userId},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointOfficerEnpoint extends _i1.EndpointRef {
+  EndpointOfficerEnpoint(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'officerEnpoint';
 }
 
 class _Modules {
@@ -58,16 +103,30 @@ class Client extends _i1.ServerpodClient {
           onFailedCall: onFailedCall,
           onSucceededCall: onSucceededCall,
         ) {
+    customerEnpoint = EndpointCustomerEnpoint(this);
     example = EndpointExample(this);
+    managerEnpoint = EndpointManagerEnpoint(this);
+    officerEnpoint = EndpointOfficerEnpoint(this);
     modules = _Modules(this);
   }
 
+  late final EndpointCustomerEnpoint customerEnpoint;
+
   late final EndpointExample example;
+
+  late final EndpointManagerEnpoint managerEnpoint;
+
+  late final EndpointOfficerEnpoint officerEnpoint;
 
   late final _Modules modules;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'example': example};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'customerEnpoint': customerEnpoint,
+        'example': example,
+        'managerEnpoint': managerEnpoint,
+        'officerEnpoint': officerEnpoint,
+      };
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup =>

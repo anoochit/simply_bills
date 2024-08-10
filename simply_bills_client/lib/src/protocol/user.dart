@@ -21,7 +21,6 @@ abstract class User implements _i1.SerializableModel {
     this.address,
     this.telephone,
     this.email,
-    required this.scope,
   });
 
   factory User({
@@ -32,7 +31,6 @@ abstract class User implements _i1.SerializableModel {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    required _i3.UserScope scope,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -49,7 +47,6 @@ abstract class User implements _i1.SerializableModel {
           .toList(),
       telephone: jsonSerialization['telephone'] as String?,
       email: jsonSerialization['email'] as String?,
-      scope: _i3.UserScope.fromJson((jsonSerialization['scope'] as String)),
     );
   }
 
@@ -70,8 +67,6 @@ abstract class User implements _i1.SerializableModel {
 
   String? email;
 
-  _i3.UserScope scope;
-
   User copyWith({
     int? id,
     int? userInfoId,
@@ -80,7 +75,6 @@ abstract class User implements _i1.SerializableModel {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    _i3.UserScope? scope,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -93,7 +87,6 @@ abstract class User implements _i1.SerializableModel {
         'address': address?.toJson(valueToJson: (v) => v.toJson()),
       if (telephone != null) 'telephone': telephone,
       if (email != null) 'email': email,
-      'scope': scope.toJson(),
     };
   }
 
@@ -114,7 +107,6 @@ class _UserImpl extends User {
     List<_i3.Address>? address,
     String? telephone,
     String? email,
-    required _i3.UserScope scope,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
@@ -123,7 +115,6 @@ class _UserImpl extends User {
           address: address,
           telephone: telephone,
           email: email,
-          scope: scope,
         );
 
   @override
@@ -135,7 +126,6 @@ class _UserImpl extends User {
     Object? address = _Undefined,
     Object? telephone = _Undefined,
     Object? email = _Undefined,
-    _i3.UserScope? scope,
   }) {
     return User(
       id: id is int? ? id : this.id,
@@ -146,7 +136,6 @@ class _UserImpl extends User {
       address: address is List<_i3.Address>? ? address : this.address?.clone(),
       telephone: telephone is String? ? telephone : this.telephone,
       email: email is String? ? email : this.email,
-      scope: scope ?? this.scope,
     );
   }
 }

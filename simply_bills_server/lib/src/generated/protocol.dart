@@ -18,21 +18,23 @@ import 'bill_item.dart' as _i6;
 import 'bill_status.dart' as _i7;
 import 'event.dart' as _i8;
 import 'example.dart' as _i9;
-import 'post.dart' as _i10;
-import 'product.dart' as _i11;
-import 'user.dart' as _i12;
-import 'user_scope.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'faq.dart' as _i10;
+import 'faq_type.dart' as _i11;
+import 'post.dart' as _i12;
+import 'product.dart' as _i13;
+import 'user.dart' as _i14;
+import 'protocol.dart' as _i15;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
 export 'bill_status.dart';
 export 'event.dart';
 export 'example.dart';
+export 'faq.dart';
+export 'faq_type.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
-export 'user_scope.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -322,7 +324,7 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTable: 'user',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
+          onUpdate: _i2.ForeignKeyAction.setNull,
           onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         )
@@ -330,6 +332,85 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'event_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'faq',
+      dartName: 'Faq',
+      schema: 'public',
+      module: 'simply_bills',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'faq_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'question',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'answer',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'type',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:FaqType',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdById',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'publish',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'faq_fk_0',
+          columns: ['createdById'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'faq_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -498,12 +579,6 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
-          name: 'scope',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'protocol:UserScope',
-        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -575,17 +650,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i9.Example) {
       return _i9.Example.fromJson(data) as T;
     }
-    if (t == _i10.Post) {
-      return _i10.Post.fromJson(data) as T;
+    if (t == _i10.Faq) {
+      return _i10.Faq.fromJson(data) as T;
     }
-    if (t == _i11.Product) {
-      return _i11.Product.fromJson(data) as T;
+    if (t == _i11.FaqType) {
+      return _i11.FaqType.fromJson(data) as T;
     }
-    if (t == _i12.User) {
-      return _i12.User.fromJson(data) as T;
+    if (t == _i12.Post) {
+      return _i12.Post.fromJson(data) as T;
     }
-    if (t == _i13.UserScope) {
-      return _i13.UserScope.fromJson(data) as T;
+    if (t == _i13.Product) {
+      return _i13.Product.fromJson(data) as T;
+    }
+    if (t == _i14.User) {
+      return _i14.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.Address?>()) {
       return (data != null ? _i4.Address.fromJson(data) : null) as T;
@@ -605,26 +683,29 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i9.Example?>()) {
       return (data != null ? _i9.Example.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.Post?>()) {
-      return (data != null ? _i10.Post.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.Faq?>()) {
+      return (data != null ? _i10.Faq.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.Product?>()) {
-      return (data != null ? _i11.Product.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.FaqType?>()) {
+      return (data != null ? _i11.FaqType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.User?>()) {
-      return (data != null ? _i12.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.Post?>()) {
+      return (data != null ? _i12.Post.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.UserScope?>()) {
-      return (data != null ? _i13.UserScope.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.Product?>()) {
+      return (data != null ? _i13.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i14.BillItem>?>()) {
+    if (t == _i1.getType<_i14.User?>()) {
+      return (data != null ? _i14.User.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i15.BillItem>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i14.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i15.BillItem>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i14.Address>?>()) {
+    if (t == _i1.getType<List<_i15.Address>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i14.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i15.Address>(e)).toList()
           : null) as dynamic;
     }
     try {
@@ -661,17 +742,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i9.Example) {
       return 'Example';
     }
-    if (data is _i10.Post) {
+    if (data is _i10.Faq) {
+      return 'Faq';
+    }
+    if (data is _i11.FaqType) {
+      return 'FaqType';
+    }
+    if (data is _i12.Post) {
       return 'Post';
     }
-    if (data is _i11.Product) {
+    if (data is _i13.Product) {
       return 'Product';
     }
-    if (data is _i12.User) {
+    if (data is _i14.User) {
       return 'User';
-    }
-    if (data is _i13.UserScope) {
-      return 'UserScope';
     }
     return super.getClassNameForObject(data);
   }
@@ -700,17 +784,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Example') {
       return deserialize<_i9.Example>(data['data']);
     }
+    if (data['className'] == 'Faq') {
+      return deserialize<_i10.Faq>(data['data']);
+    }
+    if (data['className'] == 'FaqType') {
+      return deserialize<_i11.FaqType>(data['data']);
+    }
     if (data['className'] == 'Post') {
-      return deserialize<_i10.Post>(data['data']);
+      return deserialize<_i12.Post>(data['data']);
     }
     if (data['className'] == 'Product') {
-      return deserialize<_i11.Product>(data['data']);
+      return deserialize<_i13.Product>(data['data']);
     }
     if (data['className'] == 'User') {
-      return deserialize<_i12.User>(data['data']);
-    }
-    if (data['className'] == 'UserScope') {
-      return deserialize<_i13.UserScope>(data['data']);
+      return deserialize<_i14.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -738,12 +825,14 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i6.BillItem.t;
       case _i8.Event:
         return _i8.Event.t;
-      case _i10.Post:
-        return _i10.Post.t;
-      case _i11.Product:
-        return _i11.Product.t;
-      case _i12.User:
-        return _i12.User.t;
+      case _i10.Faq:
+        return _i10.Faq.t;
+      case _i12.Post:
+        return _i12.Post.t;
+      case _i13.Product:
+        return _i13.Product.t;
+      case _i14.User:
+        return _i14.User.t;
     }
     return null;
   }

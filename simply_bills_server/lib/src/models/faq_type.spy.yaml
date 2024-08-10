@@ -1,6 +1,6 @@
-enum: UserScope
+enum: FaqType
 serialized: byName
 values:
-  - officer
   - customer
-  - admin
+  - officer
+  - manager

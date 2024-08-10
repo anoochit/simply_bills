@@ -8,23 +8,23 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod/serverpod.dart' as _i1;
 
-enum UserScope implements _i1.SerializableModel {
-  officer,
+enum FaqType implements _i1.SerializableModel {
   customer,
-  admin;
+  officer,
+  manager;
 
-  static UserScope fromJson(String name) {
+  static FaqType fromJson(String name) {
     switch (name) {
-      case 'officer':
-        return officer;
       case 'customer':
         return customer;
-      case 'admin':
-        return admin;
+      case 'officer':
+        return officer;
+      case 'manager':
+        return manager;
       default:
-        throw ArgumentError('Value "$name" cannot be converted to "UserScope"');
+        throw ArgumentError('Value "$name" cannot be converted to "FaqType"');
     }
   }
 
