@@ -6,7 +6,7 @@ import 'package:simply_bills_customer/app/modules/signup/views/email_signup_view
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
-  const SignupView({Key? key}) : super(key: key);
+  const SignupView({super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

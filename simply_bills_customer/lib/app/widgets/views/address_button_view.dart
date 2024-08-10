@@ -10,7 +10,7 @@ class AddressButtonView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).width * 2 / 3.6,
       child: PageView(

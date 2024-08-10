@@ -26,7 +26,7 @@ class HomeView extends GetView<HomeController> {
       body: Obx(
         () => IndexedStack(
           index: controller.navIndex.value,
-          children: [
+          children: const [
             // home
             HomeBodyView(),
 

@@ -59,7 +59,6 @@ class ServerPodService extends GetxService {
       final userInfo =
           await authController.validateAccount(email, verificationCode);
 
-      // TODO : set user scope
       return userInfo;
     } catch (e) {
       throw ('$e');
