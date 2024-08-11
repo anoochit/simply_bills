@@ -13,7 +13,7 @@ class LabelDeviderView extends GetView {
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.inversePrimary,
-          borderRadius: BorderRadius.circular(6.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(4.0),

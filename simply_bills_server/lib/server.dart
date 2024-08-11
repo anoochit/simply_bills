@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:serverpod/serverpod.dart';
 import 'package:simply_bills_server/src/web/routes/root.dart';
-import 'package:uuid/v4.dart';
 import 'src/generated/protocol.dart';
 import 'src/generated/endpoints.dart';
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
@@ -53,6 +50,7 @@ void run(List<String> args) async {
   await pod.start();
 }
 
+/// add sample data
 Future<void> initData(Serverpod pod) async {
   final session = await pod.createSession();
 
