@@ -91,10 +91,10 @@ class EmailSigninView extends GetView<ServerPodController> {
               child: const Text('Sing In'),
             ),
 
-            const Gap(16.0),
+            const Gap(8.0),
             TextButton(
               onPressed: () => Get.offAllNamed(Routes.SIGNUP),
-              child: const Text('Create new account'),
+              child: const Text("Don't have an account? sign up"),
             ),
             const Gap(16.0),
           ],

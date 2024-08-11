@@ -60,7 +60,7 @@ class EmailVerifyView extends GetView<ServerPodController> {
                         password: password!,
                         scope: UserScope.customer.name,
                       );
-                      // check user result
+                      // check user result update user scope
                       if (result != null) {
                         await controller.client.customerEnpoint
                             .updateToCustomerScope();

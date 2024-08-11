@@ -106,10 +106,11 @@ class EmailSignupView extends GetView<ServerPodController> {
               child: const Text('Sing Up'),
             ),
 
-            const Gap(16.0),
+            const Gap(8.0),
+
             TextButton(
               onPressed: () => Get.offAllNamed(Routes.SIGNIN),
-              child: const Text('Already have account'),
+              child: const Text('Already have an account? sign in'),
             ),
             const Gap(16.0),
           ],
