@@ -19,14 +19,18 @@ class AddressButtonView extends GetView {
             onTap: () {
               //
             },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: Center(
-                child: Text(
-                  items[index],
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Center(
+                  child: Text(
+                    items[index],
+                  ),
                 ),
               ),
             ),

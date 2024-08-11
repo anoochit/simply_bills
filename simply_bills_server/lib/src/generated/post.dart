@@ -9,15 +9,15 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
   Post._({
     int? id,
     required this.title,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   }) : super(id);
@@ -25,8 +25,8 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
   factory Post({
     int? id,
     required String title,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _PostImpl;
@@ -35,11 +35,11 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
     return Post(
       id: jsonSerialization['id'] as int?,
       title: jsonSerialization['title'] as String,
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -52,9 +52,9 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   String title;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i2.UserInfo? author;
 
   DateTime createdAt;
 
@@ -66,8 +66,8 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
   Post copyWith({
     int? id,
     String? title,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i2.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -76,8 +76,8 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'title': title,
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -88,15 +88,15 @@ abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'title': title,
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJsonForProtocol(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJsonForProtocol(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
   }
 
-  static PostInclude include({_i2.UserInclude? createdBy}) {
-    return PostInclude._(createdBy: createdBy);
+  static PostInclude include({_i2.UserInfoInclude? author}) {
+    return PostInclude._(author: author);
   }
 
   static PostIncludeList includeList({
@@ -131,15 +131,15 @@ class _PostImpl extends Post {
   _PostImpl({
     int? id,
     required String title,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
           id: id,
           title: title,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -148,17 +148,16 @@ class _PostImpl extends Post {
   Post copyWith({
     Object? id = _Undefined,
     String? title,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
     return Post(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i2.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );
@@ -171,8 +170,8 @@ class PostTable extends _i1.Table {
       'title',
       this,
     );
-    createdById = _i1.ColumnInt(
-      'createdById',
+    authorId = _i1.ColumnInt(
+      'authorId',
       this,
     );
     createdAt = _i1.ColumnDateTime(
@@ -187,54 +186,54 @@ class PostTable extends _i1.Table {
 
   late final _i1.ColumnString title;
 
-  late final _i1.ColumnInt createdById;
+  late final _i1.ColumnInt authorId;
 
-  _i2.UserTable? _createdBy;
+  _i2.UserInfoTable? _author;
 
   late final _i1.ColumnDateTime createdAt;
 
   late final _i1.ColumnBool publish;
 
-  _i2.UserTable get createdBy {
-    if (_createdBy != null) return _createdBy!;
-    _createdBy = _i1.createRelationTable(
-      relationFieldName: 'createdBy',
-      field: Post.t.createdById,
-      foreignField: _i2.User.t.id,
+  _i2.UserInfoTable get author {
+    if (_author != null) return _author!;
+    _author = _i1.createRelationTable(
+      relationFieldName: 'author',
+      field: Post.t.authorId,
+      foreignField: _i2.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.UserTable(tableRelation: foreignTableRelation),
+          _i2.UserInfoTable(tableRelation: foreignTableRelation),
     );
-    return _createdBy!;
+    return _author!;
   }
 
   @override
   List<_i1.Column> get columns => [
         id,
         title,
-        createdById,
+        authorId,
         createdAt,
         publish,
       ];
 
   @override
   _i1.Table? getRelationTable(String relationField) {
-    if (relationField == 'createdBy') {
-      return createdBy;
+    if (relationField == 'author') {
+      return author;
     }
     return null;
   }
 }
 
 class PostInclude extends _i1.IncludeObject {
-  PostInclude._({_i2.UserInclude? createdBy}) {
-    _createdBy = createdBy;
+  PostInclude._({_i2.UserInfoInclude? author}) {
+    _author = author;
   }
 
-  _i2.UserInclude? _createdBy;
+  _i2.UserInfoInclude? _author;
 
   @override
-  Map<String, _i1.Include?> get includes => {'createdBy': _createdBy};
+  Map<String, _i1.Include?> get includes => {'author': _author};
 
   @override
   _i1.Table get table => Post.t;
@@ -420,22 +419,22 @@ class PostRepository {
 class PostAttachRowRepository {
   const PostAttachRowRepository._();
 
-  Future<void> createdBy(
+  Future<void> author(
     _i1.Session session,
     Post post,
-    _i2.User createdBy,
+    _i2.UserInfo author,
   ) async {
     if (post.id == null) {
       throw ArgumentError.notNull('post.id');
     }
-    if (createdBy.id == null) {
-      throw ArgumentError.notNull('createdBy.id');
+    if (author.id == null) {
+      throw ArgumentError.notNull('author.id');
     }
 
-    var $post = post.copyWith(createdById: createdBy.id);
+    var $post = post.copyWith(authorId: author.id);
     await session.db.updateRow<Post>(
       $post,
-      columns: [Post.t.createdById],
+      columns: [Post.t.authorId],
     );
   }
 }

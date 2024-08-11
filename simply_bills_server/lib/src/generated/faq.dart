@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
@@ -18,8 +19,8 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     required this.question,
     required this.answer,
     required this.type,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   }) : super(id);
@@ -29,8 +30,8 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     required String question,
     required String answer,
     required _i2.FaqType type,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i3.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _FaqImpl;
@@ -41,11 +42,11 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
       question: jsonSerialization['question'] as String,
       answer: jsonSerialization['answer'] as String,
       type: _i2.FaqType.fromJson((jsonSerialization['type'] as String)),
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i3.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -62,9 +63,9 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.FaqType type;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i3.UserInfo? author;
 
   DateTime createdAt;
 
@@ -78,8 +79,8 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? question,
     String? answer,
     _i2.FaqType? type,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i3.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -90,8 +91,8 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
       'question': question,
       'answer': answer,
       'type': type.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -104,15 +105,15 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
       'question': question,
       'answer': answer,
       'type': type.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJsonForProtocol(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJsonForProtocol(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
   }
 
-  static FaqInclude include({_i2.UserInclude? createdBy}) {
-    return FaqInclude._(createdBy: createdBy);
+  static FaqInclude include({_i3.UserInfoInclude? author}) {
+    return FaqInclude._(author: author);
   }
 
   static FaqIncludeList includeList({
@@ -149,8 +150,8 @@ class _FaqImpl extends Faq {
     required String question,
     required String answer,
     required _i2.FaqType type,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i3.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -158,8 +159,8 @@ class _FaqImpl extends Faq {
           question: question,
           answer: answer,
           type: type,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -170,8 +171,8 @@ class _FaqImpl extends Faq {
     String? question,
     String? answer,
     _i2.FaqType? type,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
@@ -180,9 +181,8 @@ class _FaqImpl extends Faq {
       question: question ?? this.question,
       answer: answer ?? this.answer,
       type: type ?? this.type,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i3.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );
@@ -204,8 +204,8 @@ class FaqTable extends _i1.Table {
       this,
       _i1.EnumSerialization.byName,
     );
-    createdById = _i1.ColumnInt(
-      'createdById',
+    authorId = _i1.ColumnInt(
+      'authorId',
       this,
     );
     createdAt = _i1.ColumnDateTime(
@@ -224,25 +224,25 @@ class FaqTable extends _i1.Table {
 
   late final _i1.ColumnEnum<_i2.FaqType> type;
 
-  late final _i1.ColumnInt createdById;
+  late final _i1.ColumnInt authorId;
 
-  _i2.UserTable? _createdBy;
+  _i3.UserInfoTable? _author;
 
   late final _i1.ColumnDateTime createdAt;
 
   late final _i1.ColumnBool publish;
 
-  _i2.UserTable get createdBy {
-    if (_createdBy != null) return _createdBy!;
-    _createdBy = _i1.createRelationTable(
-      relationFieldName: 'createdBy',
-      field: Faq.t.createdById,
-      foreignField: _i2.User.t.id,
+  _i3.UserInfoTable get author {
+    if (_author != null) return _author!;
+    _author = _i1.createRelationTable(
+      relationFieldName: 'author',
+      field: Faq.t.authorId,
+      foreignField: _i3.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.UserTable(tableRelation: foreignTableRelation),
+          _i3.UserInfoTable(tableRelation: foreignTableRelation),
     );
-    return _createdBy!;
+    return _author!;
   }
 
   @override
@@ -251,29 +251,29 @@ class FaqTable extends _i1.Table {
         question,
         answer,
         type,
-        createdById,
+        authorId,
         createdAt,
         publish,
       ];
 
   @override
   _i1.Table? getRelationTable(String relationField) {
-    if (relationField == 'createdBy') {
-      return createdBy;
+    if (relationField == 'author') {
+      return author;
     }
     return null;
   }
 }
 
 class FaqInclude extends _i1.IncludeObject {
-  FaqInclude._({_i2.UserInclude? createdBy}) {
-    _createdBy = createdBy;
+  FaqInclude._({_i3.UserInfoInclude? author}) {
+    _author = author;
   }
 
-  _i2.UserInclude? _createdBy;
+  _i3.UserInfoInclude? _author;
 
   @override
-  Map<String, _i1.Include?> get includes => {'createdBy': _createdBy};
+  Map<String, _i1.Include?> get includes => {'author': _author};
 
   @override
   _i1.Table get table => Faq.t;
@@ -459,22 +459,22 @@ class FaqRepository {
 class FaqAttachRowRepository {
   const FaqAttachRowRepository._();
 
-  Future<void> createdBy(
+  Future<void> author(
     _i1.Session session,
     Faq faq,
-    _i2.User createdBy,
+    _i3.UserInfo author,
   ) async {
     if (faq.id == null) {
       throw ArgumentError.notNull('faq.id');
     }
-    if (createdBy.id == null) {
-      throw ArgumentError.notNull('createdBy.id');
+    if (author.id == null) {
+      throw ArgumentError.notNull('author.id');
     }
 
-    var $faq = faq.copyWith(createdById: createdBy.id);
+    var $faq = faq.copyWith(authorId: author.id);
     await session.db.updateRow<Faq>(
       $faq,
-      columns: [Faq.t.createdById],
+      columns: [Faq.t.authorId],
     );
   }
 }

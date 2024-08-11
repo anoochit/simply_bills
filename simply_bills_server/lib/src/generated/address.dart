@@ -14,12 +14,14 @@ abstract class Address extends _i1.TableRow
     implements _i1.ProtocolSerialization {
   Address._({
     int? id,
+    required this.uid,
     required this.address,
     required this.address2,
   }) : super(id);
 
   factory Address({
     int? id,
+    required String uid,
     required String address,
     required String address2,
   }) = _AddressImpl;
@@ -27,6 +29,7 @@ abstract class Address extends _i1.TableRow
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
     return Address(
       id: jsonSerialization['id'] as int?,
+      uid: jsonSerialization['uid'] as String,
       address: jsonSerialization['address'] as String,
       address2: jsonSerialization['address2'] as String,
     );
@@ -35,6 +38,8 @@ abstract class Address extends _i1.TableRow
   static final t = AddressTable();
 
   static const db = AddressRepository._();
+
+  String uid;
 
   String address;
 
@@ -47,6 +52,7 @@ abstract class Address extends _i1.TableRow
 
   Address copyWith({
     int? id,
+    String? uid,
     String? address,
     String? address2,
   });
@@ -54,6 +60,7 @@ abstract class Address extends _i1.TableRow
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'uid': uid,
       'address': address,
       'address2': address2,
       if (_userAddressUserId != null) '_userAddressUserId': _userAddressUserId,
@@ -64,6 +71,7 @@ abstract class Address extends _i1.TableRow
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      'uid': uid,
       'address': address,
       'address2': address2,
     };
@@ -104,10 +112,12 @@ class _Undefined {}
 class _AddressImpl extends Address {
   _AddressImpl({
     int? id,
+    required String uid,
     required String address,
     required String address2,
   }) : super._(
           id: id,
+          uid: uid,
           address: address,
           address2: address2,
         );
@@ -115,11 +125,13 @@ class _AddressImpl extends Address {
   @override
   Address copyWith({
     Object? id = _Undefined,
+    String? uid,
     String? address,
     String? address2,
   }) {
     return Address(
       id: id is int? ? id : this.id,
+      uid: uid ?? this.uid,
       address: address ?? this.address,
       address2: address2 ?? this.address2,
     );
@@ -129,11 +141,13 @@ class _AddressImpl extends Address {
 class AddressImplicit extends _AddressImpl {
   AddressImplicit._({
     int? id,
+    required String uid,
     required String address,
     required String address2,
     this.$_userAddressUserId,
   }) : super(
           id: id,
+          uid: uid,
           address: address,
           address2: address2,
         );
@@ -144,6 +158,7 @@ class AddressImplicit extends _AddressImpl {
   }) {
     return AddressImplicit._(
       id: address.id,
+      uid: address.uid,
       address: address.address,
       address2: address.address2,
       $_userAddressUserId: $_userAddressUserId,
@@ -162,6 +177,10 @@ class AddressImplicit extends _AddressImpl {
 
 class AddressTable extends _i1.Table {
   AddressTable({super.tableRelation}) : super(tableName: 'address') {
+    uid = _i1.ColumnString(
+      'uid',
+      this,
+    );
     address = _i1.ColumnString(
       'address',
       this,
@@ -176,6 +195,8 @@ class AddressTable extends _i1.Table {
     );
   }
 
+  late final _i1.ColumnString uid;
+
   late final _i1.ColumnString address;
 
   late final _i1.ColumnString address2;
@@ -185,6 +206,7 @@ class AddressTable extends _i1.Table {
   @override
   List<_i1.Column> get columns => [
         id,
+        uid,
         address,
         address2,
         $_userAddressUserId,

@@ -2,6 +2,6 @@ class: Post
 table: post
 fields:
   title: String
-  createdBy: User?, relation
+  author: module:auth:UserInfo?, relation(onUpdate=SetNull, onDelete=NoAction)
   createdAt: DateTime
   publish: bool

@@ -4,6 +4,6 @@ fields:
   question: String
   answer: String
   type: FaqType
-  createdBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
+  author: module:auth:UserInfo?, relation(onUpdate=SetNull, onDelete=NoAction)
   createdAt: DateTime
   publish: bool

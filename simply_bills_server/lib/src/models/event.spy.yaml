@@ -4,6 +4,6 @@ fields:
   title: String
   startDate: DateTime
   endDate: DateTime
-  createdBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
+  author: module:auth:UserInfo?, relation(onUpdate=SetNull, onDelete=NoAction)
   createdAt: DateTime
   publish: bool

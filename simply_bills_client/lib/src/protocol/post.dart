@@ -9,14 +9,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 
 abstract class Post implements _i1.SerializableModel {
   Post._({
     this.id,
     required this.title,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   });
@@ -24,8 +24,8 @@ abstract class Post implements _i1.SerializableModel {
   factory Post({
     int? id,
     required String title,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _PostImpl;
@@ -34,11 +34,11 @@ abstract class Post implements _i1.SerializableModel {
     return Post(
       id: jsonSerialization['id'] as int?,
       title: jsonSerialization['title'] as String,
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -52,9 +52,9 @@ abstract class Post implements _i1.SerializableModel {
 
   String title;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i2.UserInfo? author;
 
   DateTime createdAt;
 
@@ -63,8 +63,8 @@ abstract class Post implements _i1.SerializableModel {
   Post copyWith({
     int? id,
     String? title,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i2.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -73,8 +73,8 @@ abstract class Post implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'title': title,
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -92,15 +92,15 @@ class _PostImpl extends Post {
   _PostImpl({
     int? id,
     required String title,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
           id: id,
           title: title,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -109,17 +109,16 @@ class _PostImpl extends Post {
   Post copyWith({
     Object? id = _Undefined,
     String? title,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
     return Post(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i2.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );

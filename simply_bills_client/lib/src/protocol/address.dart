@@ -13,12 +13,14 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class Address implements _i1.SerializableModel {
   Address._({
     this.id,
+    required this.uid,
     required this.address,
     required this.address2,
   });
 
   factory Address({
     int? id,
+    required String uid,
     required String address,
     required String address2,
   }) = _AddressImpl;
@@ -26,6 +28,7 @@ abstract class Address implements _i1.SerializableModel {
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
     return Address(
       id: jsonSerialization['id'] as int?,
+      uid: jsonSerialization['uid'] as String,
       address: jsonSerialization['address'] as String,
       address2: jsonSerialization['address2'] as String,
     );
@@ -36,12 +39,15 @@ abstract class Address implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
+  String uid;
+
   String address;
 
   String address2;
 
   Address copyWith({
     int? id,
+    String? uid,
     String? address,
     String? address2,
   });
@@ -49,6 +55,7 @@ abstract class Address implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'uid': uid,
       'address': address,
       'address2': address2,
     };
@@ -65,10 +72,12 @@ class _Undefined {}
 class _AddressImpl extends Address {
   _AddressImpl({
     int? id,
+    required String uid,
     required String address,
     required String address2,
   }) : super._(
           id: id,
+          uid: uid,
           address: address,
           address2: address2,
         );
@@ -76,11 +85,13 @@ class _AddressImpl extends Address {
   @override
   Address copyWith({
     Object? id = _Undefined,
+    String? uid,
     String? address,
     String? address2,
   }) {
     return Address(
       id: id is int? ? id : this.id,
+      uid: uid ?? this.uid,
       address: address ?? this.address,
       address2: address2 ?? this.address2,
     );

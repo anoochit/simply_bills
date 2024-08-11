@@ -20,8 +20,8 @@ abstract class Bill implements _i1.SerializableModel {
     this.items,
     required this.total,
     required this.createdAt,
-    required this.billById,
-    this.billBy,
+    required this.billCreatedById,
+    this.billCreatedBy,
     required this.status,
   });
 
@@ -33,8 +33,8 @@ abstract class Bill implements _i1.SerializableModel {
     List<_i2.BillItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billById,
-    _i2.User? billBy,
+    required int billCreatedById,
+    _i2.User? billCreatedBy,
     required _i2.BillStatus status,
   }) = _BillImpl;
 
@@ -53,11 +53,11 @@ abstract class Bill implements _i1.SerializableModel {
       total: (jsonSerialization['total'] as num).toDouble(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      billById: jsonSerialization['billById'] as int,
-      billBy: jsonSerialization['billBy'] == null
+      billCreatedById: jsonSerialization['billCreatedById'] as int,
+      billCreatedBy: jsonSerialization['billCreatedBy'] == null
           ? null
           : _i2.User.fromJson(
-              (jsonSerialization['billBy'] as Map<String, dynamic>)),
+              (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
       status: _i2.BillStatus.fromJson((jsonSerialization['status'] as String)),
     );
   }
@@ -79,9 +79,9 @@ abstract class Bill implements _i1.SerializableModel {
 
   DateTime createdAt;
 
-  int billById;
+  int billCreatedById;
 
-  _i2.User? billBy;
+  _i2.User? billCreatedBy;
 
   _i2.BillStatus status;
 
@@ -93,8 +93,8 @@ abstract class Bill implements _i1.SerializableModel {
     List<_i2.BillItem>? items,
     double? total,
     DateTime? createdAt,
-    int? billById,
-    _i2.User? billBy,
+    int? billCreatedById,
+    _i2.User? billCreatedBy,
     _i2.BillStatus? status,
   });
   @override
@@ -107,8 +107,8 @@ abstract class Bill implements _i1.SerializableModel {
       if (items != null) 'items': items?.toJson(valueToJson: (v) => v.toJson()),
       'total': total,
       'createdAt': createdAt.toJson(),
-      'billById': billById,
-      if (billBy != null) 'billBy': billBy?.toJson(),
+      'billCreatedById': billCreatedById,
+      if (billCreatedBy != null) 'billCreatedBy': billCreatedBy?.toJson(),
       'status': status.toJson(),
     };
   }
@@ -130,8 +130,8 @@ class _BillImpl extends Bill {
     List<_i2.BillItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billById,
-    _i2.User? billBy,
+    required int billCreatedById,
+    _i2.User? billCreatedBy,
     required _i2.BillStatus status,
   }) : super._(
           id: id,
@@ -141,8 +141,8 @@ class _BillImpl extends Bill {
           items: items,
           total: total,
           createdAt: createdAt,
-          billById: billById,
-          billBy: billBy,
+          billCreatedById: billCreatedById,
+          billCreatedBy: billCreatedBy,
           status: status,
         );
 
@@ -155,8 +155,8 @@ class _BillImpl extends Bill {
     Object? items = _Undefined,
     double? total,
     DateTime? createdAt,
-    int? billById,
-    Object? billBy = _Undefined,
+    int? billCreatedById,
+    Object? billCreatedBy = _Undefined,
     _i2.BillStatus? status,
   }) {
     return Bill(
@@ -167,8 +167,10 @@ class _BillImpl extends Bill {
       items: items is List<_i2.BillItem>? ? items : this.items?.clone(),
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
-      billById: billById ?? this.billById,
-      billBy: billBy is _i2.User? ? billBy : this.billBy?.copyWith(),
+      billCreatedById: billCreatedById ?? this.billCreatedById,
+      billCreatedBy: billCreatedBy is _i2.User?
+          ? billCreatedBy
+          : this.billCreatedBy?.copyWith(),
       status: status ?? this.status,
     );
   }

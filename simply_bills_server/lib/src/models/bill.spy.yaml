@@ -6,5 +6,5 @@ fields:
   items: List<BillItem>?
   total: double
   createdAt: DateTime
-  billBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
+  billCreatedBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
   status: BillStatus

@@ -2,6 +2,11 @@ customerEnpoint:
   - updateToCustomerScope:
 example:
   - hello:
+faq:
+  - getCustomerFAQ:
+  - getManagerFAQ:
+  - getOfficerFAQ:
+  - getFAQ:
 managerEnpoint:
   - updateManagerScope:
   - updateOfficerScope:

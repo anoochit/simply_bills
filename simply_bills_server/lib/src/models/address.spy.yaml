@@ -1,5 +1,6 @@
 class: Address
 table: address
 fields:
+  uid: String
   address: String
   address2: String

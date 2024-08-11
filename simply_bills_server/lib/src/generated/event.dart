@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
@@ -18,8 +18,8 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
     required this.title,
     required this.startDate,
     required this.endDate,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   }) : super(id);
@@ -29,8 +29,8 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
     required String title,
     required DateTime startDate,
     required DateTime endDate,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _EventImpl;
@@ -42,11 +42,11 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
       startDate:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['startDate']),
       endDate: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['endDate']),
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -63,9 +63,9 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   DateTime endDate;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i2.UserInfo? author;
 
   DateTime createdAt;
 
@@ -79,8 +79,8 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? title,
     DateTime? startDate,
     DateTime? endDate,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i2.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -91,8 +91,8 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
       'title': title,
       'startDate': startDate.toJson(),
       'endDate': endDate.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -105,15 +105,15 @@ abstract class Event extends _i1.TableRow implements _i1.ProtocolSerialization {
       'title': title,
       'startDate': startDate.toJson(),
       'endDate': endDate.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJsonForProtocol(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJsonForProtocol(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
   }
 
-  static EventInclude include({_i2.UserInclude? createdBy}) {
-    return EventInclude._(createdBy: createdBy);
+  static EventInclude include({_i2.UserInfoInclude? author}) {
+    return EventInclude._(author: author);
   }
 
   static EventIncludeList includeList({
@@ -150,8 +150,8 @@ class _EventImpl extends Event {
     required String title,
     required DateTime startDate,
     required DateTime endDate,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -159,8 +159,8 @@ class _EventImpl extends Event {
           title: title,
           startDate: startDate,
           endDate: endDate,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -171,8 +171,8 @@ class _EventImpl extends Event {
     String? title,
     DateTime? startDate,
     DateTime? endDate,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
@@ -181,9 +181,8 @@ class _EventImpl extends Event {
       title: title ?? this.title,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i2.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );
@@ -204,8 +203,8 @@ class EventTable extends _i1.Table {
       'endDate',
       this,
     );
-    createdById = _i1.ColumnInt(
-      'createdById',
+    authorId = _i1.ColumnInt(
+      'authorId',
       this,
     );
     createdAt = _i1.ColumnDateTime(
@@ -224,25 +223,25 @@ class EventTable extends _i1.Table {
 
   late final _i1.ColumnDateTime endDate;
 
-  late final _i1.ColumnInt createdById;
+  late final _i1.ColumnInt authorId;
 
-  _i2.UserTable? _createdBy;
+  _i2.UserInfoTable? _author;
 
   late final _i1.ColumnDateTime createdAt;
 
   late final _i1.ColumnBool publish;
 
-  _i2.UserTable get createdBy {
-    if (_createdBy != null) return _createdBy!;
-    _createdBy = _i1.createRelationTable(
-      relationFieldName: 'createdBy',
-      field: Event.t.createdById,
-      foreignField: _i2.User.t.id,
+  _i2.UserInfoTable get author {
+    if (_author != null) return _author!;
+    _author = _i1.createRelationTable(
+      relationFieldName: 'author',
+      field: Event.t.authorId,
+      foreignField: _i2.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.UserTable(tableRelation: foreignTableRelation),
+          _i2.UserInfoTable(tableRelation: foreignTableRelation),
     );
-    return _createdBy!;
+    return _author!;
   }
 
   @override
@@ -251,29 +250,29 @@ class EventTable extends _i1.Table {
         title,
         startDate,
         endDate,
-        createdById,
+        authorId,
         createdAt,
         publish,
       ];
 
   @override
   _i1.Table? getRelationTable(String relationField) {
-    if (relationField == 'createdBy') {
-      return createdBy;
+    if (relationField == 'author') {
+      return author;
     }
     return null;
   }
 }
 
 class EventInclude extends _i1.IncludeObject {
-  EventInclude._({_i2.UserInclude? createdBy}) {
-    _createdBy = createdBy;
+  EventInclude._({_i2.UserInfoInclude? author}) {
+    _author = author;
   }
 
-  _i2.UserInclude? _createdBy;
+  _i2.UserInfoInclude? _author;
 
   @override
-  Map<String, _i1.Include?> get includes => {'createdBy': _createdBy};
+  Map<String, _i1.Include?> get includes => {'author': _author};
 
   @override
   _i1.Table get table => Event.t;
@@ -459,22 +458,22 @@ class EventRepository {
 class EventAttachRowRepository {
   const EventAttachRowRepository._();
 
-  Future<void> createdBy(
+  Future<void> author(
     _i1.Session session,
     Event event,
-    _i2.User createdBy,
+    _i2.UserInfo author,
   ) async {
     if (event.id == null) {
       throw ArgumentError.notNull('event.id');
     }
-    if (createdBy.id == null) {
-      throw ArgumentError.notNull('createdBy.id');
+    if (author.id == null) {
+      throw ArgumentError.notNull('author.id');
     }
 
-    var $event = event.copyWith(createdById: createdBy.id);
+    var $event = event.copyWith(authorId: author.id);
     await session.db.updateRow<Event>(
       $event,
-      columns: [Event.t.createdById],
+      columns: [Event.t.authorId],
     );
   }
 }

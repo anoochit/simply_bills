@@ -22,10 +22,12 @@ class ManagerEnpoint extends Endpoint {
   @override
   Set<Scope> get requiredScopes => {UserScope.manager};
 
+  /// update to manager scope
   Future<UserInfo?> updateManagerScope(Session session, int userId) async {
     return await Users.updateUserScopes(session, userId, {UserScope.manager});
   }
 
+  /// update officer scope
   Future<UserInfo?> updateOfficerScope(Session session, int userId) async {
     return await Users.updateUserScopes(session, userId, {UserScope.officer});
   }

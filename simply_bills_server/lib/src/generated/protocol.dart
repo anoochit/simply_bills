@@ -25,6 +25,7 @@ import 'product.dart' as _i13;
 import 'user.dart' as _i14;
 import 'user_scope.dart' as _i15;
 import 'protocol.dart' as _i16;
+import 'package:simply_bills_server/src/generated/faq.dart' as _i17;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
@@ -58,6 +59,12 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'address_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'uid',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
         ),
         _i2.ColumnDefinition(
           name: 'address',
@@ -151,7 +158,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
-          name: 'billById',
+          name: 'billCreatedById',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -176,7 +183,7 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'bill_fk_1',
-          columns: ['billById'],
+          columns: ['billCreatedById'],
           referenceTable: 'user',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -301,7 +308,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
-          name: 'createdById',
+          name: 'authorId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -322,8 +329,8 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'event_fk_0',
-          columns: ['createdById'],
-          referenceTable: 'user',
+          columns: ['authorId'],
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
@@ -380,7 +387,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'protocol:FaqType',
         ),
         _i2.ColumnDefinition(
-          name: 'createdById',
+          name: 'authorId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -401,8 +408,8 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'faq_fk_0',
-          columns: ['createdById'],
-          referenceTable: 'user',
+          columns: ['authorId'],
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
@@ -447,7 +454,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'createdById',
+          name: 'authorId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -468,11 +475,11 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'post_fk_0',
-          columns: ['createdById'],
-          referenceTable: 'user',
+          columns: ['authorId'],
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
+          onUpdate: _i2.ForeignKeyAction.setNull,
           onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         )
@@ -715,6 +722,10 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data != null
           ? (data as List).map((e) => deserialize<_i16.Address>(e)).toList()
           : null) as dynamic;
+    }
+    if (t == List<_i17.Faq>) {
+      return (data as List).map((e) => deserialize<_i17.Faq>(e)).toList()
+          as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);

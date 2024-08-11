@@ -11,7 +11,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
-import 'protocol.dart' as _i4;
+import 'package:simply_bills_client/src/protocol/faq.dart' as _i4;
+import 'protocol.dart' as _i5;
 
 /// {@category Endpoint}
 class EndpointCustomerEnpoint extends _i1.EndpointRef {
@@ -43,12 +44,53 @@ class EndpointExample extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointFaq extends _i1.EndpointRef {
+  EndpointFaq(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'faq';
+
+  /// get customer faq
+  _i2.Future<List<_i4.Faq>> getCustomerFAQ() =>
+      caller.callServerEndpoint<List<_i4.Faq>>(
+        'faq',
+        'getCustomerFAQ',
+        {},
+      );
+
+  /// get manager faq
+  _i2.Future<List<_i4.Faq>> getManagerFAQ() =>
+      caller.callServerEndpoint<List<_i4.Faq>>(
+        'faq',
+        'getManagerFAQ',
+        {},
+      );
+
+  /// get officer faq
+  _i2.Future<List<_i4.Faq>> getOfficerFAQ() =>
+      caller.callServerEndpoint<List<_i4.Faq>>(
+        'faq',
+        'getOfficerFAQ',
+        {},
+      );
+
+  /// get all faq
+  _i2.Future<List<_i4.Faq>> getFAQ() =>
+      caller.callServerEndpoint<List<_i4.Faq>>(
+        'faq',
+        'getFAQ',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointManagerEnpoint extends _i1.EndpointRef {
   EndpointManagerEnpoint(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'managerEnpoint';
 
+  /// update to manager scope
   _i2.Future<_i3.UserInfo?> updateManagerScope(int userId) =>
       caller.callServerEndpoint<_i3.UserInfo?>(
         'managerEnpoint',
@@ -56,6 +98,7 @@ class EndpointManagerEnpoint extends _i1.EndpointRef {
         {'userId': userId},
       );
 
+  /// update officer scope
   _i2.Future<_i3.UserInfo?> updateOfficerScope(int userId) =>
       caller.callServerEndpoint<_i3.UserInfo?>(
         'managerEnpoint',
@@ -95,7 +138,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i4.Protocol(),
+          _i5.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -105,6 +148,7 @@ class Client extends _i1.ServerpodClient {
         ) {
     customerEnpoint = EndpointCustomerEnpoint(this);
     example = EndpointExample(this);
+    faq = EndpointFaq(this);
     managerEnpoint = EndpointManagerEnpoint(this);
     officerEnpoint = EndpointOfficerEnpoint(this);
     modules = _Modules(this);
@@ -113,6 +157,8 @@ class Client extends _i1.ServerpodClient {
   late final EndpointCustomerEnpoint customerEnpoint;
 
   late final EndpointExample example;
+
+  late final EndpointFaq faq;
 
   late final EndpointManagerEnpoint managerEnpoint;
 
@@ -124,6 +170,7 @@ class Client extends _i1.ServerpodClient {
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'customerEnpoint': customerEnpoint,
         'example': example,
+        'faq': faq,
         'managerEnpoint': managerEnpoint,
         'officerEnpoint': officerEnpoint,
       };

@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 
 abstract class Faq implements _i1.SerializableModel {
   Faq._({
@@ -17,8 +18,8 @@ abstract class Faq implements _i1.SerializableModel {
     required this.question,
     required this.answer,
     required this.type,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   });
@@ -28,8 +29,8 @@ abstract class Faq implements _i1.SerializableModel {
     required String question,
     required String answer,
     required _i2.FaqType type,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i3.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _FaqImpl;
@@ -40,11 +41,11 @@ abstract class Faq implements _i1.SerializableModel {
       question: jsonSerialization['question'] as String,
       answer: jsonSerialization['answer'] as String,
       type: _i2.FaqType.fromJson((jsonSerialization['type'] as String)),
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i3.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -62,9 +63,9 @@ abstract class Faq implements _i1.SerializableModel {
 
   _i2.FaqType type;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i3.UserInfo? author;
 
   DateTime createdAt;
 
@@ -75,8 +76,8 @@ abstract class Faq implements _i1.SerializableModel {
     String? question,
     String? answer,
     _i2.FaqType? type,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i3.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -87,8 +88,8 @@ abstract class Faq implements _i1.SerializableModel {
       'question': question,
       'answer': answer,
       'type': type.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -108,8 +109,8 @@ class _FaqImpl extends Faq {
     required String question,
     required String answer,
     required _i2.FaqType type,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i3.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -117,8 +118,8 @@ class _FaqImpl extends Faq {
           question: question,
           answer: answer,
           type: type,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -129,8 +130,8 @@ class _FaqImpl extends Faq {
     String? question,
     String? answer,
     _i2.FaqType? type,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
@@ -139,9 +140,8 @@ class _FaqImpl extends Faq {
       question: question ?? this.question,
       answer: answer ?? this.answer,
       type: type ?? this.type,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i3.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );

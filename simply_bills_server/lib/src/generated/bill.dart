@@ -21,8 +21,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
     this.items,
     required this.total,
     required this.createdAt,
-    required this.billById,
-    this.billBy,
+    required this.billCreatedById,
+    this.billCreatedBy,
     required this.status,
   }) : super(id);
 
@@ -34,8 +34,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
     List<_i2.BillItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billById,
-    _i2.User? billBy,
+    required int billCreatedById,
+    _i2.User? billCreatedBy,
     required _i2.BillStatus status,
   }) = _BillImpl;
 
@@ -54,11 +54,11 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
       total: (jsonSerialization['total'] as num).toDouble(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      billById: jsonSerialization['billById'] as int,
-      billBy: jsonSerialization['billBy'] == null
+      billCreatedById: jsonSerialization['billCreatedById'] as int,
+      billCreatedBy: jsonSerialization['billCreatedBy'] == null
           ? null
           : _i2.User.fromJson(
-              (jsonSerialization['billBy'] as Map<String, dynamic>)),
+              (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
       status: _i2.BillStatus.fromJson((jsonSerialization['status'] as String)),
     );
   }
@@ -79,9 +79,9 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   DateTime createdAt;
 
-  int billById;
+  int billCreatedById;
 
-  _i2.User? billBy;
+  _i2.User? billCreatedBy;
 
   _i2.BillStatus status;
 
@@ -96,8 +96,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
     List<_i2.BillItem>? items,
     double? total,
     DateTime? createdAt,
-    int? billById,
-    _i2.User? billBy,
+    int? billCreatedById,
+    _i2.User? billCreatedBy,
     _i2.BillStatus? status,
   });
   @override
@@ -110,8 +110,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
       if (items != null) 'items': items?.toJson(valueToJson: (v) => v.toJson()),
       'total': total,
       'createdAt': createdAt.toJson(),
-      'billById': billById,
-      if (billBy != null) 'billBy': billBy?.toJson(),
+      'billCreatedById': billCreatedById,
+      if (billCreatedBy != null) 'billCreatedBy': billCreatedBy?.toJson(),
       'status': status.toJson(),
     };
   }
@@ -127,19 +127,20 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
         'items': items?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'total': total,
       'createdAt': createdAt.toJson(),
-      'billById': billById,
-      if (billBy != null) 'billBy': billBy?.toJsonForProtocol(),
+      'billCreatedById': billCreatedById,
+      if (billCreatedBy != null)
+        'billCreatedBy': billCreatedBy?.toJsonForProtocol(),
       'status': status.toJson(),
     };
   }
 
   static BillInclude include({
     _i2.UserInclude? billTo,
-    _i2.UserInclude? billBy,
+    _i2.UserInclude? billCreatedBy,
   }) {
     return BillInclude._(
       billTo: billTo,
-      billBy: billBy,
+      billCreatedBy: billCreatedBy,
     );
   }
 
@@ -180,8 +181,8 @@ class _BillImpl extends Bill {
     List<_i2.BillItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billById,
-    _i2.User? billBy,
+    required int billCreatedById,
+    _i2.User? billCreatedBy,
     required _i2.BillStatus status,
   }) : super._(
           id: id,
@@ -191,8 +192,8 @@ class _BillImpl extends Bill {
           items: items,
           total: total,
           createdAt: createdAt,
-          billById: billById,
-          billBy: billBy,
+          billCreatedById: billCreatedById,
+          billCreatedBy: billCreatedBy,
           status: status,
         );
 
@@ -205,8 +206,8 @@ class _BillImpl extends Bill {
     Object? items = _Undefined,
     double? total,
     DateTime? createdAt,
-    int? billById,
-    Object? billBy = _Undefined,
+    int? billCreatedById,
+    Object? billCreatedBy = _Undefined,
     _i2.BillStatus? status,
   }) {
     return Bill(
@@ -217,8 +218,10 @@ class _BillImpl extends Bill {
       items: items is List<_i2.BillItem>? ? items : this.items?.clone(),
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
-      billById: billById ?? this.billById,
-      billBy: billBy is _i2.User? ? billBy : this.billBy?.copyWith(),
+      billCreatedById: billCreatedById ?? this.billCreatedById,
+      billCreatedBy: billCreatedBy is _i2.User?
+          ? billCreatedBy
+          : this.billCreatedBy?.copyWith(),
       status: status ?? this.status,
     );
   }
@@ -246,8 +249,8 @@ class BillTable extends _i1.Table {
       'createdAt',
       this,
     );
-    billById = _i1.ColumnInt(
-      'billById',
+    billCreatedById = _i1.ColumnInt(
+      'billCreatedById',
       this,
     );
     status = _i1.ColumnEnum(
@@ -269,9 +272,9 @@ class BillTable extends _i1.Table {
 
   late final _i1.ColumnDateTime createdAt;
 
-  late final _i1.ColumnInt billById;
+  late final _i1.ColumnInt billCreatedById;
 
-  _i2.UserTable? _billBy;
+  _i2.UserTable? _billCreatedBy;
 
   late final _i1.ColumnEnum<_i2.BillStatus> status;
 
@@ -288,17 +291,17 @@ class BillTable extends _i1.Table {
     return _billTo!;
   }
 
-  _i2.UserTable get billBy {
-    if (_billBy != null) return _billBy!;
-    _billBy = _i1.createRelationTable(
-      relationFieldName: 'billBy',
-      field: Bill.t.billById,
+  _i2.UserTable get billCreatedBy {
+    if (_billCreatedBy != null) return _billCreatedBy!;
+    _billCreatedBy = _i1.createRelationTable(
+      relationFieldName: 'billCreatedBy',
+      field: Bill.t.billCreatedById,
       foreignField: _i2.User.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
           _i2.UserTable(tableRelation: foreignTableRelation),
     );
-    return _billBy!;
+    return _billCreatedBy!;
   }
 
   @override
@@ -309,7 +312,7 @@ class BillTable extends _i1.Table {
         items,
         total,
         createdAt,
-        billById,
+        billCreatedById,
         status,
       ];
 
@@ -318,8 +321,8 @@ class BillTable extends _i1.Table {
     if (relationField == 'billTo') {
       return billTo;
     }
-    if (relationField == 'billBy') {
-      return billBy;
+    if (relationField == 'billCreatedBy') {
+      return billCreatedBy;
     }
     return null;
   }
@@ -328,20 +331,20 @@ class BillTable extends _i1.Table {
 class BillInclude extends _i1.IncludeObject {
   BillInclude._({
     _i2.UserInclude? billTo,
-    _i2.UserInclude? billBy,
+    _i2.UserInclude? billCreatedBy,
   }) {
     _billTo = billTo;
-    _billBy = billBy;
+    _billCreatedBy = billCreatedBy;
   }
 
   _i2.UserInclude? _billTo;
 
-  _i2.UserInclude? _billBy;
+  _i2.UserInclude? _billCreatedBy;
 
   @override
   Map<String, _i1.Include?> get includes => {
         'billTo': _billTo,
-        'billBy': _billBy,
+        'billCreatedBy': _billCreatedBy,
       };
 
   @override
@@ -547,22 +550,22 @@ class BillAttachRowRepository {
     );
   }
 
-  Future<void> billBy(
+  Future<void> billCreatedBy(
     _i1.Session session,
     Bill bill,
-    _i2.User billBy,
+    _i2.User billCreatedBy,
   ) async {
     if (bill.id == null) {
       throw ArgumentError.notNull('bill.id');
     }
-    if (billBy.id == null) {
-      throw ArgumentError.notNull('billBy.id');
+    if (billCreatedBy.id == null) {
+      throw ArgumentError.notNull('billCreatedBy.id');
     }
 
-    var $bill = bill.copyWith(billById: billBy.id);
+    var $bill = bill.copyWith(billCreatedById: billCreatedBy.id);
     await session.db.updateRow<Bill>(
       $bill,
-      columns: [Bill.t.billById],
+      columns: [Bill.t.billCreatedById],
     );
   }
 }

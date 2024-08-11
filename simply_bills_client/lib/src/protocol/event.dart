@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 
 abstract class Event implements _i1.SerializableModel {
   Event._({
@@ -17,8 +17,8 @@ abstract class Event implements _i1.SerializableModel {
     required this.title,
     required this.startDate,
     required this.endDate,
-    required this.createdById,
-    this.createdBy,
+    required this.authorId,
+    this.author,
     required this.createdAt,
     required this.publish,
   });
@@ -28,8 +28,8 @@ abstract class Event implements _i1.SerializableModel {
     required String title,
     required DateTime startDate,
     required DateTime endDate,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) = _EventImpl;
@@ -41,11 +41,11 @@ abstract class Event implements _i1.SerializableModel {
       startDate:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['startDate']),
       endDate: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['endDate']),
-      createdById: jsonSerialization['createdById'] as int,
-      createdBy: jsonSerialization['createdBy'] == null
+      authorId: jsonSerialization['authorId'] as int,
+      author: jsonSerialization['author'] == null
           ? null
-          : _i2.User.fromJson(
-              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       publish: jsonSerialization['publish'] as bool,
@@ -63,9 +63,9 @@ abstract class Event implements _i1.SerializableModel {
 
   DateTime endDate;
 
-  int createdById;
+  int authorId;
 
-  _i2.User? createdBy;
+  _i2.UserInfo? author;
 
   DateTime createdAt;
 
@@ -76,8 +76,8 @@ abstract class Event implements _i1.SerializableModel {
     String? title,
     DateTime? startDate,
     DateTime? endDate,
-    int? createdById,
-    _i2.User? createdBy,
+    int? authorId,
+    _i2.UserInfo? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -88,8 +88,8 @@ abstract class Event implements _i1.SerializableModel {
       'title': title,
       'startDate': startDate.toJson(),
       'endDate': endDate.toJson(),
-      'createdById': createdById,
-      if (createdBy != null) 'createdBy': createdBy?.toJson(),
+      'authorId': authorId,
+      if (author != null) 'author': author?.toJson(),
       'createdAt': createdAt.toJson(),
       'publish': publish,
     };
@@ -109,8 +109,8 @@ class _EventImpl extends Event {
     required String title,
     required DateTime startDate,
     required DateTime endDate,
-    required int createdById,
-    _i2.User? createdBy,
+    required int authorId,
+    _i2.UserInfo? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -118,8 +118,8 @@ class _EventImpl extends Event {
           title: title,
           startDate: startDate,
           endDate: endDate,
-          createdById: createdById,
-          createdBy: createdBy,
+          authorId: authorId,
+          author: author,
           createdAt: createdAt,
           publish: publish,
         );
@@ -130,8 +130,8 @@ class _EventImpl extends Event {
     String? title,
     DateTime? startDate,
     DateTime? endDate,
-    int? createdById,
-    Object? createdBy = _Undefined,
+    int? authorId,
+    Object? author = _Undefined,
     DateTime? createdAt,
     bool? publish,
   }) {
@@ -140,9 +140,8 @@ class _EventImpl extends Event {
       title: title ?? this.title,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
-      createdById: createdById ?? this.createdById,
-      createdBy:
-          createdBy is _i2.User? ? createdBy : this.createdBy?.copyWith(),
+      authorId: authorId ?? this.authorId,
+      author: author is _i2.UserInfo? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );

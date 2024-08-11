@@ -45,7 +45,7 @@ class ServerPodService extends GetxService {
     super.onInit();
   }
 
-  /// Email and password  sign in with specific user's scope
+  /// sign in with email and password
   Future<UserInfo?> signInWithEmailPassword(
       {required String email,
       required String password,
@@ -69,6 +69,7 @@ class ServerPodService extends GetxService {
     }
   }
 
+  /// signup with email and password
   Future<bool> signUpWithEmailPassword(
       {required String name,
       required String email,
@@ -88,7 +89,9 @@ class ServerPodService extends GetxService {
     return userInfo;
   }
 
-  bool isSignIn() {
-    return sessionManager.isSignedIn;
+  // --- customer features ---
+
+  Future<List<Faq>> getFAQ() async {
+    return await client.faq.getCustomerFAQ();
   }
 }
