@@ -9,6 +9,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
+  flutter_gravatar: ^2.0.2
   gap: ^3.0.1
   get: 4.6.6
   google_fonts: ^6.2.1

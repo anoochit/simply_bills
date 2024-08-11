@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
 import '../../../data/data/bottom_nav.dart';
 import '../controllers/home_controller.dart';
 import 'bills_body_view.dart';
@@ -15,7 +14,9 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Obx(
+          () => Text(navItems[controller.navIndex.value].title),
+        ),
         surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,

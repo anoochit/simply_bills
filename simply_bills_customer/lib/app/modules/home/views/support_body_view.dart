@@ -11,20 +11,22 @@ class SupportBodyView extends GetView {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'SupportBodyView is working',
             style: TextStyle(fontSize: 20),
           ),
           FilledButton(
-              onPressed: () {
-                final authService = Get.find<ServerPodService>();
+            onPressed: () {
+              final authService = Get.find<ServerPodService>();
 
-                authService.sessionManager
-                    .signOut()
-                    .then((v) => Get.offAllNamed(Routes.SIGNIN));
-              },
-              child: const Text('Signout'))
+              authService.sessionManager
+                  .signOut()
+                  .then((v) => Get.offAllNamed(Routes.SIGNIN));
+            },
+            child: const Text('Signout'),
+          )
         ],
       ),
     );

@@ -11,6 +11,8 @@ class ServerPodService extends GetxService {
   late SessionManager sessionManager;
   late Client client;
 
+  late UserInfo? userInfo;
+
   // initial serverpod client
   Future<void> initServerPodClient() async {
     /// serverpod client
@@ -26,8 +28,10 @@ class ServerPodService extends GetxService {
     sessionManager.addListener(() {
       if (sessionManager.isSignedIn) {
         log('user signed in ');
+        userInfo = sessionManager.signedInUser;
       } else {
         log('user signed out ');
+        userInfo = null;
       }
     });
 
