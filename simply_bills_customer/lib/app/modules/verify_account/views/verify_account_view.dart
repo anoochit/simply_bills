@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_customer/app/modules/verify_account/views/email_verify_view.dart';
 
 import '../controllers/verify_account_controller.dart';
+import 'email_verify_view.dart';
 
 class VerifyAccountView extends GetView<VerifyAccountController> {
   const VerifyAccountView({super.key});

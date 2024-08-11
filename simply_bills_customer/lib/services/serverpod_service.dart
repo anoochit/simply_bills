@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
@@ -11,13 +13,25 @@ class ServerPodService extends GetxService {
 
   // initial serverpod client
   Future<void> initServerPodClient() async {
+    /// serverpod client
     client = Client(
       'http://$localhost:8080/',
       authenticationKeyManager: FlutterAuthenticationKeyManager(),
     )..connectivityMonitor = FlutterConnectivityMonitor();
 
+    /// serverpod session manager
     sessionManager = SessionManager(caller: client.modules.auth);
 
+    // session manager listener
+    sessionManager.addListener(() {
+      if (sessionManager.isSignedIn) {
+        log('user signed in ');
+      } else {
+        log('user signed out ');
+      }
+    });
+
+    // session manager init
     await sessionManager.initialize();
   }
 
@@ -27,14 +41,27 @@ class ServerPodService extends GetxService {
     super.onInit();
   }
 
+  /// Email and password  sign in with specific user's scope
   Future<UserInfo?> signInWithEmailPassword(
-      {required String email, required String password}) async {
+      {required String email,
+      required String password,
+      required String scope}) async {
     final authController = EmailAuthController(client.modules.auth);
 
-    try {
-      return await authController.signIn(email, password);
-    } catch (e) {
-      throw ('$e');
+    // signin
+    final result = await authController.signIn(email, password);
+    if (result != null) {
+      // check user scope
+      String scopeExist = result.scopeNames
+          .firstWhere((p) => (p.contains(scope)), orElse: () => '');
+      if (scopeExist.isNotEmpty) {
+        return result;
+      } else {
+        await sessionManager.signOut();
+        return null;
+      }
+    } else {
+      return null;
     }
   }
 
@@ -44,25 +71,17 @@ class ServerPodService extends GetxService {
       required String password}) async {
     final authController = EmailAuthController(client.modules.auth);
 
-    try {
-      return await authController.createAccountRequest(name, email, password);
-    } catch (e) {
-      throw ('$e');
-    }
+    return await authController.createAccountRequest(name, email, password);
   }
 
   Future<UserInfo?> verifyAccount(
       {required String email, required String verificationCode}) async {
     final authController = EmailAuthController(client.modules.auth);
 
-    try {
-      final userInfo =
-          await authController.validateAccount(email, verificationCode);
+    final userInfo =
+        await authController.validateAccount(email, verificationCode);
 
-      return userInfo;
-    } catch (e) {
-      throw ('$e');
-    }
+    return userInfo;
   }
 
   bool isSignIn() {

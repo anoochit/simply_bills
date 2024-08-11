@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:simply_bills_client/simply_bills_client.dart';
 import 'package:validation_pro/validate.dart';
 
 import '../../../../services/serverpod_service.dart';
@@ -76,8 +77,9 @@ class EmailSigninView extends GetView {
                   final result = await authService.signInWithEmailPassword(
                     email: _emailController.text,
                     password: _passwordController.text,
+                    scope: UserScope.customer.name,
                   );
-
+                  // check signed in result
                   if (result != null) {
                     log('signed in as = ${result.email}');
                     Get.offAllNamed(Routes.HOME);

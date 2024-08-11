@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:simply_bills_client/simply_bills_client.dart';
 
 import '../../../../services/serverpod_service.dart';
 import '../../../routes/app_pages.dart';
@@ -58,8 +59,9 @@ class EmailVerifyView extends GetView {
                       final result = await authService.signInWithEmailPassword(
                         email: email!,
                         password: password!,
+                        scope: UserScope.customer.name,
                       );
-
+                      // check user result
                       if (result != null) {
                         await authService.client.customerEnpoint
                             .updateToCustomerScope();

@@ -27,7 +27,7 @@ class CustomerEnpoint extends Endpoint {
 class UserScope extends Scope {
   const UserScope(String super.name);
 
-  static const customer = UserScope('bills.customer');
-  static const manager = UserScope('bills.manager');
-  static const officer = UserScope('bills.officer');
+  static const customer = UserScope('customer');
+  static const manager = UserScope('manager');
+  static const officer = UserScope('officer');
 }

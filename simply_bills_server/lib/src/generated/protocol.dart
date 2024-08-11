@@ -23,7 +23,8 @@ import 'faq_type.dart' as _i11;
 import 'post.dart' as _i12;
 import 'product.dart' as _i13;
 import 'user.dart' as _i14;
-import 'protocol.dart' as _i15;
+import 'user_scope.dart' as _i15;
+import 'protocol.dart' as _i16;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
@@ -35,6 +36,7 @@ export 'faq_type.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
+export 'user_scope.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -665,6 +667,9 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i14.User) {
       return _i14.User.fromJson(data) as T;
     }
+    if (t == _i15.UserScope) {
+      return _i15.UserScope.fromJson(data) as T;
+    }
     if (t == _i1.getType<_i4.Address?>()) {
       return (data != null ? _i4.Address.fromJson(data) : null) as T;
     }
@@ -698,14 +703,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i14.User?>()) {
       return (data != null ? _i14.User.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i15.BillItem>?>()) {
+    if (t == _i1.getType<_i15.UserScope?>()) {
+      return (data != null ? _i15.UserScope.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i16.BillItem>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i15.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.BillItem>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i15.Address>?>()) {
+    if (t == _i1.getType<List<_i16.Address>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i15.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.Address>(e)).toList()
           : null) as dynamic;
     }
     try {
@@ -757,6 +765,9 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i14.User) {
       return 'User';
     }
+    if (data is _i15.UserScope) {
+      return 'UserScope';
+    }
     return super.getClassNameForObject(data);
   }
 
@@ -798,6 +809,9 @@ class Protocol extends _i1.SerializationManagerServer {
     }
     if (data['className'] == 'User') {
       return deserialize<_i14.User>(data['data']);
+    }
+    if (data['className'] == 'UserScope') {
+      return deserialize<_i15.UserScope>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

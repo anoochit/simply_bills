@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_customer/app/modules/signin/views/email_signin_view.dart';
 import '../controllers/signin_controller.dart';
+import 'email_signin_view.dart';
 
 class SigninView extends GetView<SigninController> {
   const SigninView({super.key});

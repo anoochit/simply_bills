@@ -21,8 +21,9 @@ import 'faq_type.dart' as _i9;
 import 'post.dart' as _i10;
 import 'product.dart' as _i11;
 import 'user.dart' as _i12;
-import 'protocol.dart' as _i13;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
+import 'user_scope.dart' as _i13;
+import 'protocol.dart' as _i14;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
@@ -34,6 +35,7 @@ export 'faq_type.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
+export 'user_scope.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -82,6 +84,9 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i12.User) {
       return _i12.User.fromJson(data) as T;
     }
+    if (t == _i13.UserScope) {
+      return _i13.UserScope.fromJson(data) as T;
+    }
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data) : null) as T;
     }
@@ -115,18 +120,21 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i12.User?>()) {
       return (data != null ? _i12.User.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i13.BillItem>?>()) {
+    if (t == _i1.getType<_i13.UserScope?>()) {
+      return (data != null ? _i13.UserScope.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i14.BillItem>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i14.BillItem>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i13.Address>?>()) {
+    if (t == _i1.getType<List<_i14.Address>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i14.Address>(e)).toList()
           : null) as dynamic;
     }
     try {
-      return _i14.Protocol().deserialize<T>(data, t);
+      return _i15.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -134,7 +142,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i14.Protocol().getClassNameForObject(data);
+    className = _i15.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -171,6 +179,9 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i12.User) {
       return 'User';
     }
+    if (data is _i13.UserScope) {
+      return 'UserScope';
+    }
     return super.getClassNameForObject(data);
   }
 
@@ -178,7 +189,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i14.Protocol().deserializeByClassName(data);
+      return _i15.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i2.Address>(data['data']);
@@ -212,6 +223,9 @@ class Protocol extends _i1.SerializationManager {
     }
     if (data['className'] == 'User') {
       return deserialize<_i12.User>(data['data']);
+    }
+    if (data['className'] == 'UserScope') {
+      return deserialize<_i13.UserScope>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
