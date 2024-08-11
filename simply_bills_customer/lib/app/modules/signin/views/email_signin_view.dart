@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
 import 'package:validation_pro/validate.dart';
 
-import '../../../../services/serverpod_service.dart';
+import '../../../../controllers/serverpod_controller.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailSigninView extends GetView {
+class EmailSigninView extends GetView<ServerPodController> {
   EmailSigninView({
     super.key,
   });
@@ -21,9 +21,7 @@ class EmailSigninView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final serverpod = Get.find<ServerPodService>();
-
-    log('is signed in = ${serverpod.sessionManager.isSignedIn}');
+    log('is signed in = ${controller.sessionManager.isSignedIn}');
 
     return SizedBox(
       width: 360,
@@ -73,8 +71,7 @@ class EmailSigninView extends GetView {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   // signins
-                  final authService = Get.find<ServerPodService>();
-                  final result = await authService.signInWithEmailPassword(
+                  final result = await controller.signInWithEmailPassword(
                     email: _emailController.text,
                     password: _passwordController.text,
                     scope: UserScope.customer.name,

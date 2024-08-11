@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_customer/services/serverpod_service.dart';
 import 'package:validation_pro/validate.dart';
 
+import '../../../../controllers/serverpod_controller.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailSignupView extends GetView {
+class EmailSignupView extends GetView<ServerPodController> {
   EmailSignupView({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -81,8 +81,7 @@ class EmailSignupView extends GetView {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   // signins
-                  final authService = Get.find<ServerPodService>();
-                  final result = await authService.signUpWithEmailPassword(
+                  final result = await controller.signUpWithEmailPassword(
                     name: _nameController.text,
                     email: _emailController.text,
                     password: _passwordController.text,

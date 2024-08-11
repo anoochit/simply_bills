@@ -79,8 +79,9 @@ Future<void> initData(Serverpod pod) async {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question ${i + 1}',
-            answer: 'Answer ${i + 1}',
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.customer,
             authorId: 5,
             createdAt: DateTime.now(),
@@ -92,8 +93,9 @@ Future<void> initData(Serverpod pod) async {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question ${i + 1}',
-            answer: 'Answer ${i + 1}',
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.officer,
             authorId: 5,
             createdAt: DateTime.now(),
@@ -106,8 +108,9 @@ Future<void> initData(Serverpod pod) async {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question ${i + 1}',
-            answer: 'Answer ${i + 1}',
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.manager,
             authorId: 5,
             createdAt: DateTime.now(),

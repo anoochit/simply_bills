@@ -4,10 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
 
-import '../../../../services/serverpod_service.dart';
+import '../../../../controllers/serverpod_controller.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailVerifyView extends GetView {
+class EmailVerifyView extends GetView<ServerPodController> {
   EmailVerifyView({super.key, this.email, this.password});
 
   final String? email;
@@ -46,9 +46,8 @@ class EmailVerifyView extends GetView {
                 // button
                 FilledButton(
                   onPressed: () async {
-                    final authService = Get.find<ServerPodService>();
                     // verify
-                    final verifyResult = await authService.verifyAccount(
+                    final verifyResult = await controller.verifyAccount(
                       email: email!,
                       verificationCode: _verificationCodeController.text,
                     );
@@ -56,14 +55,14 @@ class EmailVerifyView extends GetView {
                     // if pass
                     if (verifyResult != null) {
                       // signin and update user scope
-                      final result = await authService.signInWithEmailPassword(
+                      final result = await controller.signInWithEmailPassword(
                         email: email!,
                         password: password!,
                         scope: UserScope.customer.name,
                       );
                       // check user result
                       if (result != null) {
-                        await authService.client.customerEnpoint
+                        await controller.client.customerEnpoint
                             .updateToCustomerScope();
                         Get.snackbar('Info', 'Account created!');
                         Get.offAllNamed(Routes.HOME);

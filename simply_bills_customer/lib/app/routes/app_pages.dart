@@ -21,12 +21,13 @@ class AppPages {
 
   static final routes = [
     GetPage(
-        name: _Paths.HOME,
-        page: () => const HomeView(),
-        binding: HomeBinding(),
-        middlewares: [
-          RouteGuard(),
-        ]),
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+      middlewares: [
+        RouteGuard(),
+      ],
+    ),
     GetPage(
       name: _Paths.SIGNIN,
       page: () => const SigninView(),
