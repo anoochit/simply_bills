@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_client/simply_bills_client.dart';
 
 import '../../../../controllers/serverpod_controller.dart';
 import '../../../routes/app_pages.dart';
@@ -63,7 +62,7 @@ class EmailVerifyView extends GetView<ServerPodController> {
                       if (user != null) {
                         await controller.client.customerEnpoint
                             .updateToCustomerScope();
-                        Get.snackbar('Info', 'Account created!');
+                        Get.snackbar('Info', 'Verified account!');
                         Get.offAllNamed(Routes.HOME);
                       } else {
                         Get.snackbar(
