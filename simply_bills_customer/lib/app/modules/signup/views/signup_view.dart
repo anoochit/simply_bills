@@ -14,6 +14,8 @@ class SignupView extends GetView<SignupController> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('SignUp'),
+          surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           centerTitle: true,
         ),
         body: Center(

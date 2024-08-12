@@ -16,6 +16,8 @@ class VerifyAccountView extends GetView<VerifyAccountController> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Verify Account'),
+          surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           centerTitle: true,
         ),
         body: Center(

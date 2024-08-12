@@ -14,6 +14,8 @@ class SigninView extends GetView<SigninController> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('SignIn'),
+          surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           centerTitle: true,
         ),
         body: Center(
