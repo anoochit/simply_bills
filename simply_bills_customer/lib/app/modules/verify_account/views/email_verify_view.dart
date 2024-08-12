@@ -55,17 +55,20 @@ class EmailVerifyView extends GetView<ServerPodController> {
                     // if pass
                     if (verifyResult != null) {
                       // signin and update user scope
-                      final result = await controller.signInWithEmailPassword(
+                      final user = await controller.signInWithEmailPassword(
                         email: email!,
                         password: password!,
-                        scope: UserScope.customer.name,
                       );
                       // check user result update user scope
-                      if (result != null) {
+                      if (user != null) {
                         await controller.client.customerEnpoint
                             .updateToCustomerScope();
                         Get.snackbar('Info', 'Account created!');
                         Get.offAllNamed(Routes.HOME);
+                      } else {
+                        Get.snackbar(
+                            'Error', 'Cannot signin and update account!');
+                        Get.offAllNamed(Routes.SIGNUP);
                       }
                     } else {
                       Get.snackbar('Error', 'Cannot verify account!');

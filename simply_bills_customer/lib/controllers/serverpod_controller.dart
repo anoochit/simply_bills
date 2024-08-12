@@ -55,22 +55,24 @@ class ServerPodController extends GetxController {
 
   /// sign in with email and password
   Future<UserInfo?> signInWithEmailPassword(
-      {required String email,
-      required String password,
-      required String scope}) async {
+      {required String email, required String password, String? scope}) async {
     final authController = EmailAuthController(client.modules.auth);
 
     // signin
     final result = await authController.signIn(email, password);
     if (result != null) {
       // check user scope
-      String scopeExist = result.scopeNames
-          .firstWhere((p) => (p.contains(scope)), orElse: () => '');
-      if (scopeExist.isNotEmpty) {
-        return result;
+      if (scope != null) {
+        String scopeExist = result.scopeNames
+            .firstWhere((p) => (p.contains(scope)), orElse: () => '');
+        if (scopeExist.isNotEmpty) {
+          return result;
+        } else {
+          await sessionManager.signOut();
+          return null;
+        }
       } else {
-        await sessionManager.signOut();
-        return null;
+        return result;
       }
     } else {
       return null;
