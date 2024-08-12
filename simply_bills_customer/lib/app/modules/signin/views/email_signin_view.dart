@@ -7,10 +7,11 @@ import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
 import 'package:validation_pro/validate.dart';
 
-import '../../../../controllers/serverpod_controller.dart';
+import '../../../../serverpod.dart';
+import '../../../../services/serverpod_service.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailSigninView extends GetView<ServerPodController> {
+class EmailSigninView extends GetView<ServerpodService> {
   EmailSigninView({
     super.key,
   });
@@ -21,7 +22,7 @@ class EmailSigninView extends GetView<ServerPodController> {
 
   @override
   Widget build(BuildContext context) {
-    log('is signed in = ${controller.sessionManager.isSignedIn}');
+    log('is signed in = ${sessionManager.isSignedIn}');
 
     return SizedBox(
       width: 360,

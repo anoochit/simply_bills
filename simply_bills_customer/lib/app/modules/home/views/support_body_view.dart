@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
+import 'package:simply_bills_customer/services/serverpod_service.dart';
 
-import '../../../../controllers/serverpod_controller.dart';
-
-class SupportBodyView extends GetView<ServerPodController> {
+class SupportBodyView extends GetView<ServerpodService> {
   const SupportBodyView({super.key});
   @override
   Widget build(BuildContext context) {

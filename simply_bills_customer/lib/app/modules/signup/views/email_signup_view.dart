@@ -4,10 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:validation_pro/validate.dart';
 
-import '../../../../controllers/serverpod_controller.dart';
+import '../../../../services/serverpod_service.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailSignupView extends GetView<ServerPodController> {
+class EmailSignupView extends GetView<ServerpodService> {
   EmailSignupView({super.key});
 
   final _formKey = GlobalKey<FormState>();

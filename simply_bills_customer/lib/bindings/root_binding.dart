@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-
-import '../controllers/serverpod_controller.dart';
+import '../services/serverpod_service.dart';
 
 class RootBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ServerPodController(), permanent: true);
+    Get.put(ServerpodService());
   }
 }

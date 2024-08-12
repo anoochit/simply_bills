@@ -3,10 +3,11 @@ import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../controllers/serverpod_controller.dart';
+import '../../../../serverpod.dart';
+import '../../../../services/serverpod_service.dart';
 import '../../../routes/app_pages.dart';
 
-class EmailVerifyView extends GetView<ServerPodController> {
+class EmailVerifyView extends GetView<ServerpodService> {
   EmailVerifyView({super.key, this.email, this.password});
 
   final String? email;
@@ -60,8 +61,7 @@ class EmailVerifyView extends GetView<ServerPodController> {
                       );
                       // check user result update user scope
                       if (user != null) {
-                        await controller.client.customerEnpoint
-                            .updateToCustomerScope();
+                        await client.customerEnpoint.updateToCustomerScope();
                         Get.snackbar('Info', 'Verified account!');
                         Get.offAllNamed(Routes.HOME);
                       } else {

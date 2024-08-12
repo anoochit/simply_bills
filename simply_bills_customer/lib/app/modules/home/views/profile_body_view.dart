@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_customer/app/routes/app_pages.dart';
-import 'package:simply_bills_customer/app/widgets/views/avatar_view.dart';
-import 'package:simply_bills_customer/controllers/serverpod_controller.dart';
 
-class ProfileBodyView extends GetView<ServerPodController> {
+import '../../../../serverpod.dart';
+import '../../../routes/app_pages.dart';
+import '../../../widgets/views/avatar_view.dart';
+
+class ProfileBodyView extends GetView {
   const ProfileBodyView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ProfileBodyView extends GetView<ServerPodController> {
           title: const Text('Signout'),
           onTap: () {
             //
-            controller.sessionManager
+            sessionManager
                 .signOut()
                 .then((_) => Get.offAllNamed(Routes.SIGNIN));
           },
