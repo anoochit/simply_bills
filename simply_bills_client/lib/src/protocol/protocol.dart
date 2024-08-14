@@ -138,6 +138,10 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i15.Faq>(e)).toList()
           as dynamic;
     }
+    if (t == List<_i16.UserInfo>) {
+      return (data as List).map((e) => deserialize<_i16.UserInfo>(e)).toList()
+          as dynamic;
+    }
     try {
       return _i16.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}

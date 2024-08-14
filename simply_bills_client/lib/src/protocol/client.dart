@@ -15,15 +15,15 @@ import 'package:simply_bills_client/src/protocol/faq.dart' as _i4;
 import 'protocol.dart' as _i5;
 
 /// {@category Endpoint}
-class EndpointCustomerEnpoint extends _i1.EndpointRef {
-  EndpointCustomerEnpoint(_i1.EndpointCaller caller) : super(caller);
+class EndpointCustomer extends _i1.EndpointRef {
+  EndpointCustomer(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'customerEnpoint';
+  String get name => 'customer';
 
   _i2.Future<_i3.UserInfo?> updateToCustomerScope() =>
       caller.callServerEndpoint<_i3.UserInfo?>(
-        'customerEnpoint',
+        'customer',
         'updateToCustomerScope',
         {},
       );
@@ -84,16 +84,16 @@ class EndpointFaq extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointManagerEnpoint extends _i1.EndpointRef {
-  EndpointManagerEnpoint(_i1.EndpointCaller caller) : super(caller);
+class EndpointManager extends _i1.EndpointRef {
+  EndpointManager(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'managerEnpoint';
+  String get name => 'manager';
 
   /// update to manager scope
   _i2.Future<_i3.UserInfo?> updateManagerScope(int userId) =>
       caller.callServerEndpoint<_i3.UserInfo?>(
-        'managerEnpoint',
+        'manager',
         'updateManagerScope',
         {'userId': userId},
       );
@@ -101,7 +101,7 @@ class EndpointManagerEnpoint extends _i1.EndpointRef {
   /// update officer scope
   _i2.Future<_i3.UserInfo?> updateOfficerScope(int userId) =>
       caller.callServerEndpoint<_i3.UserInfo?>(
-        'managerEnpoint',
+        'manager',
         'updateOfficerScope',
         {'userId': userId},
       );
@@ -109,18 +109,44 @@ class EndpointManagerEnpoint extends _i1.EndpointRef {
   /// update user scope
   _i2.Future<_i3.UserInfo?> updateUserScope(int userId) =>
       caller.callServerEndpoint<_i3.UserInfo?>(
-        'managerEnpoint',
+        'manager',
         'updateUserScope',
         {'userId': userId},
+      );
+
+  /// get users
+  _i2.Future<List<_i3.UserInfo>> getUsers() =>
+      caller.callServerEndpoint<List<_i3.UserInfo>>(
+        'manager',
+        'getUsers',
+        {},
+      );
+
+  /// add new user
+  _i2.Future<_i3.UserInfo?> createUserWithScope(
+    String userName,
+    String email,
+    String password,
+    String userScope,
+  ) =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'manager',
+        'createUserWithScope',
+        {
+          'userName': userName,
+          'email': email,
+          'password': password,
+          'userScope': userScope,
+        },
       );
 }
 
 /// {@category Endpoint}
-class EndpointOfficerEnpoint extends _i1.EndpointRef {
-  EndpointOfficerEnpoint(_i1.EndpointCaller caller) : super(caller);
+class EndpointOfficer extends _i1.EndpointRef {
+  EndpointOfficer(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'officerEnpoint';
+  String get name => 'officer';
 }
 
 class _Modules {
@@ -154,33 +180,33 @@ class Client extends _i1.ServerpodClient {
           onFailedCall: onFailedCall,
           onSucceededCall: onSucceededCall,
         ) {
-    customerEnpoint = EndpointCustomerEnpoint(this);
+    customer = EndpointCustomer(this);
     example = EndpointExample(this);
     faq = EndpointFaq(this);
-    managerEnpoint = EndpointManagerEnpoint(this);
-    officerEnpoint = EndpointOfficerEnpoint(this);
+    manager = EndpointManager(this);
+    officer = EndpointOfficer(this);
     modules = _Modules(this);
   }
 
-  late final EndpointCustomerEnpoint customerEnpoint;
+  late final EndpointCustomer customer;
 
   late final EndpointExample example;
 
   late final EndpointFaq faq;
 
-  late final EndpointManagerEnpoint managerEnpoint;
+  late final EndpointManager manager;
 
-  late final EndpointOfficerEnpoint officerEnpoint;
+  late final EndpointOfficer officer;
 
   late final _Modules modules;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'customerEnpoint': customerEnpoint,
+        'customer': customer,
         'example': example,
         'faq': faq,
-        'managerEnpoint': managerEnpoint,
-        'officerEnpoint': officerEnpoint,
+        'manager': manager,
+        'officer': officer,
       };
 
   @override

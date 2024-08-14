@@ -34,7 +34,7 @@ List<NavItem> navItems = [
     selectedIcon: Icons.notifications,
   ),
   NavItem(
-    title: 'Support',
+    title: 'F.A.Q',
     icon: Icons.contact_support_outlined,
     selectedIcon: Icons.contact_support,
   ),

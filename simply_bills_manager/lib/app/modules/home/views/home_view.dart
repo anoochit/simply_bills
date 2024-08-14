@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Obx(() => Text(navItems[controller.navIndex.value].title)),
         surfaceTintColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,

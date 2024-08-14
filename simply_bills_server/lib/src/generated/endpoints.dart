@@ -20,10 +20,10 @@ class Endpoints extends _i1.EndpointDispatch {
   @override
   void initializeEndpoints(_i1.Server server) {
     var endpoints = <String, _i1.Endpoint>{
-      'customerEnpoint': _i2.CustomerEnpoint()
+      'customer': _i2.CustomerEndpoint()
         ..initialize(
           server,
-          'customerEnpoint',
+          'customer',
           null,
         ),
       'example': _i3.ExampleEndpoint()
@@ -38,22 +38,22 @@ class Endpoints extends _i1.EndpointDispatch {
           'faq',
           null,
         ),
-      'managerEnpoint': _i5.ManagerEnpoint()
+      'manager': _i5.ManagerEndpoint()
         ..initialize(
           server,
-          'managerEnpoint',
+          'manager',
           null,
         ),
-      'officerEnpoint': _i6.OfficerEnpoint()
+      'officer': _i6.OfficerEndpoint()
         ..initialize(
           server,
-          'officerEnpoint',
+          'officer',
           null,
         ),
     };
-    connectors['customerEnpoint'] = _i1.EndpointConnector(
-      name: 'customerEnpoint',
-      endpoint: endpoints['customerEnpoint']!,
+    connectors['customer'] = _i1.EndpointConnector(
+      name: 'customer',
+      endpoint: endpoints['customer']!,
       methodConnectors: {
         'updateToCustomerScope': _i1.MethodConnector(
           name: 'updateToCustomerScope',
@@ -62,7 +62,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['customerEnpoint'] as _i2.CustomerEnpoint)
+              (endpoints['customer'] as _i2.CustomerEndpoint)
                   .updateToCustomerScope(session),
         )
       },
@@ -133,9 +133,9 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    connectors['managerEnpoint'] = _i1.EndpointConnector(
-      name: 'managerEnpoint',
-      endpoint: endpoints['managerEnpoint']!,
+    connectors['manager'] = _i1.EndpointConnector(
+      name: 'manager',
+      endpoint: endpoints['manager']!,
       methodConnectors: {
         'updateManagerScope': _i1.MethodConnector(
           name: 'updateManagerScope',
@@ -150,8 +150,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['managerEnpoint'] as _i5.ManagerEnpoint)
-                  .updateManagerScope(
+              (endpoints['manager'] as _i5.ManagerEndpoint).updateManagerScope(
             session,
             params['userId'],
           ),
@@ -169,8 +168,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['managerEnpoint'] as _i5.ManagerEnpoint)
-                  .updateOfficerScope(
+              (endpoints['manager'] as _i5.ManagerEndpoint).updateOfficerScope(
             session,
             params['userId'],
           ),
@@ -188,17 +186,61 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['managerEnpoint'] as _i5.ManagerEnpoint)
-                  .updateUserScope(
+              (endpoints['manager'] as _i5.ManagerEndpoint).updateUserScope(
             session,
             params['userId'],
           ),
         ),
+        'getUsers': _i1.MethodConnector(
+          name: 'getUsers',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['manager'] as _i5.ManagerEndpoint).getUsers(session),
+        ),
+        'createUserWithScope': _i1.MethodConnector(
+          name: 'createUserWithScope',
+          params: {
+            'userName': _i1.ParameterDescription(
+              name: 'userName',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'email': _i1.ParameterDescription(
+              name: 'email',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'password': _i1.ParameterDescription(
+              name: 'password',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'userScope': _i1.ParameterDescription(
+              name: 'userScope',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['manager'] as _i5.ManagerEndpoint).createUserWithScope(
+            session,
+            params['userName'],
+            params['email'],
+            params['password'],
+            params['userScope'],
+          ),
+        ),
       },
     );
-    connectors['officerEnpoint'] = _i1.EndpointConnector(
-      name: 'officerEnpoint',
-      endpoint: endpoints['officerEnpoint']!,
+    connectors['officer'] = _i1.EndpointConnector(
+      name: 'officer',
+      endpoint: endpoints['officer']!,
       methodConnectors: {},
     );
     modules['serverpod_auth'] = _i7.Endpoints()..initializeEndpoints(server);

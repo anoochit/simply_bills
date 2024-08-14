@@ -2,7 +2,7 @@ import 'package:serverpod/serverpod.dart';
 
 import 'customer_endpoint.dart';
 
-class OfficerEnpoint extends Endpoint {
+class OfficerEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
   // creating a public method with `Session` as its first parameter.
   // `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,

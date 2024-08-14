@@ -1,4 +1,4 @@
-customerEnpoint:
+customer:
   - updateToCustomerScope:
 example:
   - hello:
@@ -7,8 +7,10 @@ faq:
   - getManagerFAQ:
   - getOfficerFAQ:
   - getFAQ:
-managerEnpoint:
+manager:
   - updateManagerScope:
   - updateOfficerScope:
   - updateUserScope:
-officerEnpoint:
+  - getUsers:
+  - createUserWithScope:
+officer:

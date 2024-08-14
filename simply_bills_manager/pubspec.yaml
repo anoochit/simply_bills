@@ -13,6 +13,7 @@ dependencies:
   gap: ^3.0.1
   get: 4.6.6
   google_fonts: ^6.2.1
+  serverpod_auth_client: 2.0.2
   serverpod_auth_email_flutter: 2.0.2
   serverpod_auth_shared_flutter: 2.0.2
   serverpod_chat_flutter: 2.0.2

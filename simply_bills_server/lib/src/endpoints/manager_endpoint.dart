@@ -1,9 +1,8 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
+import 'package:simply_bills_server/src/endpoints/customer_endpoint.dart';
 
-import 'customer_endpoint.dart';
-
-class ManagerEnpoint extends Endpoint {
+class ManagerEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
   // creating a public method with `Session` as its first parameter.
   // `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,
@@ -35,5 +34,31 @@ class ManagerEnpoint extends Endpoint {
   /// update user scope
   Future<UserInfo?> updateUserScope(Session session, int userId) async {
     return await Users.updateUserScopes(session, userId, {UserScope.customer});
+  }
+
+  /// get users
+  Future<List<UserInfo>> getUsers(Session session) async {
+    return await UserInfo.db.find(session);
+  }
+
+  /// add new user
+  Future<UserInfo?> createUserWithScope(Session session, String userName,
+      String email, String password, String userScope) async {
+    final user = await Emails.createUser(session, userName, email, password);
+    if (user != null) {
+      switch (userScope) {
+        case 'manager':
+          return await Users.updateUserScopes(
+              session, user.id!, {UserScope.manager});
+        case 'officer':
+          return await Users.updateUserScopes(
+              session, user.id!, {UserScope.officer});
+        default:
+          return await Users.updateUserScopes(
+              session, user.id!, {UserScope.customer});
+      }
+    } else {
+      return null;
+    }
   }
 }
