@@ -5,9 +5,11 @@ class NavItem {
   String title;
   IconData icon;
   IconData selectedIcon;
+  String key;
   NavItem({
     required this.title,
     required this.icon,
     required this.selectedIcon,
+    required this.key,
   });
 }

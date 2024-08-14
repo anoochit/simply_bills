@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:simply_bills_manager/app/widgets/views/avatar_view.dart';
 
 import '../../../../controllers/app_controller.dart';
 
@@ -18,6 +19,8 @@ class UsersBodyView extends GetView<AppController> {
                 final userEmail = controller.listUser[index].email;
 
                 return ListTile(
+                  leading: AvatarView(
+                      radius: 21, showTitle: false, email: userEmail),
                   title: Text('$userName'),
                   subtitle: Text('$userEmail'),
                   onTap: () {

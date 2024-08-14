@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../../../data/data/bottom_nav.dart';
 import '../../../widgets/views/avatar_view.dart';
 import '../controllers/home_controller.dart';
@@ -88,6 +86,31 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
+      floatingActionButton: Obx(() => buildFAB(context)),
     );
+  }
+
+  Widget buildFAB(BuildContext context) {
+    final menu = navItems[controller.navIndex.value].key;
+    switch (menu) {
+      case 'bills':
+        return FloatingActionButton(
+          onPressed: () {
+            // add bills
+          },
+          child: const Icon(Icons.add),
+        );
+
+      case 'users':
+        return FloatingActionButton(
+          onPressed: () {
+            // add user
+          },
+          child: const Icon(Icons.add),
+        );
+
+      default:
+        return Container();
+    }
   }
 }

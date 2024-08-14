@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import '../../../serverpod.dart';
 
 class AvatarView extends GetView {
-  const AvatarView({super.key, required this.radius, required this.showTitle});
+  const AvatarView(
+      {super.key, required this.radius, required this.showTitle, this.email});
 
   final double radius;
   final bool showTitle;
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +20,38 @@ class AvatarView extends GetView {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Builder(builder: (context) {
-              final email = sessionManager.signedInUser?.email ?? '';
-              final gravatar = Gravatar(email);
-              return CircleAvatar(
-                radius: radius,
-                child: ClipOval(
-                  child: Image.network(
-                    gravatar.imageUrl(
-                        size: (radius * 2).toInt(), defaultImage: 'mp'),
-                  ),
+          (email == null)
+              ? Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Builder(builder: (context) {
+                    final email = sessionManager.signedInUser?.email ?? '';
+                    final gravatar = Gravatar(email);
+                    return CircleAvatar(
+                      radius: radius,
+                      child: ClipOval(
+                        child: Image.network(
+                          gravatar.imageUrl(
+                              size: (radius * 2).toInt(), defaultImage: 'mp'),
+                        ),
+                      ),
+                    );
+                  }),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Builder(builder: (context) {
+                    final gravatar = Gravatar(email!);
+                    return CircleAvatar(
+                      radius: radius,
+                      child: ClipOval(
+                        child: Image.network(
+                          gravatar.imageUrl(
+                              size: (radius * 2).toInt(), defaultImage: 'mp'),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
-              );
-            }),
-          ),
           Visibility(
             visible: (showTitle),
             child: Padding(
