@@ -105,6 +105,14 @@ class EndpointManagerEnpoint extends _i1.EndpointRef {
         'updateOfficerScope',
         {'userId': userId},
       );
+
+  /// update user scope
+  _i2.Future<_i3.UserInfo?> updateUserScope(int userId) =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'managerEnpoint',
+        'updateUserScope',
+        {'userId': userId},
+      );
 }
 
 /// {@category Endpoint}

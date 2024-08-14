@@ -175,6 +175,25 @@ class Endpoints extends _i1.EndpointDispatch {
             params['userId'],
           ),
         ),
+        'updateUserScope': _i1.MethodConnector(
+          name: 'updateUserScope',
+          params: {
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['managerEnpoint'] as _i5.ManagerEnpoint)
+                  .updateUserScope(
+            session,
+            params['userId'],
+          ),
+        ),
       },
     );
     connectors['officerEnpoint'] = _i1.EndpointConnector(

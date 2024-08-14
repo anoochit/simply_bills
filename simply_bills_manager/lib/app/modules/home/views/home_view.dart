@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/data/bottom_nav.dart';
+import '../../../widgets/views/avatar_view.dart';
 import '../controllers/home_controller.dart';
 import 'address_body_view.dart';
 import 'bills_body_view.dart';
 import 'home_body_view.dart';
 import 'notificaion_body_view.dart';
+import 'profile_body_view.dart';
 import 'report_body_view.dart';
 import 'support_body_view.dart';
 import 'users_body_view.dart';
@@ -47,6 +49,9 @@ class HomeView extends GetView<HomeController> {
 
             // support
             SupportBodyView(),
+
+            // profile
+            ProfileBodyView(),
           ],
         ),
       ),
@@ -58,7 +63,10 @@ class HomeView extends GetView<HomeController> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              child: Container(),
+              child: const SizedBox(
+                width: double.infinity,
+                child: AvatarView(radius: 42, showTitle: true),
+              ),
             ),
 
             // menu
@@ -69,6 +77,10 @@ class HomeView extends GetView<HomeController> {
                   return ListTile(
                     leading: Icon(navItems[index].icon),
                     title: Text(navItems[index].title),
+                    onTap: () {
+                      controller.navIndex.value = index;
+                      Get.back();
+                    },
                   );
                 },
               ),

@@ -10,4 +10,5 @@ faq:
 managerEnpoint:
   - updateManagerScope:
   - updateOfficerScope:
+  - updateUserScope:
 officerEnpoint:

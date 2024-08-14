@@ -222,6 +222,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.0"
+  flutter_gravatar:
+    dependency: "direct main"
+    description:
+      name: flutter_gravatar
+      sha256: cf501cf3743992a2064b0d1fb5ef57bc343db4a3a252fbc46fd870828910360f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -248,6 +256,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gap:
+    dependency: "direct main"
+    description:
+      name: gap
+      sha256: f19387d4e32f849394758b91377f9153a1b41d79513ef7668c088c77dbc6955d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   get:
     dependency: "direct main"
     description:
@@ -852,6 +868,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.4.2"
+  validation_pro:
+    dependency: "direct main"
+    description:
+      name: validation_pro
+      sha256: fe7b8a5a19fd331cd408b8724edc273be94fb69b518d63e44a8736fb59f5033e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   vector_math:
     dependency: transitive
     description:

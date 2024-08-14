@@ -31,4 +31,9 @@ class ManagerEnpoint extends Endpoint {
   Future<UserInfo?> updateOfficerScope(Session session, int userId) async {
     return await Users.updateUserScopes(session, userId, {UserScope.officer});
   }
+
+  /// update user scope
+  Future<UserInfo?> updateUserScope(Session session, int userId) async {
+    return await Users.updateUserScopes(session, userId, {UserScope.customer});
+  }
 }

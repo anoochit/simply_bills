@@ -38,4 +38,9 @@ List<NavItem> navItems = [
     icon: Icons.contact_support_outlined,
     selectedIcon: Icons.contact_support,
   ),
+  NavItem(
+    title: 'Profile',
+    icon: Icons.account_circle_outlined,
+    selectedIcon: Icons.account_circle,
+  ),
 ];

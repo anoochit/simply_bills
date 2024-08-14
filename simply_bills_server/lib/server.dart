@@ -44,7 +44,7 @@ void run(List<String> args) async {
   );
 
   // add sample data
-  await initData(pod);
+  // await initData(pod);
 
   // Start the server.
   await pod.start();
@@ -64,9 +64,10 @@ Future<void> initData(Serverpod pod) async {
       Address.db.insertRow(
         session,
         Address(
-            uid: uuid,
-            address: '${100 + i} Moo 10, Suranaree',
-            address2: 'Muang, Nakhon Ratchasima'),
+          uid: uuid,
+          address: '${100 + i} Moo 10, Suranaree',
+          address2: 'Muang, Nakhon Ratchasima 30000',
+        ),
       );
     }
   }
@@ -83,7 +84,7 @@ Future<void> initData(Serverpod pod) async {
             answer:
                 'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.customer,
-            authorId: 5,
+            authorId: 1,
             createdAt: DateTime.now(),
             publish: true),
       );
@@ -97,7 +98,7 @@ Future<void> initData(Serverpod pod) async {
             answer:
                 'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.officer,
-            authorId: 5,
+            authorId: 1,
             createdAt: DateTime.now(),
             publish: true),
       );
@@ -112,7 +113,7 @@ Future<void> initData(Serverpod pod) async {
             answer:
                 'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
             type: FaqType.manager,
-            authorId: 5,
+            authorId: 1,
             createdAt: DateTime.now(),
             publish: true),
       );
