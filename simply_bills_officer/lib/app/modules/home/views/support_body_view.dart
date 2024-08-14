@@ -2,15 +2,45 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class SupportBodyView extends GetView {
+import '../../../../controllers/app_controller.dart';
+
+class SupportBodyView extends GetView<AppController> {
   const SupportBodyView({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'SupportBodyView is working',
-        style: TextStyle(fontSize: 20),
-      ),
+    return Obx(
+      () => (controller.listFaq.isNotEmpty)
+          ? ListView.builder(
+              itemCount: controller.listFaq.length,
+              itemBuilder: (BuildContext context, int index) {
+                final faqQuestion = controller.listFaq[index].question;
+                final faqAnswer = controller.listFaq[index].answer;
+                final faqId = controller.listFaq[index].id;
+                return ExpansionTile(
+                  shape: const RoundedRectangleBorder(),
+                  leading: Icon(
+                    Icons.contact_support_outlined,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  title: Text(
+                    faqQuestion,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .apply(fontWeightDelta: 3),
+                  ),
+                  expandedAlignment: Alignment.topLeft,
+                  children: [
+                    ListTile(
+                      title: Text(faqAnswer),
+                    ),
+                  ],
+                );
+              },
+            )
+          : const Center(
+              child: Text('No Data!'),
+            ),
     );
   }
 }

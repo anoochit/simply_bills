@@ -55,9 +55,10 @@ class ServerpodService extends GetxService {
 
   /// get FAQ
   Future<List<Faq>> getFAQ() async {
-    return await client.faq.getCustomerFAQ();
+    return await client.faq.getFAQ();
   }
 
+  /// get user
   Future<List<UserInfo>> getUser() async {
     return await client.manager.getUsers();
   }

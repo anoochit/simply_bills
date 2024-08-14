@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 
+import '../../middlewares/load_data.dart';
 import '../../middlewares/route_guard.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -26,6 +27,7 @@ class AppPages {
       binding: HomeBinding(),
       middlewares: [
         RouteGuard(),
+        LoadData(),
       ],
     ),
     GetPage(

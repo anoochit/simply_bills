@@ -7,6 +7,7 @@ import '../controllers/home_controller.dart';
 import 'bills_body_view.dart';
 import 'home_body_view.dart';
 import 'notificaion_body_view.dart';
+import 'profile_body_view.dart';
 import 'support_body_view.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -35,6 +36,9 @@ class HomeView extends GetView<HomeController> {
 
             // support
             SupportBodyView(),
+
+            // profile
+            ProfileBodyView(),
           ],
         ),
       ),
