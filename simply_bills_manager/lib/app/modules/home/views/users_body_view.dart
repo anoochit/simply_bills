@@ -13,13 +13,13 @@ class UsersBodyView extends GetView<AppController> {
           ? ListView.builder(
               itemCount: controller.listUser.length,
               itemBuilder: (BuildContext context, int index) {
-                final userId = controller.listUser[index].id;
+                // final userId = controller.listUser[index].id;
                 final userName = controller.listUser[index].userName;
                 final userEmail = controller.listUser[index].email;
 
                 return ListTile(
-                  title: Text('${userName}'),
-                  subtitle: Text('${userEmail}'),
+                  title: Text('$userName'),
+                  subtitle: Text('$userEmail'),
                   onTap: () {
                     //
                   },

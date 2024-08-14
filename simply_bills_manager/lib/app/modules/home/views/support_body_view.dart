@@ -13,12 +13,11 @@ class SupportBodyView extends GetView<AppController> {
           ? ListView.builder(
               itemCount: controller.listFaq.length,
               itemBuilder: (BuildContext context, int index) {
-                final faqId = controller.listFaq[index].id;
                 final faqTitle = controller.listFaq[index].question;
                 final faqType = controller.listFaq[index].type;
 
                 return ListTile(
-                  title: Text('${faqTitle}'),
+                  title: Text(faqTitle),
                   trailing: Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surfaceContainer,
@@ -29,7 +28,7 @@ class SupportBodyView extends GetView<AppController> {
                         vertical: 4.0,
                         horizontal: 8.0,
                       ),
-                      child: Text('${faqType}'),
+                      child: Text('$faqType'),
                     ),
                   ),
                   onTap: () {

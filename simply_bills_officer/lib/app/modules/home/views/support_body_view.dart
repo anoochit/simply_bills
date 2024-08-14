@@ -15,7 +15,6 @@ class SupportBodyView extends GetView<AppController> {
               itemBuilder: (BuildContext context, int index) {
                 final faqQuestion = controller.listFaq[index].question;
                 final faqAnswer = controller.listFaq[index].answer;
-                final faqId = controller.listFaq[index].id;
                 return ExpansionTile(
                   shape: const RoundedRectangleBorder(),
                   leading: Icon(
