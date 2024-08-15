@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simply_bills_manager/serverpod.dart';
@@ -10,6 +12,8 @@ class LoadData extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     if (sessionManager.isSignedIn) {
+      log('load data');
+
       final appController = Get.find<AppController>();
       final serverpodService = Get.find<ServerpodService>();
 

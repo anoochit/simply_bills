@@ -1,13 +1,13 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
-import 'package:simply_bills_manager/middlewares/load_data.dart';
-import 'package:simply_bills_manager/middlewares/route_guard.dart';
 
+import '../../middlewares/load_data.dart';
+import '../../middlewares/route_guard.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 

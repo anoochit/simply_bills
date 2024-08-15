@@ -103,7 +103,7 @@ class HomeView extends GetView<HomeController> {
 
       case 'users':
         return FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             // add user
           },
           child: const Icon(Icons.add),
