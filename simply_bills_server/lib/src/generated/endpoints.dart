@@ -209,6 +209,15 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['manager'] as _i5.ManagerEndpoint).getAddress(session),
         ),
+        'getInvoice': _i1.MethodConnector(
+          name: 'getInvoice',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['manager'] as _i5.ManagerEndpoint).getInvoice(session),
+        ),
         'createUserWithScope': _i1.MethodConnector(
           name: 'createUserWithScope',
           params: {

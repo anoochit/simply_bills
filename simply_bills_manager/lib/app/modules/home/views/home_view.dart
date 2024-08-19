@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simply_bills_manager/app/routes/app_pages.dart';
 import '../../../data/data/bottom_nav.dart';
 import '../../../widgets/views/avatar_view.dart';
 import '../controllers/home_controller.dart';
 import 'address_body_view.dart';
-import 'bills_body_view.dart';
+import 'invoice_body_view.dart';
 import 'home_body_view.dart';
 import 'notificaion_body_view.dart';
 import 'profile_body_view.dart';
@@ -33,8 +34,8 @@ class HomeView extends GetView<HomeController> {
             // report
             ReportBodyView(),
 
-            // bills
-            BillsBodyView(),
+            // invoice
+            InvoiceBodyView(),
 
             // user
             UsersBodyView(),
@@ -92,11 +93,19 @@ class HomeView extends GetView<HomeController> {
   Widget buildFAB(BuildContext context) {
     final menu = navItems[controller.navIndex.value].key;
     switch (menu) {
-      case 'bills':
+      case 'invoices':
         return FloatingActionButton(
           onPressed: () {
-            // add bills
-            createInvoiceDialog(context);
+            // create invoice
+            Get.toNamed(Routes.CREATE_INVOICE);
+          },
+          child: const Icon(Icons.add),
+        );
+
+      case 'notification':
+        return FloatingActionButton(
+          onPressed: () async {
+            // add notification
           },
           child: const Icon(Icons.add),
         );
@@ -112,25 +121,5 @@ class HomeView extends GetView<HomeController> {
       default:
         return Container();
     }
-  }
-
-  void createInvoiceDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('New invoice'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: const Text('Waste'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 }

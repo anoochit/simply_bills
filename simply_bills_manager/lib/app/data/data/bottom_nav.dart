@@ -16,10 +16,10 @@ List<NavItem> navItems = [
     key: 'report',
   ),
   NavItem(
-    title: 'Bills',
+    title: 'Invoice',
     icon: Icons.receipt_long_outlined,
     selectedIcon: Icons.receipt_long,
-    key: 'bills',
+    key: 'invoices',
   ),
   NavItem(
     title: 'Users',

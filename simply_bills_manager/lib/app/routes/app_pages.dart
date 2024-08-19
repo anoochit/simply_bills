@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../../middlewares/load_data.dart';
 import '../../middlewares/route_guard.dart';
+import '../modules/create_invoice/bindings/create_invoice_binding.dart';
+import '../modules/create_invoice/views/create_invoice_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
@@ -30,6 +32,11 @@ class AppPages {
       name: _Paths.SIGNIN,
       page: () => const SigninView(),
       binding: SigninBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_INVOICE,
+      page: () => const CreateInvoiceView(),
+      binding: CreateInvoiceBinding(),
     ),
   ];
 }

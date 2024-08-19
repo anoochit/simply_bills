@@ -11,8 +11,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class BillItem implements _i1.SerializableModel {
-  BillItem._({
+abstract class InvoiceItem implements _i1.SerializableModel {
+  InvoiceItem._({
     this.id,
     required this.productId,
     this.product,
@@ -21,17 +21,17 @@ abstract class BillItem implements _i1.SerializableModel {
     required this.total,
   });
 
-  factory BillItem({
+  factory InvoiceItem({
     int? id,
     required int productId,
     _i2.Product? product,
     required double qt,
     required double unitPrice,
     required double total,
-  }) = _BillItemImpl;
+  }) = _InvoiceItemImpl;
 
-  factory BillItem.fromJson(Map<String, dynamic> jsonSerialization) {
-    return BillItem(
+  factory InvoiceItem.fromJson(Map<String, dynamic> jsonSerialization) {
+    return InvoiceItem(
       id: jsonSerialization['id'] as int?,
       productId: jsonSerialization['productId'] as int,
       product: jsonSerialization['product'] == null
@@ -59,7 +59,7 @@ abstract class BillItem implements _i1.SerializableModel {
 
   double total;
 
-  BillItem copyWith({
+  InvoiceItem copyWith({
     int? id,
     int? productId,
     _i2.Product? product,
@@ -87,8 +87,8 @@ abstract class BillItem implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _BillItemImpl extends BillItem {
-  _BillItemImpl({
+class _InvoiceItemImpl extends InvoiceItem {
+  _InvoiceItemImpl({
     int? id,
     required int productId,
     _i2.Product? product,
@@ -105,7 +105,7 @@ class _BillItemImpl extends BillItem {
         );
 
   @override
-  BillItem copyWith({
+  InvoiceItem copyWith({
     Object? id = _Undefined,
     int? productId,
     Object? product = _Undefined,
@@ -113,7 +113,7 @@ class _BillItemImpl extends BillItem {
     double? unitPrice,
     double? total,
   }) {
-    return BillItem(
+    return InvoiceItem(
       id: id is int? ? id : this.id,
       productId: productId ?? this.productId,
       product: product is _i2.Product? ? product : this.product?.copyWith(),

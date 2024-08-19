@@ -12,12 +12,15 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
-  Bill._({
+abstract class Invoice extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
+  Invoice._({
     int? id,
     required this.referenceNo,
     required this.billToId,
     this.billTo,
+    required this.billAddressId,
+    this.billAddress,
     this.items,
     required this.total,
     required this.createdAt,
@@ -26,21 +29,23 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
     required this.status,
   }) : super(id);
 
-  factory Bill({
+  factory Invoice({
     int? id,
     required String referenceNo,
     required int billToId,
     _i2.User? billTo,
-    List<_i2.BillItem>? items,
+    required int billAddressId,
+    _i2.Address? billAddress,
+    List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
     _i2.User? billCreatedBy,
-    required _i2.BillStatus status,
-  }) = _BillImpl;
+    required _i2.InvoiceStatus status,
+  }) = _InvoiceImpl;
 
-  factory Bill.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Bill(
+  factory Invoice.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Invoice(
       id: jsonSerialization['id'] as int?,
       referenceNo: jsonSerialization['referenceNo'] as String,
       billToId: jsonSerialization['billToId'] as int,
@@ -48,8 +53,13 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.User.fromJson(
               (jsonSerialization['billTo'] as Map<String, dynamic>)),
+      billAddressId: jsonSerialization['billAddressId'] as int,
+      billAddress: jsonSerialization['billAddress'] == null
+          ? null
+          : _i2.Address.fromJson(
+              (jsonSerialization['billAddress'] as Map<String, dynamic>)),
       items: (jsonSerialization['items'] as List?)
-          ?.map((e) => _i2.BillItem.fromJson((e as Map<String, dynamic>)))
+          ?.map((e) => _i2.Invoice.fromJson((e as Map<String, dynamic>)))
           .toList(),
       total: (jsonSerialization['total'] as num).toDouble(),
       createdAt:
@@ -59,13 +69,14 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.User.fromJson(
               (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
-      status: _i2.BillStatus.fromJson((jsonSerialization['status'] as String)),
+      status:
+          _i2.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
     );
   }
 
-  static final t = BillTable();
+  static final t = InvoiceTable();
 
-  static const db = BillRepository._();
+  static const db = InvoiceRepository._();
 
   String referenceNo;
 
@@ -73,7 +84,11 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.User? billTo;
 
-  List<_i2.BillItem>? items;
+  int billAddressId;
+
+  _i2.Address? billAddress;
+
+  List<_i2.Invoice>? items;
 
   double total;
 
@@ -83,22 +98,24 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.User? billCreatedBy;
 
-  _i2.BillStatus status;
+  _i2.InvoiceStatus status;
 
   @override
   _i1.Table get table => t;
 
-  Bill copyWith({
+  Invoice copyWith({
     int? id,
     String? referenceNo,
     int? billToId,
     _i2.User? billTo,
-    List<_i2.BillItem>? items,
+    int? billAddressId,
+    _i2.Address? billAddress,
+    List<_i2.Invoice>? items,
     double? total,
     DateTime? createdAt,
     int? billCreatedById,
     _i2.User? billCreatedBy,
-    _i2.BillStatus? status,
+    _i2.InvoiceStatus? status,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -107,6 +124,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
       'referenceNo': referenceNo,
       'billToId': billToId,
       if (billTo != null) 'billTo': billTo?.toJson(),
+      'billAddressId': billAddressId,
+      if (billAddress != null) 'billAddress': billAddress?.toJson(),
       if (items != null) 'items': items?.toJson(valueToJson: (v) => v.toJson()),
       'total': total,
       'createdAt': createdAt.toJson(),
@@ -123,6 +142,8 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
       'referenceNo': referenceNo,
       'billToId': billToId,
       if (billTo != null) 'billTo': billTo?.toJsonForProtocol(),
+      'billAddressId': billAddressId,
+      if (billAddress != null) 'billAddress': billAddress?.toJsonForProtocol(),
       if (items != null)
         'items': items?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'total': total,
@@ -134,32 +155,34 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
     };
   }
 
-  static BillInclude include({
+  static InvoiceInclude include({
     _i2.UserInclude? billTo,
+    _i2.AddressInclude? billAddress,
     _i2.UserInclude? billCreatedBy,
   }) {
-    return BillInclude._(
+    return InvoiceInclude._(
       billTo: billTo,
+      billAddress: billAddress,
       billCreatedBy: billCreatedBy,
     );
   }
 
-  static BillIncludeList includeList({
-    _i1.WhereExpressionBuilder<BillTable>? where,
+  static InvoiceIncludeList includeList({
+    _i1.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BillTable>? orderBy,
+    _i1.OrderByBuilder<InvoiceTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<BillTable>? orderByList,
-    BillInclude? include,
+    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
+    InvoiceInclude? include,
   }) {
-    return BillIncludeList._(
+    return InvoiceIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Bill.t),
+      orderBy: orderBy?.call(Invoice.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Bill.t),
+      orderByList: orderByList?.call(Invoice.t),
       include: include,
     );
   }
@@ -172,23 +195,27 @@ abstract class Bill extends _i1.TableRow implements _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _BillImpl extends Bill {
-  _BillImpl({
+class _InvoiceImpl extends Invoice {
+  _InvoiceImpl({
     int? id,
     required String referenceNo,
     required int billToId,
     _i2.User? billTo,
-    List<_i2.BillItem>? items,
+    required int billAddressId,
+    _i2.Address? billAddress,
+    List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
     _i2.User? billCreatedBy,
-    required _i2.BillStatus status,
+    required _i2.InvoiceStatus status,
   }) : super._(
           id: id,
           referenceNo: referenceNo,
           billToId: billToId,
           billTo: billTo,
+          billAddressId: billAddressId,
+          billAddress: billAddress,
           items: items,
           total: total,
           createdAt: createdAt,
@@ -198,24 +225,30 @@ class _BillImpl extends Bill {
         );
 
   @override
-  Bill copyWith({
+  Invoice copyWith({
     Object? id = _Undefined,
     String? referenceNo,
     int? billToId,
     Object? billTo = _Undefined,
+    int? billAddressId,
+    Object? billAddress = _Undefined,
     Object? items = _Undefined,
     double? total,
     DateTime? createdAt,
     int? billCreatedById,
     Object? billCreatedBy = _Undefined,
-    _i2.BillStatus? status,
+    _i2.InvoiceStatus? status,
   }) {
-    return Bill(
+    return Invoice(
       id: id is int? ? id : this.id,
       referenceNo: referenceNo ?? this.referenceNo,
       billToId: billToId ?? this.billToId,
       billTo: billTo is _i2.User? ? billTo : this.billTo?.copyWith(),
-      items: items is List<_i2.BillItem>? ? items : this.items?.clone(),
+      billAddressId: billAddressId ?? this.billAddressId,
+      billAddress: billAddress is _i2.Address?
+          ? billAddress
+          : this.billAddress?.copyWith(),
+      items: items is List<_i2.Invoice>? ? items : this.items?.clone(),
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
       billCreatedById: billCreatedById ?? this.billCreatedById,
@@ -227,14 +260,18 @@ class _BillImpl extends Bill {
   }
 }
 
-class BillTable extends _i1.Table {
-  BillTable({super.tableRelation}) : super(tableName: 'bill') {
+class InvoiceTable extends _i1.Table {
+  InvoiceTable({super.tableRelation}) : super(tableName: 'invoice') {
     referenceNo = _i1.ColumnString(
       'referenceNo',
       this,
     );
     billToId = _i1.ColumnInt(
       'billToId',
+      this,
+    );
+    billAddressId = _i1.ColumnInt(
+      'billAddressId',
       this,
     );
     items = _i1.ColumnSerializable(
@@ -266,6 +303,10 @@ class BillTable extends _i1.Table {
 
   _i2.UserTable? _billTo;
 
+  late final _i1.ColumnInt billAddressId;
+
+  _i2.AddressTable? _billAddress;
+
   late final _i1.ColumnSerializable items;
 
   late final _i1.ColumnDouble total;
@@ -276,13 +317,13 @@ class BillTable extends _i1.Table {
 
   _i2.UserTable? _billCreatedBy;
 
-  late final _i1.ColumnEnum<_i2.BillStatus> status;
+  late final _i1.ColumnEnum<_i2.InvoiceStatus> status;
 
   _i2.UserTable get billTo {
     if (_billTo != null) return _billTo!;
     _billTo = _i1.createRelationTable(
       relationFieldName: 'billTo',
-      field: Bill.t.billToId,
+      field: Invoice.t.billToId,
       foreignField: _i2.User.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
@@ -291,11 +332,24 @@ class BillTable extends _i1.Table {
     return _billTo!;
   }
 
+  _i2.AddressTable get billAddress {
+    if (_billAddress != null) return _billAddress!;
+    _billAddress = _i1.createRelationTable(
+      relationFieldName: 'billAddress',
+      field: Invoice.t.billAddressId,
+      foreignField: _i2.Address.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.AddressTable(tableRelation: foreignTableRelation),
+    );
+    return _billAddress!;
+  }
+
   _i2.UserTable get billCreatedBy {
     if (_billCreatedBy != null) return _billCreatedBy!;
     _billCreatedBy = _i1.createRelationTable(
       relationFieldName: 'billCreatedBy',
-      field: Bill.t.billCreatedById,
+      field: Invoice.t.billCreatedById,
       foreignField: _i2.User.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
@@ -309,6 +363,7 @@ class BillTable extends _i1.Table {
         id,
         referenceNo,
         billToId,
+        billAddressId,
         items,
         total,
         createdAt,
@@ -321,6 +376,9 @@ class BillTable extends _i1.Table {
     if (relationField == 'billTo') {
       return billTo;
     }
+    if (relationField == 'billAddress') {
+      return billAddress;
+    }
     if (relationField == 'billCreatedBy') {
       return billCreatedBy;
     }
@@ -328,32 +386,37 @@ class BillTable extends _i1.Table {
   }
 }
 
-class BillInclude extends _i1.IncludeObject {
-  BillInclude._({
+class InvoiceInclude extends _i1.IncludeObject {
+  InvoiceInclude._({
     _i2.UserInclude? billTo,
+    _i2.AddressInclude? billAddress,
     _i2.UserInclude? billCreatedBy,
   }) {
     _billTo = billTo;
+    _billAddress = billAddress;
     _billCreatedBy = billCreatedBy;
   }
 
   _i2.UserInclude? _billTo;
+
+  _i2.AddressInclude? _billAddress;
 
   _i2.UserInclude? _billCreatedBy;
 
   @override
   Map<String, _i1.Include?> get includes => {
         'billTo': _billTo,
+        'billAddress': _billAddress,
         'billCreatedBy': _billCreatedBy,
       };
 
   @override
-  _i1.Table get table => Bill.t;
+  _i1.Table get table => Invoice.t;
 }
 
-class BillIncludeList extends _i1.IncludeList {
-  BillIncludeList._({
-    _i1.WhereExpressionBuilder<BillTable>? where,
+class InvoiceIncludeList extends _i1.IncludeList {
+  InvoiceIncludeList._({
+    _i1.WhereExpressionBuilder<InvoiceTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -361,36 +424,36 @@ class BillIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Bill.t);
+    super.where = where?.call(Invoice.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Bill.t;
+  _i1.Table get table => Invoice.t;
 }
 
-class BillRepository {
-  const BillRepository._();
+class InvoiceRepository {
+  const InvoiceRepository._();
 
-  final attachRow = const BillAttachRowRepository._();
+  final attachRow = const InvoiceAttachRowRepository._();
 
-  Future<List<Bill>> find(
+  Future<List<Invoice>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<BillTable>? where,
+    _i1.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BillTable>? orderBy,
+    _i1.OrderByBuilder<InvoiceTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<BillTable>? orderByList,
+    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
-    BillInclude? include,
+    InvoiceInclude? include,
   }) async {
-    return session.db.find<Bill>(
-      where: where?.call(Bill.t),
-      orderBy: orderBy?.call(Bill.t),
-      orderByList: orderByList?.call(Bill.t),
+    return session.db.find<Invoice>(
+      where: where?.call(Invoice.t),
+      orderBy: orderBy?.call(Invoice.t),
+      orderByList: orderByList?.call(Invoice.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -399,20 +462,20 @@ class BillRepository {
     );
   }
 
-  Future<Bill?> findFirstRow(
+  Future<Invoice?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<BillTable>? where,
+    _i1.WhereExpressionBuilder<InvoiceTable>? where,
     int? offset,
-    _i1.OrderByBuilder<BillTable>? orderBy,
+    _i1.OrderByBuilder<InvoiceTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<BillTable>? orderByList,
+    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
-    BillInclude? include,
+    InvoiceInclude? include,
   }) async {
-    return session.db.findFirstRow<Bill>(
-      where: where?.call(Bill.t),
-      orderBy: orderBy?.call(Bill.t),
-      orderByList: orderByList?.call(Bill.t),
+    return session.db.findFirstRow<Invoice>(
+      where: where?.call(Invoice.t),
+      orderBy: orderBy?.call(Invoice.t),
+      orderByList: orderByList?.call(Invoice.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
@@ -420,152 +483,171 @@ class BillRepository {
     );
   }
 
-  Future<Bill?> findById(
+  Future<Invoice?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
-    BillInclude? include,
+    InvoiceInclude? include,
   }) async {
-    return session.db.findById<Bill>(
+    return session.db.findById<Invoice>(
       id,
       transaction: transaction,
       include: include,
     );
   }
 
-  Future<List<Bill>> insert(
+  Future<List<Invoice>> insert(
     _i1.Session session,
-    List<Bill> rows, {
+    List<Invoice> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Bill>(
+    return session.db.insert<Invoice>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<Bill> insertRow(
+  Future<Invoice> insertRow(
     _i1.Session session,
-    Bill row, {
+    Invoice row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Bill>(
+    return session.db.insertRow<Invoice>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<Bill>> update(
+  Future<List<Invoice>> update(
     _i1.Session session,
-    List<Bill> rows, {
-    _i1.ColumnSelections<BillTable>? columns,
+    List<Invoice> rows, {
+    _i1.ColumnSelections<InvoiceTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Bill>(
+    return session.db.update<Invoice>(
       rows,
-      columns: columns?.call(Bill.t),
+      columns: columns?.call(Invoice.t),
       transaction: transaction,
     );
   }
 
-  Future<Bill> updateRow(
+  Future<Invoice> updateRow(
     _i1.Session session,
-    Bill row, {
-    _i1.ColumnSelections<BillTable>? columns,
+    Invoice row, {
+    _i1.ColumnSelections<InvoiceTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Bill>(
+    return session.db.updateRow<Invoice>(
       row,
-      columns: columns?.call(Bill.t),
+      columns: columns?.call(Invoice.t),
       transaction: transaction,
     );
   }
 
-  Future<List<Bill>> delete(
+  Future<List<Invoice>> delete(
     _i1.Session session,
-    List<Bill> rows, {
+    List<Invoice> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Bill>(
+    return session.db.delete<Invoice>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<Bill> deleteRow(
+  Future<Invoice> deleteRow(
     _i1.Session session,
-    Bill row, {
+    Invoice row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Bill>(
+    return session.db.deleteRow<Invoice>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<Bill>> deleteWhere(
+  Future<List<Invoice>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<BillTable> where,
+    required _i1.WhereExpressionBuilder<InvoiceTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Bill>(
-      where: where(Bill.t),
+    return session.db.deleteWhere<Invoice>(
+      where: where(Invoice.t),
       transaction: transaction,
     );
   }
 
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<BillTable>? where,
+    _i1.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Bill>(
-      where: where?.call(Bill.t),
+    return session.db.count<Invoice>(
+      where: where?.call(Invoice.t),
       limit: limit,
       transaction: transaction,
     );
   }
 }
 
-class BillAttachRowRepository {
-  const BillAttachRowRepository._();
+class InvoiceAttachRowRepository {
+  const InvoiceAttachRowRepository._();
 
   Future<void> billTo(
     _i1.Session session,
-    Bill bill,
+    Invoice invoice,
     _i2.User billTo,
   ) async {
-    if (bill.id == null) {
-      throw ArgumentError.notNull('bill.id');
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
     }
     if (billTo.id == null) {
       throw ArgumentError.notNull('billTo.id');
     }
 
-    var $bill = bill.copyWith(billToId: billTo.id);
-    await session.db.updateRow<Bill>(
-      $bill,
-      columns: [Bill.t.billToId],
+    var $invoice = invoice.copyWith(billToId: billTo.id);
+    await session.db.updateRow<Invoice>(
+      $invoice,
+      columns: [Invoice.t.billToId],
+    );
+  }
+
+  Future<void> billAddress(
+    _i1.Session session,
+    Invoice invoice,
+    _i2.Address billAddress,
+  ) async {
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+    if (billAddress.id == null) {
+      throw ArgumentError.notNull('billAddress.id');
+    }
+
+    var $invoice = invoice.copyWith(billAddressId: billAddress.id);
+    await session.db.updateRow<Invoice>(
+      $invoice,
+      columns: [Invoice.t.billAddressId],
     );
   }
 
   Future<void> billCreatedBy(
     _i1.Session session,
-    Bill bill,
+    Invoice invoice,
     _i2.User billCreatedBy,
   ) async {
-    if (bill.id == null) {
-      throw ArgumentError.notNull('bill.id');
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
     }
     if (billCreatedBy.id == null) {
       throw ArgumentError.notNull('billCreatedBy.id');
     }
 
-    var $bill = bill.copyWith(billCreatedById: billCreatedBy.id);
-    await session.db.updateRow<Bill>(
-      $bill,
-      columns: [Bill.t.billCreatedById],
+    var $invoice = invoice.copyWith(billCreatedById: billCreatedBy.id);
+    await session.db.updateRow<Invoice>(
+      $invoice,
+      columns: [Invoice.t.billCreatedById],
     );
   }
 }

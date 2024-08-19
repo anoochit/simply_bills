@@ -5,6 +5,6 @@ import 'package:simply_bills_client/simply_bills_client.dart';
 class AppController extends GetxController {
   RxList<UserInfo> listUser = <UserInfo>[].obs;
   RxList<Faq> listFaq = <Faq>[].obs;
-  RxList<Bill> listBill = <Bill>[].obs;
+  RxList<Invoice> listInvoice = <Invoice>[].obs;
   RxList<Address> listAddress = <Address>[].obs;
 }

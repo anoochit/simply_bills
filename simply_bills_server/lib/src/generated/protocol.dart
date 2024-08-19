@@ -13,13 +13,13 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'address.dart' as _i4;
-import 'bill.dart' as _i5;
-import 'bill_item.dart' as _i6;
-import 'bill_status.dart' as _i7;
-import 'event.dart' as _i8;
-import 'example.dart' as _i9;
-import 'faq.dart' as _i10;
-import 'faq_type.dart' as _i11;
+import 'event.dart' as _i5;
+import 'example.dart' as _i6;
+import 'faq.dart' as _i7;
+import 'faq_type.dart' as _i8;
+import 'invoice.dart' as _i9;
+import 'invoice_item.dart' as _i10;
+import 'invoice_status.dart' as _i11;
 import 'post.dart' as _i12;
 import 'product.dart' as _i13;
 import 'user.dart' as _i14;
@@ -27,14 +27,15 @@ import 'user_scope.dart' as _i15;
 import 'protocol.dart' as _i16;
 import 'package:simply_bills_server/src/generated/faq.dart' as _i17;
 import 'package:simply_bills_server/src/generated/address.dart' as _i18;
+import 'package:simply_bills_server/src/generated/invoice.dart' as _i19;
 export 'address.dart';
-export 'bill.dart';
-export 'bill_item.dart';
-export 'bill_status.dart';
 export 'event.dart';
 export 'example.dart';
 export 'faq.dart';
 export 'faq_type.dart';
+export 'invoice.dart';
+export 'invoice_item.dart';
+export 'invoice_status.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
@@ -101,168 +102,6 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'address_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            )
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        )
-      ],
-      managed: true,
-    ),
-    _i2.TableDefinition(
-      name: 'bill',
-      dartName: 'Bill',
-      schema: 'public',
-      module: 'simply_bills',
-      columns: [
-        _i2.ColumnDefinition(
-          name: 'id',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int?',
-          columnDefault: 'nextval(\'bill_id_seq\'::regclass)',
-        ),
-        _i2.ColumnDefinition(
-          name: 'referenceNo',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
-        ),
-        _i2.ColumnDefinition(
-          name: 'billToId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'items',
-          columnType: _i2.ColumnType.json,
-          isNullable: true,
-          dartType: 'List<protocol:BillItem>?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'total',
-          columnType: _i2.ColumnType.doublePrecision,
-          isNullable: false,
-          dartType: 'double',
-        ),
-        _i2.ColumnDefinition(
-          name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: false,
-          dartType: 'DateTime',
-        ),
-        _i2.ColumnDefinition(
-          name: 'billCreatedById',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'status',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'protocol:BillStatus',
-        ),
-      ],
-      foreignKeys: [
-        _i2.ForeignKeyDefinition(
-          constraintName: 'bill_fk_0',
-          columns: ['billToId'],
-          referenceTable: 'user',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        ),
-        _i2.ForeignKeyDefinition(
-          constraintName: 'bill_fk_1',
-          columns: ['billCreatedById'],
-          referenceTable: 'user',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        ),
-      ],
-      indexes: [
-        _i2.IndexDefinition(
-          indexName: 'bill_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            )
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        )
-      ],
-      managed: true,
-    ),
-    _i2.TableDefinition(
-      name: 'bill_item',
-      dartName: 'BillItem',
-      schema: 'public',
-      module: 'simply_bills',
-      columns: [
-        _i2.ColumnDefinition(
-          name: 'id',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int?',
-          columnDefault: 'nextval(\'bill_item_id_seq\'::regclass)',
-        ),
-        _i2.ColumnDefinition(
-          name: 'productId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'qt',
-          columnType: _i2.ColumnType.doublePrecision,
-          isNullable: false,
-          dartType: 'double',
-        ),
-        _i2.ColumnDefinition(
-          name: 'unitPrice',
-          columnType: _i2.ColumnType.doublePrecision,
-          isNullable: false,
-          dartType: 'double',
-        ),
-        _i2.ColumnDefinition(
-          name: 'total',
-          columnType: _i2.ColumnType.doublePrecision,
-          isNullable: false,
-          dartType: 'double',
-        ),
-      ],
-      foreignKeys: [
-        _i2.ForeignKeyDefinition(
-          constraintName: 'bill_item_fk_0',
-          columns: ['productId'],
-          referenceTable: 'product',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        )
-      ],
-      indexes: [
-        _i2.IndexDefinition(
-          indexName: 'bill_item_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -421,6 +260,184 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'faq_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'invoice',
+      dartName: 'Invoice',
+      schema: 'public',
+      module: 'simply_bills',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'invoice_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'referenceNo',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'billToId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'billAddressId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'items',
+          columnType: _i2.ColumnType.json,
+          isNullable: true,
+          dartType: 'List<protocol:Invoice>?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'total',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'billCreatedById',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'status',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:InvoiceStatus',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'invoice_fk_0',
+          columns: ['billToId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'invoice_fk_1',
+          columns: ['billAddressId'],
+          referenceTable: 'address',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'invoice_fk_2',
+          columns: ['billCreatedById'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'invoice_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'invoice_item',
+      dartName: 'InvoiceItem',
+      schema: 'public',
+      module: 'simply_bills',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'invoice_item_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'productId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'qt',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'unitPrice',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'total',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'invoice_item_fk_0',
+          columns: ['productId'],
+          referenceTable: 'product',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'invoice_item_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -645,26 +662,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i4.Address) {
       return _i4.Address.fromJson(data) as T;
     }
-    if (t == _i5.Bill) {
-      return _i5.Bill.fromJson(data) as T;
+    if (t == _i5.Event) {
+      return _i5.Event.fromJson(data) as T;
     }
-    if (t == _i6.BillItem) {
-      return _i6.BillItem.fromJson(data) as T;
+    if (t == _i6.Example) {
+      return _i6.Example.fromJson(data) as T;
     }
-    if (t == _i7.BillStatus) {
-      return _i7.BillStatus.fromJson(data) as T;
+    if (t == _i7.Faq) {
+      return _i7.Faq.fromJson(data) as T;
     }
-    if (t == _i8.Event) {
-      return _i8.Event.fromJson(data) as T;
+    if (t == _i8.FaqType) {
+      return _i8.FaqType.fromJson(data) as T;
     }
-    if (t == _i9.Example) {
-      return _i9.Example.fromJson(data) as T;
+    if (t == _i9.Invoice) {
+      return _i9.Invoice.fromJson(data) as T;
     }
-    if (t == _i10.Faq) {
-      return _i10.Faq.fromJson(data) as T;
+    if (t == _i10.InvoiceItem) {
+      return _i10.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i11.FaqType) {
-      return _i11.FaqType.fromJson(data) as T;
+    if (t == _i11.InvoiceStatus) {
+      return _i11.InvoiceStatus.fromJson(data) as T;
     }
     if (t == _i12.Post) {
       return _i12.Post.fromJson(data) as T;
@@ -681,26 +698,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i4.Address?>()) {
       return (data != null ? _i4.Address.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.Bill?>()) {
-      return (data != null ? _i5.Bill.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.Event?>()) {
+      return (data != null ? _i5.Event.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.BillItem?>()) {
-      return (data != null ? _i6.BillItem.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Example?>()) {
+      return (data != null ? _i6.Example.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.BillStatus?>()) {
-      return (data != null ? _i7.BillStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.Faq?>()) {
+      return (data != null ? _i7.Faq.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Event?>()) {
-      return (data != null ? _i8.Event.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.FaqType?>()) {
+      return (data != null ? _i8.FaqType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Example?>()) {
-      return (data != null ? _i9.Example.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Invoice?>()) {
+      return (data != null ? _i9.Invoice.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.Faq?>()) {
-      return (data != null ? _i10.Faq.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.InvoiceItem?>()) {
+      return (data != null ? _i10.InvoiceItem.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.FaqType?>()) {
-      return (data != null ? _i11.FaqType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.InvoiceStatus?>()) {
+      return (data != null ? _i11.InvoiceStatus.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i12.Post?>()) {
       return (data != null ? _i12.Post.fromJson(data) : null) as T;
@@ -714,9 +731,9 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i15.UserScope?>()) {
       return (data != null ? _i15.UserScope.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i16.BillItem>?>()) {
+    if (t == _i1.getType<List<_i16.Invoice>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i16.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.Invoice>(e)).toList()
           : null) as dynamic;
     }
     if (t == _i1.getType<List<_i16.Address>?>()) {
@@ -734,6 +751,10 @@ class Protocol extends _i1.SerializationManagerServer {
     }
     if (t == List<_i18.Address>) {
       return (data as List).map((e) => deserialize<_i18.Address>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i19.Invoice>) {
+      return (data as List).map((e) => deserialize<_i19.Invoice>(e)).toList()
           as dynamic;
     }
     try {
@@ -755,26 +776,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i4.Address) {
       return 'Address';
     }
-    if (data is _i5.Bill) {
-      return 'Bill';
-    }
-    if (data is _i6.BillItem) {
-      return 'BillItem';
-    }
-    if (data is _i7.BillStatus) {
-      return 'BillStatus';
-    }
-    if (data is _i8.Event) {
+    if (data is _i5.Event) {
       return 'Event';
     }
-    if (data is _i9.Example) {
+    if (data is _i6.Example) {
       return 'Example';
     }
-    if (data is _i10.Faq) {
+    if (data is _i7.Faq) {
       return 'Faq';
     }
-    if (data is _i11.FaqType) {
+    if (data is _i8.FaqType) {
       return 'FaqType';
+    }
+    if (data is _i9.Invoice) {
+      return 'Invoice';
+    }
+    if (data is _i10.InvoiceItem) {
+      return 'InvoiceItem';
+    }
+    if (data is _i11.InvoiceStatus) {
+      return 'InvoiceStatus';
     }
     if (data is _i12.Post) {
       return 'Post';
@@ -800,26 +821,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Address') {
       return deserialize<_i4.Address>(data['data']);
     }
-    if (data['className'] == 'Bill') {
-      return deserialize<_i5.Bill>(data['data']);
-    }
-    if (data['className'] == 'BillItem') {
-      return deserialize<_i6.BillItem>(data['data']);
-    }
-    if (data['className'] == 'BillStatus') {
-      return deserialize<_i7.BillStatus>(data['data']);
-    }
     if (data['className'] == 'Event') {
-      return deserialize<_i8.Event>(data['data']);
+      return deserialize<_i5.Event>(data['data']);
     }
     if (data['className'] == 'Example') {
-      return deserialize<_i9.Example>(data['data']);
+      return deserialize<_i6.Example>(data['data']);
     }
     if (data['className'] == 'Faq') {
-      return deserialize<_i10.Faq>(data['data']);
+      return deserialize<_i7.Faq>(data['data']);
     }
     if (data['className'] == 'FaqType') {
-      return deserialize<_i11.FaqType>(data['data']);
+      return deserialize<_i8.FaqType>(data['data']);
+    }
+    if (data['className'] == 'Invoice') {
+      return deserialize<_i9.Invoice>(data['data']);
+    }
+    if (data['className'] == 'InvoiceItem') {
+      return deserialize<_i10.InvoiceItem>(data['data']);
+    }
+    if (data['className'] == 'InvoiceStatus') {
+      return deserialize<_i11.InvoiceStatus>(data['data']);
     }
     if (data['className'] == 'Post') {
       return deserialize<_i12.Post>(data['data']);
@@ -853,14 +874,14 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (t) {
       case _i4.Address:
         return _i4.Address.t;
-      case _i5.Bill:
-        return _i5.Bill.t;
-      case _i6.BillItem:
-        return _i6.BillItem.t;
-      case _i8.Event:
-        return _i8.Event.t;
-      case _i10.Faq:
-        return _i10.Faq.t;
+      case _i5.Event:
+        return _i5.Event.t;
+      case _i7.Faq:
+        return _i7.Faq.t;
+      case _i9.Invoice:
+        return _i9.Invoice.t;
+      case _i10.InvoiceItem:
+        return _i10.InvoiceItem.t;
       case _i12.Post:
         return _i12.Post.t;
       case _i13.Product:

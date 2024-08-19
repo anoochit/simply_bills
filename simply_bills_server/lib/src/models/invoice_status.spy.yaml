@@ -1,4 +1,4 @@
-enum: BillStatus
+enum: InvoiceStatus
 serialized: byName
 values:
   - unpaid

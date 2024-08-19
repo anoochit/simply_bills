@@ -46,4 +46,9 @@ class ServerpodService extends GetxService {
   Future<List<Address>> getAddress() async {
     return await client.manager.getAddress();
   }
+
+  /// get invoice
+  Future<List<Invoice>> getInvoice() async {
+    return await client.manager.getInvoice();
+  }
 }

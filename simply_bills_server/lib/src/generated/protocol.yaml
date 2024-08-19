@@ -13,5 +13,6 @@ manager:
   - updateUserScope:
   - getUsers:
   - getAddress:
+  - getInvoice:
   - createUserWithScope:
 officer:

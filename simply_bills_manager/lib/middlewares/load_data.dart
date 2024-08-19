@@ -31,6 +31,11 @@ class LoadData extends GetMiddleware {
       serverpodService.getAddress().then((value) {
         appController.listAddress.value = value;
       });
+
+      // load invoice
+      serverpodService.getInvoice().then((value) {
+        appController.listInvoice.value = value;
+      });
     }
 
     return null;

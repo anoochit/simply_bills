@@ -10,12 +10,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-enum BillStatus implements _i1.SerializableModel {
+enum InvoiceStatus implements _i1.SerializableModel {
   unpaid,
   paid,
   cancel;
 
-  static BillStatus fromJson(String name) {
+  static InvoiceStatus fromJson(String name) {
     switch (name) {
       case 'unpaid':
         return unpaid;
@@ -25,7 +25,7 @@ enum BillStatus implements _i1.SerializableModel {
         return cancel;
       default:
         throw ArgumentError(
-            'Value "$name" cannot be converted to "BillStatus"');
+            'Value "$name" cannot be converted to "InvoiceStatus"');
     }
   }
 

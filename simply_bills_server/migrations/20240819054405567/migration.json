@@ -1,0 +1,142 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "bill"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "bill",
+        "dartName": "Bill",
+        "module": "simply_bills",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('bill_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "referenceNo",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "billToId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "billAddressId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "items",
+            "columnType": 8,
+            "isNullable": true,
+            "dartType": "List<protocol:BillItem>?"
+          },
+          {
+            "name": "total",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "createdAt",
+            "columnType": 4,
+            "isNullable": false,
+            "dartType": "DateTime"
+          },
+          {
+            "name": "billCreatedById",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "status",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "protocol:BillStatus"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "bill_fk_0",
+            "columns": [
+              "billToId"
+            ],
+            "referenceTable": "user",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 0,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "bill_fk_1",
+            "columns": [
+              "billAddressId"
+            ],
+            "referenceTable": "address",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 0,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "bill_fk_2",
+            "columns": [
+              "billCreatedById"
+            ],
+            "referenceTable": "user",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 0,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "bill_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"bill\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "bill",
+      "columns": [
+        "billAddressId"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

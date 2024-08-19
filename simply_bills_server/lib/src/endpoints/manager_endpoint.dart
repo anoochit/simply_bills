@@ -3,6 +3,7 @@ import 'package:serverpod_auth_server/module.dart';
 import 'package:simply_bills_server/src/endpoints/customer_endpoint.dart';
 
 import '../generated/address.dart';
+import '../generated/invoice.dart';
 
 class ManagerEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
@@ -40,12 +41,25 @@ class ManagerEndpoint extends Endpoint {
 
   /// get users
   Future<List<UserInfo>> getUsers(Session session) async {
-    return await UserInfo.db.find(session);
+    return await UserInfo.db.find(
+      session,
+      orderBy: (p) => (p.created),
+      orderDescending: true,
+    );
   }
 
   /// get users
   Future<List<Address>> getAddress(Session session) async {
     return await Address.db.find(session);
+  }
+
+  /// get invoices
+  Future<List<Invoice>> getInvoice(Session session) async {
+    return await Invoice.db.find(
+      session,
+      orderBy: (p) => (p.createdAt),
+      orderDescending: true,
+    );
   }
 
   /// add new user with scope
@@ -55,15 +69,13 @@ class ManagerEndpoint extends Endpoint {
     if (user != null) {
       switch (userScope) {
         case 'manager':
-          return await Users.updateUserScopes(
-              session, user.id!, {UserScope.manager});
+          await Users.updateUserScopes(session, user.id!, {UserScope.manager});
         case 'officer':
-          return await Users.updateUserScopes(
-              session, user.id!, {UserScope.officer});
-        default:
-          return await Users.updateUserScopes(
-              session, user.id!, {UserScope.customer});
+          await Users.updateUserScopes(session, user.id!, {UserScope.officer});
+        case 'customer':
+          await Users.updateUserScopes(session, user.id!, {UserScope.customer});
       }
+      return user;
     } else {
       return null;
     }

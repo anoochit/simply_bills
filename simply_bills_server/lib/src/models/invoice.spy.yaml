@@ -1,10 +1,11 @@
-class: Bill
-table: bill
+class: Invoice
+table: invoice
 fields:
   referenceNo: String
   billTo: User?, relation(onUpdate=SetNull, onDelete=NoAction)
-  items: List<BillItem>?
+  billAddress: Address?, relation(onUpdate=SetNull, onDelete=NoAction)
+  items: List<Invoice>?
   total: double
   createdAt: DateTime
   billCreatedBy: User?, relation(onUpdate=SetNull, onDelete=NoAction)
-  status: BillStatus
+  status: InvoiceStatus

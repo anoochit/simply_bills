@@ -13,7 +13,8 @@ import 'dart:async' as _i2;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 import 'package:simply_bills_client/src/protocol/faq.dart' as _i4;
 import 'package:simply_bills_client/src/protocol/address.dart' as _i5;
-import 'protocol.dart' as _i6;
+import 'package:simply_bills_client/src/protocol/invoice.dart' as _i6;
+import 'protocol.dart' as _i7;
 
 /// {@category Endpoint}
 class EndpointCustomer extends _i1.EndpointRef {
@@ -131,7 +132,15 @@ class EndpointManager extends _i1.EndpointRef {
         {},
       );
 
-  /// add new user
+  /// get invoices
+  _i2.Future<List<_i6.Invoice>> getInvoice() =>
+      caller.callServerEndpoint<List<_i6.Invoice>>(
+        'manager',
+        'getInvoice',
+        {},
+      );
+
+  /// add new user with scope
   _i2.Future<_i3.UserInfo?> createUserWithScope(
     String userName,
     String email,
@@ -181,7 +190,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i6.Protocol(),
+          _i7.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

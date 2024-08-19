@@ -11,13 +11,13 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'address.dart' as _i2;
-import 'bill.dart' as _i3;
-import 'bill_item.dart' as _i4;
-import 'bill_status.dart' as _i5;
-import 'event.dart' as _i6;
-import 'example.dart' as _i7;
-import 'faq.dart' as _i8;
-import 'faq_type.dart' as _i9;
+import 'event.dart' as _i3;
+import 'example.dart' as _i4;
+import 'faq.dart' as _i5;
+import 'faq_type.dart' as _i6;
+import 'invoice.dart' as _i7;
+import 'invoice_item.dart' as _i8;
+import 'invoice_status.dart' as _i9;
 import 'post.dart' as _i10;
 import 'product.dart' as _i11;
 import 'user.dart' as _i12;
@@ -26,14 +26,15 @@ import 'protocol.dart' as _i14;
 import 'package:simply_bills_client/src/protocol/faq.dart' as _i15;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i16;
 import 'package:simply_bills_client/src/protocol/address.dart' as _i17;
+import 'package:simply_bills_client/src/protocol/invoice.dart' as _i18;
 export 'address.dart';
-export 'bill.dart';
-export 'bill_item.dart';
-export 'bill_status.dart';
 export 'event.dart';
 export 'example.dart';
 export 'faq.dart';
 export 'faq_type.dart';
+export 'invoice.dart';
+export 'invoice_item.dart';
+export 'invoice_status.dart';
 export 'post.dart';
 export 'product.dart';
 export 'user.dart';
@@ -56,26 +57,26 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Address) {
       return _i2.Address.fromJson(data) as T;
     }
-    if (t == _i3.Bill) {
-      return _i3.Bill.fromJson(data) as T;
+    if (t == _i3.Event) {
+      return _i3.Event.fromJson(data) as T;
     }
-    if (t == _i4.BillItem) {
-      return _i4.BillItem.fromJson(data) as T;
+    if (t == _i4.Example) {
+      return _i4.Example.fromJson(data) as T;
     }
-    if (t == _i5.BillStatus) {
-      return _i5.BillStatus.fromJson(data) as T;
+    if (t == _i5.Faq) {
+      return _i5.Faq.fromJson(data) as T;
     }
-    if (t == _i6.Event) {
-      return _i6.Event.fromJson(data) as T;
+    if (t == _i6.FaqType) {
+      return _i6.FaqType.fromJson(data) as T;
     }
-    if (t == _i7.Example) {
-      return _i7.Example.fromJson(data) as T;
+    if (t == _i7.Invoice) {
+      return _i7.Invoice.fromJson(data) as T;
     }
-    if (t == _i8.Faq) {
-      return _i8.Faq.fromJson(data) as T;
+    if (t == _i8.InvoiceItem) {
+      return _i8.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i9.FaqType) {
-      return _i9.FaqType.fromJson(data) as T;
+    if (t == _i9.InvoiceStatus) {
+      return _i9.InvoiceStatus.fromJson(data) as T;
     }
     if (t == _i10.Post) {
       return _i10.Post.fromJson(data) as T;
@@ -92,26 +93,26 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.Bill?>()) {
-      return (data != null ? _i3.Bill.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i3.Event?>()) {
+      return (data != null ? _i3.Event.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i4.BillItem?>()) {
-      return (data != null ? _i4.BillItem.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i4.Example?>()) {
+      return (data != null ? _i4.Example.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.BillStatus?>()) {
-      return (data != null ? _i5.BillStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.Faq?>()) {
+      return (data != null ? _i5.Faq.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.Event?>()) {
-      return (data != null ? _i6.Event.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.FaqType?>()) {
+      return (data != null ? _i6.FaqType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.Example?>()) {
-      return (data != null ? _i7.Example.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.Invoice?>()) {
+      return (data != null ? _i7.Invoice.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Faq?>()) {
-      return (data != null ? _i8.Faq.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.InvoiceItem?>()) {
+      return (data != null ? _i8.InvoiceItem.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.FaqType?>()) {
-      return (data != null ? _i9.FaqType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.InvoiceStatus?>()) {
+      return (data != null ? _i9.InvoiceStatus.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i10.Post?>()) {
       return (data != null ? _i10.Post.fromJson(data) : null) as T;
@@ -125,9 +126,9 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i13.UserScope?>()) {
       return (data != null ? _i13.UserScope.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i14.BillItem>?>()) {
+    if (t == _i1.getType<List<_i14.Invoice>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i14.BillItem>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i14.Invoice>(e)).toList()
           : null) as dynamic;
     }
     if (t == _i1.getType<List<_i14.Address>?>()) {
@@ -147,6 +148,10 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i17.Address>(e)).toList()
           as dynamic;
     }
+    if (t == List<_i18.Invoice>) {
+      return (data as List).map((e) => deserialize<_i18.Invoice>(e)).toList()
+          as dynamic;
+    }
     try {
       return _i16.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
@@ -163,26 +168,26 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i2.Address) {
       return 'Address';
     }
-    if (data is _i3.Bill) {
-      return 'Bill';
-    }
-    if (data is _i4.BillItem) {
-      return 'BillItem';
-    }
-    if (data is _i5.BillStatus) {
-      return 'BillStatus';
-    }
-    if (data is _i6.Event) {
+    if (data is _i3.Event) {
       return 'Event';
     }
-    if (data is _i7.Example) {
+    if (data is _i4.Example) {
       return 'Example';
     }
-    if (data is _i8.Faq) {
+    if (data is _i5.Faq) {
       return 'Faq';
     }
-    if (data is _i9.FaqType) {
+    if (data is _i6.FaqType) {
       return 'FaqType';
+    }
+    if (data is _i7.Invoice) {
+      return 'Invoice';
+    }
+    if (data is _i8.InvoiceItem) {
+      return 'InvoiceItem';
+    }
+    if (data is _i9.InvoiceStatus) {
+      return 'InvoiceStatus';
     }
     if (data is _i10.Post) {
       return 'Post';
@@ -208,26 +213,26 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Address') {
       return deserialize<_i2.Address>(data['data']);
     }
-    if (data['className'] == 'Bill') {
-      return deserialize<_i3.Bill>(data['data']);
-    }
-    if (data['className'] == 'BillItem') {
-      return deserialize<_i4.BillItem>(data['data']);
-    }
-    if (data['className'] == 'BillStatus') {
-      return deserialize<_i5.BillStatus>(data['data']);
-    }
     if (data['className'] == 'Event') {
-      return deserialize<_i6.Event>(data['data']);
+      return deserialize<_i3.Event>(data['data']);
     }
     if (data['className'] == 'Example') {
-      return deserialize<_i7.Example>(data['data']);
+      return deserialize<_i4.Example>(data['data']);
     }
     if (data['className'] == 'Faq') {
-      return deserialize<_i8.Faq>(data['data']);
+      return deserialize<_i5.Faq>(data['data']);
     }
     if (data['className'] == 'FaqType') {
-      return deserialize<_i9.FaqType>(data['data']);
+      return deserialize<_i6.FaqType>(data['data']);
+    }
+    if (data['className'] == 'Invoice') {
+      return deserialize<_i7.Invoice>(data['data']);
+    }
+    if (data['className'] == 'InvoiceItem') {
+      return deserialize<_i8.InvoiceItem>(data['data']);
+    }
+    if (data['className'] == 'InvoiceStatus') {
+      return deserialize<_i9.InvoiceStatus>(data['data']);
     }
     if (data['className'] == 'Post') {
       return deserialize<_i10.Post>(data['data']);
