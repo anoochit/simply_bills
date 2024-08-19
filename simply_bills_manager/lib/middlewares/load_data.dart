@@ -26,6 +26,11 @@ class LoadData extends GetMiddleware {
       serverpodService.getFAQ().then((value) {
         appController.listFaq.value = value;
       });
+
+      // load addree
+      serverpodService.getAddress().then((value) {
+        appController.listAddress.value = value;
+      });
     }
 
     return null;

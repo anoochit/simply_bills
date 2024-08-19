@@ -63,15 +63,14 @@ class HomeView extends GetView<HomeController> {
               ),
               child: const SizedBox(
                 width: double.infinity,
-                child: AvatarView(radius: 42, showTitle: true),
+                child: AvatarView(radius: 44, showTitle: true),
               ),
             ),
 
             // menu
             Expanded(
-              child: ListView.builder(
-                itemCount: navItems.length,
-                itemBuilder: (BuildContext context, int index) {
+              child: ListView(
+                children: List.generate(navItems.length, (index) {
                   return ListTile(
                     leading: Icon(navItems[index].icon),
                     title: Text(navItems[index].title),
@@ -80,7 +79,7 @@ class HomeView extends GetView<HomeController> {
                       Get.back();
                     },
                   );
-                },
+                }),
               ),
             ),
           ],
@@ -97,6 +96,7 @@ class HomeView extends GetView<HomeController> {
         return FloatingActionButton(
           onPressed: () {
             // add bills
+            createInvoiceDialog(context);
           },
           child: const Icon(Icons.add),
         );
@@ -112,5 +112,25 @@ class HomeView extends GetView<HomeController> {
       default:
         return Container();
     }
+  }
+
+  void createInvoiceDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('New invoice'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Waste'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

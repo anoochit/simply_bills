@@ -12,5 +12,6 @@ manager:
   - updateOfficerScope:
   - updateUserScope:
   - getUsers:
+  - getAddress:
   - createUserWithScope:
 officer:

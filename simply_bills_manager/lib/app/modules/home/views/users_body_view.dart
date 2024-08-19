@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
-import 'package:simply_bills_manager/app/widgets/views/avatar_view.dart';
 
 import '../../../../controllers/app_controller.dart';
 
@@ -53,11 +52,6 @@ class UsersBodyView extends GetView<AppController> {
           final userName = listUsers[index].userName;
           final userEmail = listUsers[index].email;
           return ListTile(
-            // leading: AvatarView(
-            //   radius: 22,
-            //   showTitle: false,
-            //   email: userEmail,
-            // ),
             title: Text(
               '$userName',
               maxLines: 1,

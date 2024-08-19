@@ -2,6 +2,8 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 import 'package:simply_bills_server/src/endpoints/customer_endpoint.dart';
 
+import '../generated/address.dart';
+
 class ManagerEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
   // creating a public method with `Session` as its first parameter.
@@ -41,7 +43,12 @@ class ManagerEndpoint extends Endpoint {
     return await UserInfo.db.find(session);
   }
 
-  /// add new user
+  /// get users
+  Future<List<Address>> getAddress(Session session) async {
+    return await Address.db.find(session);
+  }
+
+  /// add new user with scope
   Future<UserInfo?> createUserWithScope(Session session, String userName,
       String email, String password, String userScope) async {
     final user = await Emails.createUser(session, userName, email, password);

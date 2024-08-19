@@ -32,27 +32,6 @@ class ServerpodService extends GetxService {
     }
   }
 
-  /// signup with email and password
-  Future<bool> signUpWithEmailPassword(
-      {required String name,
-      required String email,
-      required String password}) async {
-    final authController = EmailAuthController(client.modules.auth);
-
-    return await authController.createAccountRequest(name, email, password);
-  }
-
-  /// verify account
-  Future<UserInfo?> verifyAccount(
-      {required String email, required String verificationCode}) async {
-    final authController = EmailAuthController(client.modules.auth);
-
-    final userInfo =
-        await authController.validateAccount(email, verificationCode);
-
-    return userInfo;
-  }
-
   /// get FAQ
   Future<List<Faq>> getFAQ() async {
     return await client.faq.getFAQ();
@@ -61,5 +40,10 @@ class ServerpodService extends GetxService {
   /// get user
   Future<List<UserInfo>> getUser() async {
     return await client.manager.getUsers();
+  }
+
+  /// get address
+  Future<List<Address>> getAddress() async {
+    return await client.manager.getAddress();
   }
 }

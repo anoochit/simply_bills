@@ -25,6 +25,7 @@ import 'user_scope.dart' as _i13;
 import 'protocol.dart' as _i14;
 import 'package:simply_bills_client/src/protocol/faq.dart' as _i15;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i16;
+import 'package:simply_bills_client/src/protocol/address.dart' as _i17;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
@@ -140,6 +141,10 @@ class Protocol extends _i1.SerializationManager {
     }
     if (t == List<_i16.UserInfo>) {
       return (data as List).map((e) => deserialize<_i16.UserInfo>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i17.Address>) {
+      return (data as List).map((e) => deserialize<_i17.Address>(e)).toList()
           as dynamic;
     }
     try {

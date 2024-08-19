@@ -26,6 +26,7 @@ import 'user.dart' as _i14;
 import 'user_scope.dart' as _i15;
 import 'protocol.dart' as _i16;
 import 'package:simply_bills_server/src/generated/faq.dart' as _i17;
+import 'package:simply_bills_server/src/generated/address.dart' as _i18;
 export 'address.dart';
 export 'bill.dart';
 export 'bill_item.dart';
@@ -729,6 +730,10 @@ class Protocol extends _i1.SerializationManagerServer {
     }
     if (t == List<_i3.UserInfo>) {
       return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i18.Address>) {
+      return (data as List).map((e) => deserialize<_i18.Address>(e)).toList()
           as dynamic;
     }
     try {
