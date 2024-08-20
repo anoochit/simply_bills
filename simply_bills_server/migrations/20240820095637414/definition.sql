@@ -57,7 +57,7 @@ CREATE TABLE "invoice" (
 CREATE TABLE "invoice_item" (
     "id" bigserial PRIMARY KEY,
     "productId" bigint NOT NULL,
-    "qt" double precision NOT NULL,
+    "quantity" double precision NOT NULL,
     "unitPrice" double precision NOT NULL,
     "total" double precision NOT NULL
 );
@@ -91,6 +91,9 @@ CREATE TABLE "user_address" (
     "userId" bigint NOT NULL,
     "addressId" bigint NOT NULL
 );
+
+-- Indexes
+CREATE UNIQUE INDEX "useraddress_index_idx" ON "user_address" USING btree ("userId", "addressId");
 
 --
 -- Class UserData as table user_data
@@ -541,9 +544,9 @@ ALTER TABLE ONLY "serverpod_query_log"
 -- MIGRATION VERSION FOR simply_bills
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('simply_bills', '20240820062156854', now())
+    VALUES ('simply_bills', '20240820095637414', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20240820062156854', "timestamp" = now();
+    DO UPDATE SET "version" = '20240820095637414', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

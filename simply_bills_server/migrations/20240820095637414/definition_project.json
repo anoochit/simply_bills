@@ -351,7 +351,7 @@
           "dartType": "int"
         },
         {
-          "name": "qt",
+          "name": "quantity",
           "columnType": 3,
           "isNullable": false,
           "dartType": "double"
@@ -667,7 +667,7 @@
     },
     {
       "module": "simply_bills",
-      "version": "20240820062156854"
+      "version": "20240820074242802"
     }
   ],
   "migrationApiVersion": 1

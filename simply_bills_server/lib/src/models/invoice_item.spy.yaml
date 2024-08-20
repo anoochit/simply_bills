@@ -2,6 +2,6 @@ class: InvoiceItem
 table: invoice_item
 fields:
   product: Product?, relation(onUpdate=SetNull, onDelete=SetNull)
-  qt: double
+  quantity: double
   unitPrice: double
   total: double

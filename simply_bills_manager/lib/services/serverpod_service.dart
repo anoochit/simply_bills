@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
+import 'package:simply_bills_manager/controllers/app_controller.dart';
 
 import '../serverpod.dart';
 
@@ -50,5 +51,33 @@ class ServerpodService extends GetxService {
   /// get invoice
   Future<List<Invoice>> getInvoice() async {
     return await client.manager.getInvoice();
+  }
+
+  // load users
+  loadUser() {
+    getUser().then((value) {
+      Get.find<AppController>().listUser.value = value;
+    });
+  }
+
+  // load faq
+  loadFaq() {
+    getFAQ().then((value) {
+      Get.find<AppController>().listFaq.value = value;
+    });
+  }
+
+  // load addree
+  loadAddress() {
+    getAddress().then((value) {
+      Get.find<AppController>().listAddress.value = value;
+    });
+  }
+
+  // load invoice
+  loadInvoice() {
+    getInvoice().then((value) {
+      Get.find<AppController>().listInvoice.value = value;
+    });
   }
 }

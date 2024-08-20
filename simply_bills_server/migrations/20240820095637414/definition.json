@@ -351,7 +351,7 @@
           "dartType": "int"
         },
         {
-          "name": "qt",
+          "name": "quantity",
           "columnType": 3,
           "isNullable": false,
           "dartType": "double"
@@ -2348,7 +2348,7 @@
   "installedModules": [
     {
       "module": "simply_bills",
-      "version": "20240820074242802"
+      "version": "20240820095637414"
     },
     {
       "module": "serverpod",

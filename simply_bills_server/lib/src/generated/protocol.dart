@@ -391,7 +391,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'qt',
+          name: 'quantity',
           columnType: _i2.ColumnType.doublePrecision,
           isNullable: false,
           dartType: 'double',

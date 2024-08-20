@@ -1,0 +1,101 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "invoice_item"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "invoice_item",
+        "dartName": "InvoiceItem",
+        "module": "simply_bills",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('invoice_item_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "productId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "quantity",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "unitPrice",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "total",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "invoice_item_fk_0",
+            "columns": [
+              "productId"
+            ],
+            "referenceTable": "product",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 0,
+            "onDelete": 0
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "invoice_item_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "columnDropped",
+      "message": "Column \"qt\" of table \"invoice_item\" will be dropped.",
+      "table": "invoice_item",
+      "columns": [
+        "qt"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"invoice_item\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "invoice_item",
+      "columns": [
+        "quantity"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

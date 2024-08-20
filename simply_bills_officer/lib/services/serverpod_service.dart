@@ -3,6 +3,7 @@ import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
 
+import '../controllers/app_controller.dart';
 import '../serverpod.dart';
 
 class ServerpodService extends GetxService {
@@ -32,29 +33,15 @@ class ServerpodService extends GetxService {
     }
   }
 
-  /// signup with email and password
-  Future<bool> signUpWithEmailPassword(
-      {required String name,
-      required String email,
-      required String password}) async {
-    final authController = EmailAuthController(client.modules.auth);
-
-    return await authController.createAccountRequest(name, email, password);
-  }
-
-  /// verify account
-  Future<UserInfo?> verifyAccount(
-      {required String email, required String verificationCode}) async {
-    final authController = EmailAuthController(client.modules.auth);
-
-    final userInfo =
-        await authController.validateAccount(email, verificationCode);
-
-    return userInfo;
-  }
-
   /// get FAQ
   Future<List<Faq>> getFAQ() async {
     return await client.faq.getOfficerFAQ();
+  }
+
+  // load faq
+  loadFaq() {
+    getFAQ().then((value) {
+      Get.find<AppController>().listFaq.value = value;
+    });
   }
 }

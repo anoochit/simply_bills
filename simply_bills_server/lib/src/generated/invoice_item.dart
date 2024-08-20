@@ -17,7 +17,7 @@ abstract class InvoiceItem extends _i1.TableRow
     int? id,
     required this.productId,
     this.product,
-    required this.qt,
+    required this.quantity,
     required this.unitPrice,
     required this.total,
   }) : super(id);
@@ -26,7 +26,7 @@ abstract class InvoiceItem extends _i1.TableRow
     int? id,
     required int productId,
     _i2.Product? product,
-    required double qt,
+    required double quantity,
     required double unitPrice,
     required double total,
   }) = _InvoiceItemImpl;
@@ -39,7 +39,7 @@ abstract class InvoiceItem extends _i1.TableRow
           ? null
           : _i2.Product.fromJson(
               (jsonSerialization['product'] as Map<String, dynamic>)),
-      qt: (jsonSerialization['qt'] as num).toDouble(),
+      quantity: (jsonSerialization['quantity'] as num).toDouble(),
       unitPrice: (jsonSerialization['unitPrice'] as num).toDouble(),
       total: (jsonSerialization['total'] as num).toDouble(),
     );
@@ -53,7 +53,7 @@ abstract class InvoiceItem extends _i1.TableRow
 
   _i2.Product? product;
 
-  double qt;
+  double quantity;
 
   double unitPrice;
 
@@ -66,7 +66,7 @@ abstract class InvoiceItem extends _i1.TableRow
     int? id,
     int? productId,
     _i2.Product? product,
-    double? qt,
+    double? quantity,
     double? unitPrice,
     double? total,
   });
@@ -76,7 +76,7 @@ abstract class InvoiceItem extends _i1.TableRow
       if (id != null) 'id': id,
       'productId': productId,
       if (product != null) 'product': product?.toJson(),
-      'qt': qt,
+      'quantity': quantity,
       'unitPrice': unitPrice,
       'total': total,
     };
@@ -88,7 +88,7 @@ abstract class InvoiceItem extends _i1.TableRow
       if (id != null) 'id': id,
       'productId': productId,
       if (product != null) 'product': product?.toJsonForProtocol(),
-      'qt': qt,
+      'quantity': quantity,
       'unitPrice': unitPrice,
       'total': total,
     };
@@ -131,14 +131,14 @@ class _InvoiceItemImpl extends InvoiceItem {
     int? id,
     required int productId,
     _i2.Product? product,
-    required double qt,
+    required double quantity,
     required double unitPrice,
     required double total,
   }) : super._(
           id: id,
           productId: productId,
           product: product,
-          qt: qt,
+          quantity: quantity,
           unitPrice: unitPrice,
           total: total,
         );
@@ -148,7 +148,7 @@ class _InvoiceItemImpl extends InvoiceItem {
     Object? id = _Undefined,
     int? productId,
     Object? product = _Undefined,
-    double? qt,
+    double? quantity,
     double? unitPrice,
     double? total,
   }) {
@@ -156,7 +156,7 @@ class _InvoiceItemImpl extends InvoiceItem {
       id: id is int? ? id : this.id,
       productId: productId ?? this.productId,
       product: product is _i2.Product? ? product : this.product?.copyWith(),
-      qt: qt ?? this.qt,
+      quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       total: total ?? this.total,
     );
@@ -169,8 +169,8 @@ class InvoiceItemTable extends _i1.Table {
       'productId',
       this,
     );
-    qt = _i1.ColumnDouble(
-      'qt',
+    quantity = _i1.ColumnDouble(
+      'quantity',
       this,
     );
     unitPrice = _i1.ColumnDouble(
@@ -187,7 +187,7 @@ class InvoiceItemTable extends _i1.Table {
 
   _i2.ProductTable? _product;
 
-  late final _i1.ColumnDouble qt;
+  late final _i1.ColumnDouble quantity;
 
   late final _i1.ColumnDouble unitPrice;
 
@@ -210,7 +210,7 @@ class InvoiceItemTable extends _i1.Table {
   List<_i1.Column> get columns => [
         id,
         productId,
-        qt,
+        quantity,
         unitPrice,
         total,
       ];
