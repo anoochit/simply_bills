@@ -130,15 +130,18 @@ Future<void> initData(Serverpod pod) async {
   // if no faq add sample data
   final faqTotal = await Faq.db.count(session);
 
+  final question = 'Question';
+  final answer =
+      'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.';
+
   if (faqTotal == 0) {
     // customer faq
     for (int i = 0; i < 10; i++) {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question',
-            answer:
-                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            question: question,
+            answer: answer,
             type: FaqType.customer,
             authorId: managerId,
             createdAt: DateTime.now(),
@@ -150,9 +153,8 @@ Future<void> initData(Serverpod pod) async {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question',
-            answer:
-                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            question: question,
+            answer: answer,
             type: FaqType.officer,
             authorId: managerId,
             createdAt: DateTime.now(),
@@ -165,9 +167,8 @@ Future<void> initData(Serverpod pod) async {
       Faq.db.insertRow(
         session,
         Faq(
-            question: 'Question',
-            answer:
-                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            question: question,
+            answer: answer,
             type: FaqType.manager,
             authorId: managerId,
             createdAt: DateTime.now(),
