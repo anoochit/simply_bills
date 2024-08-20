@@ -61,7 +61,10 @@ class EmailVerifyView extends GetView<ServerpodService> {
                       );
                       // check user result update user scope
                       if (user != null) {
-                        await client.customer.updateToCustomerScope();
+                        // update scope
+                        await controller.updateToCustomerScope();
+                        // create customer data
+                        await client.customer.createCustomerData();
                         Get.snackbar('Info', 'Verified account!');
                         Get.offAllNamed(Routes.HOME);
                       } else {

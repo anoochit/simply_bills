@@ -1,5 +1,8 @@
 customer:
   - updateToCustomerScope:
+  - createCustomerData:
+  - getCustomerData:
+  - addCustomerAddress:
 example:
   - hello:
 faq:

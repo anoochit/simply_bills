@@ -1,0 +1,65 @@
+{
+  "actions": [
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "user_address",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "_addressOwnersAddressId",
+          "_userDataAddressUserDataId"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [
+          "user_address_fk_2",
+          "user_address_fk_3"
+        ],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"_addressOwnersAddressId\" of table \"user_address\" will be dropped.",
+            "table": "user_address",
+            "columns": [
+              "_addressOwnersAddressId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"_userDataAddressUserDataId\" of table \"user_address\" will be dropped.",
+            "table": "user_address",
+            "columns": [
+              "_userDataAddressUserDataId"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "columnDropped",
+      "message": "Column \"_addressOwnersAddressId\" of table \"user_address\" will be dropped.",
+      "table": "user_address",
+      "columns": [
+        "_addressOwnersAddressId"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"_userDataAddressUserDataId\" of table \"user_address\" will be dropped.",
+      "table": "user_address",
+      "columns": [
+        "_userDataAddressUserDataId"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

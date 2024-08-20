@@ -6,9 +6,11 @@ environment:
   sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
+  ai_barcode_scanner: ^5.1.1+2
   cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
+  flutter_barcode_scanner: ^2.0.0
   flutter_gravatar: ^2.0.2
   gap: ^3.0.1
   get: 4.6.6

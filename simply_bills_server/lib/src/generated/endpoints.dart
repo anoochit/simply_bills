@@ -64,7 +64,52 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['customer'] as _i2.CustomerEndpoint)
                   .updateToCustomerScope(session),
-        )
+        ),
+        'createCustomerData': _i1.MethodConnector(
+          name: 'createCustomerData',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['customer'] as _i2.CustomerEndpoint)
+                  .createCustomerData(session),
+        ),
+        'getCustomerData': _i1.MethodConnector(
+          name: 'getCustomerData',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['customer'] as _i2.CustomerEndpoint)
+                  .getCustomerData(session),
+        ),
+        'addCustomerAddress': _i1.MethodConnector(
+          name: 'addCustomerAddress',
+          params: {
+            'uuid': _i1.ParameterDescription(
+              name: 'uuid',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'userDataId': _i1.ParameterDescription(
+              name: 'userDataId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['customer'] as _i2.CustomerEndpoint)
+                  .addCustomerAddress(
+            session,
+            params['uuid'],
+            params['userDataId'],
+          ),
+        ),
       },
     );
     connectors['example'] = _i1.EndpointConnector(

@@ -1,0 +1,5 @@
+class: UserData
+table: user_data
+fields:
+  userInfo: module:auth:UserInfo?, relation(onUpdate=SetNull, onDelete=SetNull)
+  address: List<UserAddress>?, relation(name=user_useraddress)

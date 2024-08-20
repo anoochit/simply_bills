@@ -22,12 +22,14 @@ import 'invoice_item.dart' as _i10;
 import 'invoice_status.dart' as _i11;
 import 'post.dart' as _i12;
 import 'product.dart' as _i13;
-import 'user.dart' as _i14;
-import 'user_scope.dart' as _i15;
-import 'protocol.dart' as _i16;
-import 'package:simply_bills_server/src/generated/faq.dart' as _i17;
-import 'package:simply_bills_server/src/generated/address.dart' as _i18;
-import 'package:simply_bills_server/src/generated/invoice.dart' as _i19;
+import 'user_address.dart' as _i14;
+import 'user_data.dart' as _i15;
+import 'user_scope.dart' as _i16;
+import 'protocol.dart' as _i17;
+import 'package:simply_bills_server/src/generated/user_data.dart' as _i18;
+import 'package:simply_bills_server/src/generated/faq.dart' as _i19;
+import 'package:simply_bills_server/src/generated/address.dart' as _i20;
+import 'package:simply_bills_server/src/generated/invoice.dart' as _i21;
 export 'address.dart';
 export 'event.dart';
 export 'example.dart';
@@ -38,7 +40,8 @@ export 'invoice_item.dart';
 export 'invoice_status.dart';
 export 'post.dart';
 export 'product.dart';
-export 'user.dart';
+export 'user_address.dart';
+export 'user_data.dart';
 export 'user_scope.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
@@ -80,25 +83,8 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
-          name: '_userAddressUserId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: true,
-          dartType: 'int?',
-        ),
       ],
-      foreignKeys: [
-        _i2.ForeignKeyDefinition(
-          constraintName: 'address_fk_0',
-          columns: ['_userAddressUserId'],
-          referenceTable: 'user',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        )
-      ],
+      foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'address_pkey',
@@ -174,7 +160,7 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         )
       ],
@@ -253,7 +239,7 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         )
       ],
@@ -340,11 +326,11 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'invoice_fk_0',
           columns: ['billToId'],
-          referenceTable: 'user',
+          referenceTable: 'user_data',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         ),
         _i2.ForeignKeyDefinition(
@@ -354,17 +340,17 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'invoice_fk_2',
           columns: ['billCreatedById'],
-          referenceTable: 'user',
+          referenceTable: 'user_data',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
@@ -431,7 +417,7 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
         )
       ],
@@ -570,8 +556,8 @@ class Protocol extends _i1.SerializationManagerServer {
       managed: true,
     ),
     _i2.TableDefinition(
-      name: 'user',
-      dartName: 'User',
+      name: 'user_address',
+      dartName: 'UserAddress',
       schema: 'public',
       module: 'simply_bills',
       columns: [
@@ -580,48 +566,46 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'user_id_seq\'::regclass)',
+          columnDefault: 'nextval(\'user_address_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
-          name: 'userInfoId',
+          name: 'userId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'name',
-          columnType: _i2.ColumnType.text,
+          name: 'addressId',
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
-        ),
-        _i2.ColumnDefinition(
-          name: 'telephone',
-          columnType: _i2.ColumnType.text,
-          isNullable: true,
-          dartType: 'String?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'email',
-          columnType: _i2.ColumnType.text,
-          isNullable: true,
-          dartType: 'String?',
+          dartType: 'int',
         ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
-          constraintName: 'user_fk_0',
-          columns: ['userInfoId'],
-          referenceTable: 'serverpod_user_info',
+          constraintName: 'user_address_fk_0',
+          columns: ['userId'],
+          referenceTable: 'user_data',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
+          onUpdate: _i2.ForeignKeyAction.noAction,
           onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
-        )
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'user_address_fk_1',
+          columns: ['addressId'],
+          referenceTable: 'address',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'user_pkey',
+          indexName: 'user_address_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -634,18 +618,71 @@ class Protocol extends _i1.SerializationManagerServer {
           isPrimary: true,
         ),
         _i2.IndexDefinition(
-          indexName: 'user_library_unique_idx',
+          indexName: 'useraddress_index_idx',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'userInfoId',
-            )
+              definition: 'userId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'addressId',
+            ),
           ],
           type: 'btree',
           isUnique: true,
           isPrimary: false,
         ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'user_data',
+      dartName: 'UserData',
+      schema: 'public',
+      module: 'simply_bills',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'user_data_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'userInfoId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'user_data_fk_0',
+          columns: ['userInfoId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.setNull,
+          onDelete: _i2.ForeignKeyAction.setNull,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'user_data_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
       ],
       managed: true,
     ),
@@ -689,11 +726,14 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i13.Product) {
       return _i13.Product.fromJson(data) as T;
     }
-    if (t == _i14.User) {
-      return _i14.User.fromJson(data) as T;
+    if (t == _i14.UserAddress) {
+      return _i14.UserAddress.fromJson(data) as T;
     }
-    if (t == _i15.UserScope) {
-      return _i15.UserScope.fromJson(data) as T;
+    if (t == _i15.UserData) {
+      return _i15.UserData.fromJson(data) as T;
+    }
+    if (t == _i16.UserScope) {
+      return _i16.UserScope.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.Address?>()) {
       return (data != null ? _i4.Address.fromJson(data) : null) as T;
@@ -725,36 +765,48 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i13.Product?>()) {
       return (data != null ? _i13.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i14.User?>()) {
-      return (data != null ? _i14.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i14.UserAddress?>()) {
+      return (data != null ? _i14.UserAddress.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.UserScope?>()) {
-      return (data != null ? _i15.UserScope.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i15.UserData?>()) {
+      return (data != null ? _i15.UserData.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i16.Invoice>?>()) {
+    if (t == _i1.getType<_i16.UserScope?>()) {
+      return (data != null ? _i16.UserScope.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i17.UserAddress>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i16.Invoice>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i17.UserAddress>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i16.Address>?>()) {
+    if (t == _i1.getType<List<_i17.Invoice>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i16.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i17.Invoice>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i17.Faq>) {
-      return (data as List).map((e) => deserialize<_i17.Faq>(e)).toList()
+    if (t == _i1.getType<List<_i17.UserAddress>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i17.UserAddress>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i18.UserData>) {
+      return (data as List).map((e) => deserialize<_i18.UserData>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i19.Faq>) {
+      return (data as List).map((e) => deserialize<_i19.Faq>(e)).toList()
           as dynamic;
     }
     if (t == List<_i3.UserInfo>) {
       return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i18.Address>) {
-      return (data as List).map((e) => deserialize<_i18.Address>(e)).toList()
+    if (t == List<_i20.Address>) {
+      return (data as List).map((e) => deserialize<_i20.Address>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i19.Invoice>) {
-      return (data as List).map((e) => deserialize<_i19.Invoice>(e)).toList()
+    if (t == List<_i21.Invoice>) {
+      return (data as List).map((e) => deserialize<_i21.Invoice>(e)).toList()
           as dynamic;
     }
     try {
@@ -803,10 +855,13 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i13.Product) {
       return 'Product';
     }
-    if (data is _i14.User) {
-      return 'User';
+    if (data is _i14.UserAddress) {
+      return 'UserAddress';
     }
-    if (data is _i15.UserScope) {
+    if (data is _i15.UserData) {
+      return 'UserData';
+    }
+    if (data is _i16.UserScope) {
       return 'UserScope';
     }
     return super.getClassNameForObject(data);
@@ -848,11 +903,14 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Product') {
       return deserialize<_i13.Product>(data['data']);
     }
-    if (data['className'] == 'User') {
-      return deserialize<_i14.User>(data['data']);
+    if (data['className'] == 'UserAddress') {
+      return deserialize<_i14.UserAddress>(data['data']);
+    }
+    if (data['className'] == 'UserData') {
+      return deserialize<_i15.UserData>(data['data']);
     }
     if (data['className'] == 'UserScope') {
-      return deserialize<_i15.UserScope>(data['data']);
+      return deserialize<_i16.UserScope>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -886,8 +944,10 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i12.Post.t;
       case _i13.Product:
         return _i13.Product.t;
-      case _i14.User:
-        return _i14.User.t;
+      case _i14.UserAddress:
+        return _i14.UserAddress.t;
+      case _i15.UserData:
+        return _i15.UserData.t;
     }
     return null;
   }

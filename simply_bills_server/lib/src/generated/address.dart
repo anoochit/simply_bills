@@ -9,6 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Address extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -17,6 +19,7 @@ abstract class Address extends _i1.TableRow
     required this.uid,
     required this.address,
     required this.address2,
+    this.owners,
   }) : super(id);
 
   factory Address({
@@ -24,6 +27,7 @@ abstract class Address extends _i1.TableRow
     required String uid,
     required String address,
     required String address2,
+    List<_i2.UserAddress>? owners,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -32,6 +36,9 @@ abstract class Address extends _i1.TableRow
       uid: jsonSerialization['uid'] as String,
       address: jsonSerialization['address'] as String,
       address2: jsonSerialization['address2'] as String,
+      owners: (jsonSerialization['owners'] as List?)
+          ?.map((e) => _i2.UserAddress.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -45,7 +52,7 @@ abstract class Address extends _i1.TableRow
 
   String address2;
 
-  int? _userAddressUserId;
+  List<_i2.UserAddress>? owners;
 
   @override
   _i1.Table get table => t;
@@ -55,6 +62,7 @@ abstract class Address extends _i1.TableRow
     String? uid,
     String? address,
     String? address2,
+    List<_i2.UserAddress>? owners,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -63,7 +71,8 @@ abstract class Address extends _i1.TableRow
       'uid': uid,
       'address': address,
       'address2': address2,
-      if (_userAddressUserId != null) '_userAddressUserId': _userAddressUserId,
+      if (owners != null)
+        'owners': owners?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -74,11 +83,13 @@ abstract class Address extends _i1.TableRow
       'uid': uid,
       'address': address,
       'address2': address2,
+      if (owners != null)
+        'owners': owners?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
-  static AddressInclude include() {
-    return AddressInclude._();
+  static AddressInclude include({_i2.UserAddressIncludeList? owners}) {
+    return AddressInclude._(owners: owners);
   }
 
   static AddressIncludeList includeList({
@@ -115,11 +126,13 @@ class _AddressImpl extends Address {
     required String uid,
     required String address,
     required String address2,
+    List<_i2.UserAddress>? owners,
   }) : super._(
           id: id,
           uid: uid,
           address: address,
           address2: address2,
+          owners: owners,
         );
 
   @override
@@ -128,50 +141,15 @@ class _AddressImpl extends Address {
     String? uid,
     String? address,
     String? address2,
+    Object? owners = _Undefined,
   }) {
     return Address(
       id: id is int? ? id : this.id,
       uid: uid ?? this.uid,
       address: address ?? this.address,
       address2: address2 ?? this.address2,
+      owners: owners is List<_i2.UserAddress>? ? owners : this.owners?.clone(),
     );
-  }
-}
-
-class AddressImplicit extends _AddressImpl {
-  AddressImplicit._({
-    int? id,
-    required String uid,
-    required String address,
-    required String address2,
-    this.$_userAddressUserId,
-  }) : super(
-          id: id,
-          uid: uid,
-          address: address,
-          address2: address2,
-        );
-
-  factory AddressImplicit(
-    Address address, {
-    int? $_userAddressUserId,
-  }) {
-    return AddressImplicit._(
-      id: address.id,
-      uid: address.uid,
-      address: address.address,
-      address2: address.address2,
-      $_userAddressUserId: $_userAddressUserId,
-    );
-  }
-
-  int? $_userAddressUserId;
-
-  @override
-  Map<String, dynamic> toJson() {
-    var jsonMap = super.toJson();
-    jsonMap.addAll({'_userAddressUserId': $_userAddressUserId});
-    return jsonMap;
   }
 }
 
@@ -189,10 +167,6 @@ class AddressTable extends _i1.Table {
       'address2',
       this,
     );
-    $_userAddressUserId = _i1.ColumnInt(
-      '_userAddressUserId',
-      this,
-    );
   }
 
   late final _i1.ColumnString uid;
@@ -201,7 +175,40 @@ class AddressTable extends _i1.Table {
 
   late final _i1.ColumnString address2;
 
-  late final _i1.ColumnInt $_userAddressUserId;
+  _i2.UserAddressTable? ___owners;
+
+  _i1.ManyRelation<_i2.UserAddressTable>? _owners;
+
+  _i2.UserAddressTable get __owners {
+    if (___owners != null) return ___owners!;
+    ___owners = _i1.createRelationTable(
+      relationFieldName: '__owners',
+      field: Address.t.id,
+      foreignField: _i2.UserAddress.t.addressId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.UserAddressTable(tableRelation: foreignTableRelation),
+    );
+    return ___owners!;
+  }
+
+  _i1.ManyRelation<_i2.UserAddressTable> get owners {
+    if (_owners != null) return _owners!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'owners',
+      field: Address.t.id,
+      foreignField: _i2.UserAddress.t.addressId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.UserAddressTable(tableRelation: foreignTableRelation),
+    );
+    _owners = _i1.ManyRelation<_i2.UserAddressTable>(
+      tableWithRelations: relationTable,
+      table: _i2.UserAddressTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _owners!;
+  }
 
   @override
   List<_i1.Column> get columns => [
@@ -209,15 +216,26 @@ class AddressTable extends _i1.Table {
         uid,
         address,
         address2,
-        $_userAddressUserId,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'owners') {
+      return __owners;
+    }
+    return null;
+  }
 }
 
 class AddressInclude extends _i1.IncludeObject {
-  AddressInclude._();
+  AddressInclude._({_i2.UserAddressIncludeList? owners}) {
+    _owners = owners;
+  }
+
+  _i2.UserAddressIncludeList? _owners;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'owners': _owners};
 
   @override
   _i1.Table get table => Address.t;
@@ -246,6 +264,14 @@ class AddressIncludeList extends _i1.IncludeList {
 class AddressRepository {
   const AddressRepository._();
 
+  final attach = const AddressAttachRepository._();
+
+  final attachRow = const AddressAttachRowRepository._();
+
+  final detach = const AddressDetachRepository._();
+
+  final detachRow = const AddressDetachRowRepository._();
+
   Future<List<Address>> find(
     _i1.Session session, {
     _i1.WhereExpressionBuilder<AddressTable>? where,
@@ -255,6 +281,7 @@ class AddressRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<AddressTable>? orderByList,
     _i1.Transaction? transaction,
+    AddressInclude? include,
   }) async {
     return session.db.find<Address>(
       where: where?.call(Address.t),
@@ -264,6 +291,7 @@ class AddressRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -275,6 +303,7 @@ class AddressRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<AddressTable>? orderByList,
     _i1.Transaction? transaction,
+    AddressInclude? include,
   }) async {
     return session.db.findFirstRow<Address>(
       where: where?.call(Address.t),
@@ -283,6 +312,7 @@ class AddressRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -290,10 +320,12 @@ class AddressRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    AddressInclude? include,
   }) async {
     return session.db.findById<Address>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -388,6 +420,92 @@ class AddressRepository {
       where: where?.call(Address.t),
       limit: limit,
       transaction: transaction,
+    );
+  }
+}
+
+class AddressAttachRepository {
+  const AddressAttachRepository._();
+
+  Future<void> owners(
+    _i1.Session session,
+    Address address,
+    List<_i2.UserAddress> userAddress,
+  ) async {
+    if (userAddress.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('userAddress.id');
+    }
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $userAddress =
+        userAddress.map((e) => e.copyWith(addressId: address.id)).toList();
+    await session.db.update<_i2.UserAddress>(
+      $userAddress,
+      columns: [_i2.UserAddress.t.addressId],
+    );
+  }
+}
+
+class AddressAttachRowRepository {
+  const AddressAttachRowRepository._();
+
+  Future<void> owners(
+    _i1.Session session,
+    Address address,
+    _i2.UserAddress userAddress,
+  ) async {
+    if (userAddress.id == null) {
+      throw ArgumentError.notNull('userAddress.id');
+    }
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $userAddress = userAddress.copyWith(addressId: address.id);
+    await session.db.updateRow<_i2.UserAddress>(
+      $userAddress,
+      columns: [_i2.UserAddress.t.addressId],
+    );
+  }
+}
+
+class AddressDetachRepository {
+  const AddressDetachRepository._();
+
+  Future<void> owners(
+    _i1.Session session,
+    List<_i2.UserAddress> userAddress,
+  ) async {
+    if (userAddress.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('userAddress.id');
+    }
+
+    var $userAddress =
+        userAddress.map((e) => e.copyWith(addressId: null)).toList();
+    await session.db.update<_i2.UserAddress>(
+      $userAddress,
+      columns: [_i2.UserAddress.t.addressId],
+    );
+  }
+}
+
+class AddressDetachRowRepository {
+  const AddressDetachRowRepository._();
+
+  Future<void> owners(
+    _i1.Session session,
+    _i2.UserAddress userAddress,
+  ) async {
+    if (userAddress.id == null) {
+      throw ArgumentError.notNull('userAddress.id');
+    }
+
+    var $userAddress = userAddress.copyWith(addressId: null);
+    await session.db.updateRow<_i2.UserAddress>(
+      $userAddress,
+      columns: [_i2.UserAddress.t.addressId],
     );
   }
 }

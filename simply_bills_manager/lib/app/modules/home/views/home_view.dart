@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simply_bills_manager/app/routes/app_pages.dart';
 import '../../../data/data/bottom_nav.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/views/avatar_view.dart';
 import '../controllers/home_controller.dart';
 import 'address_body_view.dart';

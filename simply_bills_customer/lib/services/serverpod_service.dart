@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
+import 'package:simply_bills_customer/controllers/app_controller.dart';
 
 import '../serverpod.dart';
 
@@ -56,5 +57,40 @@ class ServerpodService extends GetxService {
   /// get FAQ
   Future<List<Faq>> getFAQ() async {
     return await client.faq.getCustomerFAQ();
+  }
+
+  // update customer scope
+  Future<UserInfo?> updateToCustomerScope() async {
+    return await client.customer.updateToCustomerScope();
+  }
+
+  // create customer data
+  Future<UserData> createCustomerData() async {
+    return await client.customer.createCustomerData();
+  }
+
+  // get customer data
+  Future<List<UserData>> getCustomerData() async {
+    return await client.customer.getCustomerData();
+  }
+
+  // add customer address
+  Future<UserAddress?> addCustomerAddress(
+      {required String uuid, required int userDataId}) async {
+    return await client.customer.addCustomerAddress(uuid, userDataId);
+  }
+
+  // load faq
+  loadfaq() {
+    getFAQ().then((v) {
+      Get.find<AppController>().listFaq.value = v;
+    });
+  }
+
+  // load user data
+  loadUserData() async {
+    getCustomerData().then((v) {
+      Get.find<AppController>().userData.value = v;
+    });
   }
 }

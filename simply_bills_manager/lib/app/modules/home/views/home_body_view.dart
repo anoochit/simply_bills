@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
-import 'package:simply_bills_manager/controllers/app_controller.dart';
+
+import '../../../../controllers/app_controller.dart';
 
 class HomeBodyView extends GetView<AppController> {
   const HomeBodyView({super.key});
@@ -11,6 +12,7 @@ class HomeBodyView extends GetView<AppController> {
     return SingleChildScrollView(
       child: Obx(
         () => GridView(
+          padding: const EdgeInsets.all(4.0),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -19,21 +21,21 @@ class HomeBodyView extends GetView<AppController> {
           children: [
             // total customer
             totalUserCard(
+              context: context,
               title: 'Customer',
               scope: UserScope.customer,
-              context: context,
             ),
             // total officer
             totalUserCard(
+              context: context,
               title: 'Officer',
               scope: UserScope.officer,
-              context: context,
             ),
             // total manager
             totalUserCard(
+              context: context,
               title: 'Manager',
               scope: UserScope.manager,
-              context: context,
             ),
           ],
         ),
@@ -42,18 +44,18 @@ class HomeBodyView extends GetView<AppController> {
   }
 
   Widget totalUserCard(
-      {required UserScope scope,
-      required String title,
-      required BuildContext context}) {
+      {required BuildContext context,
+      required UserScope scope,
+      required String title}) {
+    // get item total
     final total = controller.listUser
-        .where(
-          (p) => (p.scopeNames
-              .firstWhere((t) => (t.contains(scope.name)), orElse: () => '')
-              .isNotEmpty),
-        )
+        .where((p) => (p.scopeNames
+            .firstWhere((t) => (t.contains(scope.name)), orElse: () => '')
+            .isNotEmpty))
         .length;
 
     return Card(
+      elevation: 0.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

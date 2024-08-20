@@ -33,14 +33,14 @@ abstract class Invoice extends _i1.TableRow
     int? id,
     required String referenceNo,
     required int billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     required int billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     required _i2.InvoiceStatus status,
   }) = _InvoiceImpl;
 
@@ -51,7 +51,7 @@ abstract class Invoice extends _i1.TableRow
       billToId: jsonSerialization['billToId'] as int,
       billTo: jsonSerialization['billTo'] == null
           ? null
-          : _i2.User.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['billTo'] as Map<String, dynamic>)),
       billAddressId: jsonSerialization['billAddressId'] as int,
       billAddress: jsonSerialization['billAddress'] == null
@@ -67,7 +67,7 @@ abstract class Invoice extends _i1.TableRow
       billCreatedById: jsonSerialization['billCreatedById'] as int,
       billCreatedBy: jsonSerialization['billCreatedBy'] == null
           ? null
-          : _i2.User.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
       status:
           _i2.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
@@ -82,7 +82,7 @@ abstract class Invoice extends _i1.TableRow
 
   int billToId;
 
-  _i2.User? billTo;
+  _i2.UserData? billTo;
 
   int billAddressId;
 
@@ -96,7 +96,7 @@ abstract class Invoice extends _i1.TableRow
 
   int billCreatedById;
 
-  _i2.User? billCreatedBy;
+  _i2.UserData? billCreatedBy;
 
   _i2.InvoiceStatus status;
 
@@ -107,14 +107,14 @@ abstract class Invoice extends _i1.TableRow
     int? id,
     String? referenceNo,
     int? billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     int? billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     double? total,
     DateTime? createdAt,
     int? billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     _i2.InvoiceStatus? status,
   });
   @override
@@ -156,9 +156,9 @@ abstract class Invoice extends _i1.TableRow
   }
 
   static InvoiceInclude include({
-    _i2.UserInclude? billTo,
+    _i2.UserDataInclude? billTo,
     _i2.AddressInclude? billAddress,
-    _i2.UserInclude? billCreatedBy,
+    _i2.UserDataInclude? billCreatedBy,
   }) {
     return InvoiceInclude._(
       billTo: billTo,
@@ -200,14 +200,14 @@ class _InvoiceImpl extends Invoice {
     int? id,
     required String referenceNo,
     required int billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     required int billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     required _i2.InvoiceStatus status,
   }) : super._(
           id: id,
@@ -243,7 +243,7 @@ class _InvoiceImpl extends Invoice {
       id: id is int? ? id : this.id,
       referenceNo: referenceNo ?? this.referenceNo,
       billToId: billToId ?? this.billToId,
-      billTo: billTo is _i2.User? ? billTo : this.billTo?.copyWith(),
+      billTo: billTo is _i2.UserData? ? billTo : this.billTo?.copyWith(),
       billAddressId: billAddressId ?? this.billAddressId,
       billAddress: billAddress is _i2.Address?
           ? billAddress
@@ -252,7 +252,7 @@ class _InvoiceImpl extends Invoice {
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
       billCreatedById: billCreatedById ?? this.billCreatedById,
-      billCreatedBy: billCreatedBy is _i2.User?
+      billCreatedBy: billCreatedBy is _i2.UserData?
           ? billCreatedBy
           : this.billCreatedBy?.copyWith(),
       status: status ?? this.status,
@@ -301,7 +301,7 @@ class InvoiceTable extends _i1.Table {
 
   late final _i1.ColumnInt billToId;
 
-  _i2.UserTable? _billTo;
+  _i2.UserDataTable? _billTo;
 
   late final _i1.ColumnInt billAddressId;
 
@@ -315,19 +315,19 @@ class InvoiceTable extends _i1.Table {
 
   late final _i1.ColumnInt billCreatedById;
 
-  _i2.UserTable? _billCreatedBy;
+  _i2.UserDataTable? _billCreatedBy;
 
   late final _i1.ColumnEnum<_i2.InvoiceStatus> status;
 
-  _i2.UserTable get billTo {
+  _i2.UserDataTable get billTo {
     if (_billTo != null) return _billTo!;
     _billTo = _i1.createRelationTable(
       relationFieldName: 'billTo',
       field: Invoice.t.billToId,
-      foreignField: _i2.User.t.id,
+      foreignField: _i2.UserData.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.UserTable(tableRelation: foreignTableRelation),
+          _i2.UserDataTable(tableRelation: foreignTableRelation),
     );
     return _billTo!;
   }
@@ -345,15 +345,15 @@ class InvoiceTable extends _i1.Table {
     return _billAddress!;
   }
 
-  _i2.UserTable get billCreatedBy {
+  _i2.UserDataTable get billCreatedBy {
     if (_billCreatedBy != null) return _billCreatedBy!;
     _billCreatedBy = _i1.createRelationTable(
       relationFieldName: 'billCreatedBy',
       field: Invoice.t.billCreatedById,
-      foreignField: _i2.User.t.id,
+      foreignField: _i2.UserData.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.UserTable(tableRelation: foreignTableRelation),
+          _i2.UserDataTable(tableRelation: foreignTableRelation),
     );
     return _billCreatedBy!;
   }
@@ -388,20 +388,20 @@ class InvoiceTable extends _i1.Table {
 
 class InvoiceInclude extends _i1.IncludeObject {
   InvoiceInclude._({
-    _i2.UserInclude? billTo,
+    _i2.UserDataInclude? billTo,
     _i2.AddressInclude? billAddress,
-    _i2.UserInclude? billCreatedBy,
+    _i2.UserDataInclude? billCreatedBy,
   }) {
     _billTo = billTo;
     _billAddress = billAddress;
     _billCreatedBy = billCreatedBy;
   }
 
-  _i2.UserInclude? _billTo;
+  _i2.UserDataInclude? _billTo;
 
   _i2.AddressInclude? _billAddress;
 
-  _i2.UserInclude? _billCreatedBy;
+  _i2.UserDataInclude? _billCreatedBy;
 
   @override
   Map<String, _i1.Include?> get includes => {
@@ -597,7 +597,7 @@ class InvoiceAttachRowRepository {
   Future<void> billTo(
     _i1.Session session,
     Invoice invoice,
-    _i2.User billTo,
+    _i2.UserData billTo,
   ) async {
     if (invoice.id == null) {
       throw ArgumentError.notNull('invoice.id');
@@ -635,7 +635,7 @@ class InvoiceAttachRowRepository {
   Future<void> billCreatedBy(
     _i1.Session session,
     Invoice invoice,
-    _i2.User billCreatedBy,
+    _i2.UserData billCreatedBy,
   ) async {
     if (invoice.id == null) {
       throw ArgumentError.notNull('invoice.id');

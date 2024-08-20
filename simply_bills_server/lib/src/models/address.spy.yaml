@@ -4,3 +4,4 @@ fields:
   uid: String
   address: String
   address2: String
+  owners: List<UserAddress>?, relation(name=address_useraddress)

@@ -57,82 +57,138 @@ void run(List<String> args) async {
 Future<void> initData(Serverpod pod) async {
   final session = await pod.createSession();
 
-  // final demoUser = await mo.Emails.createUser(
+  int managerId = 1;
+
+  // if no product add sample data
+  final productTotal = await Product.db.count(session);
+  if (productTotal == 0) {
+    await Product.db.insertRow(
+      session,
+      Product(title: 'Wast', description: 'Wast service', unitPrice: 40.0),
+    );
+  }
+
+  // if no user add sample data
+  final userTotal = await mo.UserInfo.db.count(session);
+  if (userTotal == 0) {
+    // add sample manager
+    await mo.Emails.createUser(
+            session, 'manager', 'manager@example.com', 'Hello123!')
+        .then((c) {
+      managerId = c!.id!;
+      auth.Users.updateUserScopes(session, c.id!, {ce.UserScope.manager});
+    });
+
+    // add sample officer
+    await mo.Emails.createUser(
+            session, 'officer', 'officer@example.com', 'Hello123!')
+        .then((c) {
+      auth.Users.updateUserScopes(session, c!.id!, {ce.UserScope.officer});
+    });
+
+    // add sample customer
+    await mo.Emails.createUser(
+            session, 'customer', 'customer@example.com', 'Hello123!')
+        .then((c) {
+      auth.Users.updateUserScopes(session, c!.id!, {ce.UserScope.customer});
+      UserData.db.insertRow(
+        session,
+        UserData(userInfoId: c.id!, address: null),
+      );
+    });
+  }
+
+  // if no address add sample data
+  final addressTotal = await Address.db.count(session);
+
+  if (addressTotal == 0) {
+    for (int i = 0; i < 10; i++) {
+      final uuid = Uuid().v4();
+      session.log(uuid);
+      await Address.db.insertRow(
+        session,
+        Address(
+            uid: uuid,
+            address: '${100 + i} Moo 10, Suranaree',
+            address2: 'Muang, Nakhon Ratchasima 30000'),
+      );
+    }
+  }
+
+  // add user to address
+  final userAddressTotal = await UserAddress.db.count(session);
+  if (userAddressTotal == 0) {
+    final user = UserAddress.db.insert(
+      session,
+      [
+        UserAddress(userId: 1, addressId: 1),
+        UserAddress(userId: 1, addressId: 2),
+      ],
+    );
+  }
+
+  // await UserData.db
+  //     .find(
   //   session,
-  //   'demo',
-  //   'demo@example.com',
-  //   'Hello123!',
-  // );
-
-  // await mo.Users.updateUserScopes(
-  //   session,
-  //   demoUser!.id!,
-  //   {ce.UserScope.customer},
-  // );
-
-  // final addressTotal = await Address.db.count(session);
-
-  // // if no address add sample data
-  // if (addressTotal == 0) {
-  //   for (int i = 0; i < 10; i++) {
-  //     final uuid = Uuid().v4();
-  //     session.log(uuid);
-  //     Address.db.insertRow(
-  //       session,
-  //       Address(
-  //         uid: uuid,
-  //         address: '${100 + i} Moo 10, Suranaree',
-  //         address2: 'Muang, Nakhon Ratchasima 30000',
+  //   where: (p) => (p.userInfoId.equals(3)),
+  //   include: UserData.include(
+  //     address: UserAddress.includeList(
+  //       include: UserAddress.include(
+  //         address: Address.include(),
   //       ),
-  //     );
-  //   }
-  // }
+  //     ),
+  //   ),
+  // )
+  //     .then((v) {
+  //   session.log('${v.first.address?.first.address?.uid}');
+  // });
 
-  // final faqTotal = await Faq.db.count(session);
+  // if no faq add sample data
+  final faqTotal = await Faq.db.count(session);
 
-  // if (faqTotal == 0) {
-  //   // customer faq
-  //   for (int i = 0; i < 10; i++) {
-  //     Faq.db.insertRow(
-  //       session,
-  //       Faq(
-  //           question: 'Question',
-  //           answer:
-  //               'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
-  //           type: FaqType.customer,
-  //           authorId: 1,
-  //           createdAt: DateTime.now(),
-  //           publish: true),
-  //     );
-  //   }
-  //   // officer faq
-  //   for (int i = 0; i < 10; i++) {
-  //     Faq.db.insertRow(
-  //       session,
-  //       Faq(
-  //           question: 'Question',
-  //           answer:
-  //               'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
-  //           type: FaqType.officer,
-  //           authorId: 1,
-  //           createdAt: DateTime.now(),
-  //           publish: true),
-  //     );
-  //   }
+  if (faqTotal == 0) {
+    // customer faq
+    for (int i = 0; i < 10; i++) {
+      Faq.db.insertRow(
+        session,
+        Faq(
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            type: FaqType.customer,
+            authorId: managerId,
+            createdAt: DateTime.now(),
+            publish: true),
+      );
+    }
+    // officer faq
+    for (int i = 0; i < 10; i++) {
+      Faq.db.insertRow(
+        session,
+        Faq(
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            type: FaqType.officer,
+            authorId: managerId,
+            createdAt: DateTime.now(),
+            publish: true),
+      );
+    }
 
-  //   // manager faq
-  //   for (int i = 0; i < 10; i++) {
-  //     Faq.db.insertRow(
-  //       session,
-  //       Faq(
-  //           question: 'Question',
-  //           answer:
-  //               'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
-  //           type: FaqType.manager,
-  //           authorId: 1,
-  //           createdAt: DateTime.now(),
-  //           publish: true),
-  //     );
-  //   }
-  // }
+    // manager faq
+    for (int i = 0; i < 10; i++) {
+      Faq.db.insertRow(
+        session,
+        Faq(
+            question: 'Question',
+            answer:
+                'Nam malesuada lectus sed augue elementum malesuada. Aenean ipsum ligula, euismod eu odio et, ullamcorper lobortis turpis.',
+            type: FaqType.manager,
+            authorId: managerId,
+            createdAt: DateTime.now(),
+            publish: true),
+      );
+    }
+  }
 }

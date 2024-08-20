@@ -14,7 +14,7 @@ class HomeBodyView extends GetView {
       child: Column(
         children: [
           // address
-          AddressButtonView(items: ['item 1', 'item 2']),
+          AddressButtonView(),
 
           // label devider
           LabelDeviderView(title: 'Our services'),

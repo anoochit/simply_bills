@@ -20,13 +20,15 @@ import 'invoice_item.dart' as _i8;
 import 'invoice_status.dart' as _i9;
 import 'post.dart' as _i10;
 import 'product.dart' as _i11;
-import 'user.dart' as _i12;
-import 'user_scope.dart' as _i13;
-import 'protocol.dart' as _i14;
-import 'package:simply_bills_client/src/protocol/faq.dart' as _i15;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i16;
-import 'package:simply_bills_client/src/protocol/address.dart' as _i17;
-import 'package:simply_bills_client/src/protocol/invoice.dart' as _i18;
+import 'user_address.dart' as _i12;
+import 'user_data.dart' as _i13;
+import 'user_scope.dart' as _i14;
+import 'protocol.dart' as _i15;
+import 'package:simply_bills_client/src/protocol/user_data.dart' as _i16;
+import 'package:simply_bills_client/src/protocol/faq.dart' as _i17;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i18;
+import 'package:simply_bills_client/src/protocol/address.dart' as _i19;
+import 'package:simply_bills_client/src/protocol/invoice.dart' as _i20;
 export 'address.dart';
 export 'event.dart';
 export 'example.dart';
@@ -37,7 +39,8 @@ export 'invoice_item.dart';
 export 'invoice_status.dart';
 export 'post.dart';
 export 'product.dart';
-export 'user.dart';
+export 'user_address.dart';
+export 'user_data.dart';
 export 'user_scope.dart';
 export 'client.dart';
 
@@ -84,11 +87,14 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i11.Product) {
       return _i11.Product.fromJson(data) as T;
     }
-    if (t == _i12.User) {
-      return _i12.User.fromJson(data) as T;
+    if (t == _i12.UserAddress) {
+      return _i12.UserAddress.fromJson(data) as T;
     }
-    if (t == _i13.UserScope) {
-      return _i13.UserScope.fromJson(data) as T;
+    if (t == _i13.UserData) {
+      return _i13.UserData.fromJson(data) as T;
+    }
+    if (t == _i14.UserScope) {
+      return _i14.UserScope.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data) : null) as T;
@@ -120,40 +126,52 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i11.Product?>()) {
       return (data != null ? _i11.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.User?>()) {
-      return (data != null ? _i12.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.UserAddress?>()) {
+      return (data != null ? _i12.UserAddress.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.UserScope?>()) {
-      return (data != null ? _i13.UserScope.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.UserData?>()) {
+      return (data != null ? _i13.UserData.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i14.Invoice>?>()) {
+    if (t == _i1.getType<_i14.UserScope?>()) {
+      return (data != null ? _i14.UserScope.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i15.UserAddress>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i14.Invoice>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i15.UserAddress>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i14.Address>?>()) {
+    if (t == _i1.getType<List<_i15.Invoice>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i14.Address>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i15.Invoice>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i15.Faq>) {
-      return (data as List).map((e) => deserialize<_i15.Faq>(e)).toList()
+    if (t == _i1.getType<List<_i15.UserAddress>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i15.UserAddress>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i16.UserData>) {
+      return (data as List).map((e) => deserialize<_i16.UserData>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i16.UserInfo>) {
-      return (data as List).map((e) => deserialize<_i16.UserInfo>(e)).toList()
+    if (t == List<_i17.Faq>) {
+      return (data as List).map((e) => deserialize<_i17.Faq>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i17.Address>) {
-      return (data as List).map((e) => deserialize<_i17.Address>(e)).toList()
+    if (t == List<_i18.UserInfo>) {
+      return (data as List).map((e) => deserialize<_i18.UserInfo>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i18.Invoice>) {
-      return (data as List).map((e) => deserialize<_i18.Invoice>(e)).toList()
+    if (t == List<_i19.Address>) {
+      return (data as List).map((e) => deserialize<_i19.Address>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i20.Invoice>) {
+      return (data as List).map((e) => deserialize<_i20.Invoice>(e)).toList()
           as dynamic;
     }
     try {
-      return _i16.Protocol().deserialize<T>(data, t);
+      return _i18.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -161,7 +179,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i16.Protocol().getClassNameForObject(data);
+    className = _i18.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -195,10 +213,13 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i11.Product) {
       return 'Product';
     }
-    if (data is _i12.User) {
-      return 'User';
+    if (data is _i12.UserAddress) {
+      return 'UserAddress';
     }
-    if (data is _i13.UserScope) {
+    if (data is _i13.UserData) {
+      return 'UserData';
+    }
+    if (data is _i14.UserScope) {
       return 'UserScope';
     }
     return super.getClassNameForObject(data);
@@ -208,7 +229,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i16.Protocol().deserializeByClassName(data);
+      return _i18.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i2.Address>(data['data']);
@@ -240,11 +261,14 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Product') {
       return deserialize<_i11.Product>(data['data']);
     }
-    if (data['className'] == 'User') {
-      return deserialize<_i12.User>(data['data']);
+    if (data['className'] == 'UserAddress') {
+      return deserialize<_i12.UserAddress>(data['data']);
+    }
+    if (data['className'] == 'UserData') {
+      return deserialize<_i13.UserData>(data['data']);
     }
     if (data['className'] == 'UserScope') {
-      return deserialize<_i13.UserScope>(data['data']);
+      return deserialize<_i14.UserScope>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

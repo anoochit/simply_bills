@@ -31,14 +31,14 @@ abstract class Invoice implements _i1.SerializableModel {
     int? id,
     required String referenceNo,
     required int billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     required int billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     required _i2.InvoiceStatus status,
   }) = _InvoiceImpl;
 
@@ -49,7 +49,7 @@ abstract class Invoice implements _i1.SerializableModel {
       billToId: jsonSerialization['billToId'] as int,
       billTo: jsonSerialization['billTo'] == null
           ? null
-          : _i2.User.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['billTo'] as Map<String, dynamic>)),
       billAddressId: jsonSerialization['billAddressId'] as int,
       billAddress: jsonSerialization['billAddress'] == null
@@ -65,7 +65,7 @@ abstract class Invoice implements _i1.SerializableModel {
       billCreatedById: jsonSerialization['billCreatedById'] as int,
       billCreatedBy: jsonSerialization['billCreatedBy'] == null
           ? null
-          : _i2.User.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
       status:
           _i2.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
@@ -81,7 +81,7 @@ abstract class Invoice implements _i1.SerializableModel {
 
   int billToId;
 
-  _i2.User? billTo;
+  _i2.UserData? billTo;
 
   int billAddressId;
 
@@ -95,7 +95,7 @@ abstract class Invoice implements _i1.SerializableModel {
 
   int billCreatedById;
 
-  _i2.User? billCreatedBy;
+  _i2.UserData? billCreatedBy;
 
   _i2.InvoiceStatus status;
 
@@ -103,14 +103,14 @@ abstract class Invoice implements _i1.SerializableModel {
     int? id,
     String? referenceNo,
     int? billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     int? billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     double? total,
     DateTime? createdAt,
     int? billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     _i2.InvoiceStatus? status,
   });
   @override
@@ -144,14 +144,14 @@ class _InvoiceImpl extends Invoice {
     int? id,
     required String referenceNo,
     required int billToId,
-    _i2.User? billTo,
+    _i2.UserData? billTo,
     required int billAddressId,
     _i2.Address? billAddress,
     List<_i2.Invoice>? items,
     required double total,
     required DateTime createdAt,
     required int billCreatedById,
-    _i2.User? billCreatedBy,
+    _i2.UserData? billCreatedBy,
     required _i2.InvoiceStatus status,
   }) : super._(
           id: id,
@@ -187,7 +187,7 @@ class _InvoiceImpl extends Invoice {
       id: id is int? ? id : this.id,
       referenceNo: referenceNo ?? this.referenceNo,
       billToId: billToId ?? this.billToId,
-      billTo: billTo is _i2.User? ? billTo : this.billTo?.copyWith(),
+      billTo: billTo is _i2.UserData? ? billTo : this.billTo?.copyWith(),
       billAddressId: billAddressId ?? this.billAddressId,
       billAddress: billAddress is _i2.Address?
           ? billAddress
@@ -196,7 +196,7 @@ class _InvoiceImpl extends Invoice {
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
       billCreatedById: billCreatedById ?? this.billCreatedById,
-      billCreatedBy: billCreatedBy is _i2.User?
+      billCreatedBy: billCreatedBy is _i2.UserData?
           ? billCreatedBy
           : this.billCreatedBy?.copyWith(),
       status: status ?? this.status,

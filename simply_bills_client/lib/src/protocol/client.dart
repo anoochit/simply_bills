@@ -11,10 +11,12 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
-import 'package:simply_bills_client/src/protocol/faq.dart' as _i4;
-import 'package:simply_bills_client/src/protocol/address.dart' as _i5;
-import 'package:simply_bills_client/src/protocol/invoice.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:simply_bills_client/src/protocol/user_data.dart' as _i4;
+import 'package:simply_bills_client/src/protocol/user_address.dart' as _i5;
+import 'package:simply_bills_client/src/protocol/faq.dart' as _i6;
+import 'package:simply_bills_client/src/protocol/address.dart' as _i7;
+import 'package:simply_bills_client/src/protocol/invoice.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// {@category Endpoint}
 class EndpointCustomer extends _i1.EndpointRef {
@@ -28,6 +30,33 @@ class EndpointCustomer extends _i1.EndpointRef {
         'customer',
         'updateToCustomerScope',
         {},
+      );
+
+  _i2.Future<_i4.UserData> createCustomerData() =>
+      caller.callServerEndpoint<_i4.UserData>(
+        'customer',
+        'createCustomerData',
+        {},
+      );
+
+  _i2.Future<List<_i4.UserData>> getCustomerData() =>
+      caller.callServerEndpoint<List<_i4.UserData>>(
+        'customer',
+        'getCustomerData',
+        {},
+      );
+
+  _i2.Future<_i5.UserAddress?> addCustomerAddress(
+    String uuid,
+    int userDataId,
+  ) =>
+      caller.callServerEndpoint<_i5.UserAddress?>(
+        'customer',
+        'addCustomerAddress',
+        {
+          'uuid': uuid,
+          'userDataId': userDataId,
+        },
       );
 }
 
@@ -53,32 +82,32 @@ class EndpointFaq extends _i1.EndpointRef {
   String get name => 'faq';
 
   /// get customer faq
-  _i2.Future<List<_i4.Faq>> getCustomerFAQ() =>
-      caller.callServerEndpoint<List<_i4.Faq>>(
+  _i2.Future<List<_i6.Faq>> getCustomerFAQ() =>
+      caller.callServerEndpoint<List<_i6.Faq>>(
         'faq',
         'getCustomerFAQ',
         {},
       );
 
   /// get manager faq
-  _i2.Future<List<_i4.Faq>> getManagerFAQ() =>
-      caller.callServerEndpoint<List<_i4.Faq>>(
+  _i2.Future<List<_i6.Faq>> getManagerFAQ() =>
+      caller.callServerEndpoint<List<_i6.Faq>>(
         'faq',
         'getManagerFAQ',
         {},
       );
 
   /// get officer faq
-  _i2.Future<List<_i4.Faq>> getOfficerFAQ() =>
-      caller.callServerEndpoint<List<_i4.Faq>>(
+  _i2.Future<List<_i6.Faq>> getOfficerFAQ() =>
+      caller.callServerEndpoint<List<_i6.Faq>>(
         'faq',
         'getOfficerFAQ',
         {},
       );
 
   /// get all faq
-  _i2.Future<List<_i4.Faq>> getFAQ() =>
-      caller.callServerEndpoint<List<_i4.Faq>>(
+  _i2.Future<List<_i6.Faq>> getFAQ() =>
+      caller.callServerEndpoint<List<_i6.Faq>>(
         'faq',
         'getFAQ',
         {},
@@ -125,16 +154,16 @@ class EndpointManager extends _i1.EndpointRef {
       );
 
   /// get users
-  _i2.Future<List<_i5.Address>> getAddress() =>
-      caller.callServerEndpoint<List<_i5.Address>>(
+  _i2.Future<List<_i7.Address>> getAddress() =>
+      caller.callServerEndpoint<List<_i7.Address>>(
         'manager',
         'getAddress',
         {},
       );
 
   /// get invoices
-  _i2.Future<List<_i6.Invoice>> getInvoice() =>
-      caller.callServerEndpoint<List<_i6.Invoice>>(
+  _i2.Future<List<_i8.Invoice>> getInvoice() =>
+      caller.callServerEndpoint<List<_i8.Invoice>>(
         'manager',
         'getInvoice',
         {},
@@ -190,7 +219,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i7.Protocol(),
+          _i9.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

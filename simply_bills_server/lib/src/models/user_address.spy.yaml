@@ -1,0 +1,10 @@
+class: UserAddress
+table: user_address
+fields:
+  user: UserData?, relation(name=user_useraddress)
+  address: Address?, relation(name=address_useraddress)
+
+indexes:
+  useraddress_index_idx:
+    fields: userId, addressId
+    unique: true
