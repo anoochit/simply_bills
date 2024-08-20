@@ -12,132 +12,126 @@ class AddressButtonView extends GetView<AppController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => (controller.userData.isEmpty)
-          ? pageViewAddress(context, children: [Container()])
-          : pageViewAddress(
-              context,
-              children: (controller.userData.first.address!.isEmpty)
-                  ? [
-                      addressAddButton(context,
-                          userData: controller.userData.first)
-                    ]
-                  : List.generate(
-                      ((controller.userData.first.address!.length) + 1),
-                      (index) {
-                      if (index == controller.userData.first.address!.length) {
-                        return addressAddButton(context,
-                            userData: controller.userData.first);
-                      } else {
-                        return addressItem(context,
-                            userData: controller.userData.first,
-                            address: controller
-                                .userData.first.address![index].address!);
-                      }
-                    }),
-            ),
+    return Obx(() => _buildAddressView(context));
+  }
+
+  Widget _buildAddressView(BuildContext context) {
+    if (controller.userData.isEmpty) {
+      return _pageViewAddress(context, children: [Container()]);
+    }
+
+    final user = controller.userData.first;
+    final addresses = user.address ?? [];
+
+    return _pageViewAddress(
+      context,
+      children: [
+        ...addresses.map((address) =>
+            _addressItem(context, address: address.address!, userData: user)),
+        _addressAddButton(context, userData: user),
+      ],
     );
   }
 
-  // pageview address
-  SizedBox pageViewAddress(BuildContext context,
+  Widget _pageViewAddress(BuildContext context,
       {required List<Widget> children}) {
+    final size = MediaQuery.of(context).size;
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).width * 2 / 3.6,
+      width: size.width,
+      height: size.width * 2 / 3.6,
       child: PageView(children: children),
     );
   }
 
-  // address item
-  Widget addressItem(BuildContext context,
+  Widget _addressItem(BuildContext context,
       {required Address address, required UserData userData}) {
-    final name = userData.userInfo!.userName;
-    final addressL1 = address.address;
-    final addressL2 = address.address2;
+    return _buildCard(
+      context,
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(userData.userInfo?.userName ?? ''),
+            Text(address.address ?? ''),
+            Text(address.address2 ?? ''),
+          ],
+        ),
+      ),
+      onTap: () {
+        // TODO: Implement onTap
+      },
+    );
+  }
+
+  Widget _addressAddButton(BuildContext context, {required UserData userData}) {
+    return _buildCard(
+      context,
+      child: const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.add_circle),
+            Text('Add new address'),
+          ],
+        ),
+      ),
+      onTap: () => _handleAddressScanning(context, userData),
+    );
+  }
+
+  Widget _buildCard(BuildContext context,
+      {required Widget child, required VoidCallback onTap}) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
-            onTap: () {
-              //
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //
-                  Text('$name'),
-                  Text('$addressL1'),
-                  Text('$addressL2'),
-                ],
-              ),
-            )),
+          onTap: onTap,
+          child: child,
+        ),
       ),
     );
   }
 
-// address add button
-  Widget addressAddButton(BuildContext context, {required UserData userData}) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: InkWell(
-          onTap: () async {
-            // open qrcode scanner to add new address
-            await Get.to(
-              scanner.AiBarcodeScanner(
-                // force blank bootomsheet
-                bottomSheetBuilder: (context, controller) => const SizedBox(),
-                hideSheetTitle: true,
-                controller: scanner.MobileScannerController(
-                  detectionSpeed: scanner.DetectionSpeed.noDuplicates,
-                ),
-                onDetect: (scanner.BarcodeCapture capture) async {
-                  // show barcode value
-                  final String? scannedValue =
-                      capture.barcodes.first.displayValue;
-                  log('$scannedValue');
-
-                  // find and add address
-                  if (scannedValue != null) {
-                    final userAddress =
-                        await Get.find<ServerpodService>().addCustomerAddress(
-                      uuid: scannedValue,
-                      userDataId: userData.id!,
-                    );
-
-                    if (userAddress == null) {
-                      Get.back();
-                      Get.snackbar(
-                          'Error', 'Cannot add address OR already added');
-                    } else {
-                      Get.back();
-                      Get.snackbar('Info', 'Address added');
-                    }
-                  } else {
-                    Get.snackbar('Error', 'Address not found');
-                    Get.back();
-                  }
-                },
-              ),
-            );
-          },
-          child: const Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('+'),
-                Text('Add new address'),
-              ],
-            ),
-          ),
+  Future<void> _handleAddressScanning(
+      BuildContext context, UserData userData) async {
+    await Get.to(
+      scanner.AiBarcodeScanner(
+        bottomSheetBuilder: (_, __) => const SizedBox(),
+        hideSheetTitle: true,
+        controller: scanner.MobileScannerController(
+          detectionSpeed: scanner.DetectionSpeed.noDuplicates,
         ),
+        onDetect: (capture) => _processScannedBarcode(capture, userData),
       ),
     );
+  }
+
+  Future<void> _processScannedBarcode(
+      scanner.BarcodeCapture capture, UserData userData) async {
+    final scannedValue = capture.barcodes.first.displayValue;
+    log('$scannedValue');
+
+    if (scannedValue == null) {
+      Get.back();
+      Get.snackbar('Error', 'Address not found');
+      return;
+    }
+
+    final userAddress = await Get.find<ServerpodService>().addCustomerAddress(
+      uuid: scannedValue,
+      userDataId: userData.id!,
+    );
+
+    Get.back();
+
+    if (userAddress == null) {
+      Get.snackbar('Error', 'Cannot add address OR already added');
+    } else {
+      await Get.find<ServerpodService>().loadUserData();
+      Get.snackbar('Info', 'Address added');
+    }
   }
 }

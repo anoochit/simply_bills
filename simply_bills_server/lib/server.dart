@@ -1,6 +1,6 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart' as mo;
-import 'package:simply_bills_server/src/endpoints/customer_endpoint.dart' as ce;
+import '/src/endpoints/customer_endpoint.dart' as ce;
 import 'src/generated/protocol.dart';
 import 'src/generated/endpoints.dart';
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
@@ -118,7 +118,7 @@ Future<void> initData(Serverpod pod) async {
   // add user to address
   final userAddressTotal = await UserAddress.db.count(session);
   if (userAddressTotal == 0) {
-    final user = UserAddress.db.insert(
+    await UserAddress.db.insert(
       session,
       [
         UserAddress(userId: 1, addressId: 1),
@@ -126,22 +126,6 @@ Future<void> initData(Serverpod pod) async {
       ],
     );
   }
-
-  // await UserData.db
-  //     .find(
-  //   session,
-  //   where: (p) => (p.userInfoId.equals(3)),
-  //   include: UserData.include(
-  //     address: UserAddress.includeList(
-  //       include: UserAddress.include(
-  //         address: Address.include(),
-  //       ),
-  //     ),
-  //   ),
-  // )
-  //     .then((v) {
-  //   session.log('${v.first.address?.first.address?.uid}');
-  // });
 
   // if no faq add sample data
   final faqTotal = await Faq.db.count(session);
