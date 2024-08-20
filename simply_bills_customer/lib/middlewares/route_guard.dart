@@ -8,9 +8,11 @@ class RouteGuard extends GetMiddleware {
   // redirect
   @override
   RouteSettings? redirect(String? route) {
-    if (sessionManager.isSignedIn == true) {
+    final isAuthenticated = sessionManager.isSignedIn;
+    if (isAuthenticated) {
       return null;
+    } else {
+      return const RouteSettings(name: Routes.SIGNIN);
     }
-    return const RouteSettings(name: Routes.SIGNIN);
   }
 }

@@ -27,7 +27,7 @@ class AddressButtonView extends GetView<AppController> {
       context,
       children: [
         ...addresses.map((address) =>
-            _addressItem(context, address: address.address!, userData: user)),
+            _addressItem(context, address: address.address, userData: user)),
         _addressAddButton(context, userData: user),
       ],
     );
@@ -44,7 +44,7 @@ class AddressButtonView extends GetView<AppController> {
   }
 
   Widget _addressItem(BuildContext context,
-      {required Address address, required UserData userData}) {
+      {Address? address, required UserData userData}) {
     return _buildCard(
       context,
       child: Padding(
@@ -54,8 +54,8 @@ class AddressButtonView extends GetView<AppController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(userData.userInfo?.userName ?? ''),
-            Text(address.address ?? ''),
-            Text(address.address2 ?? ''),
+            Text(address?.address ?? ''),
+            Text(address?.address2 ?? ''),
           ],
         ),
       ),

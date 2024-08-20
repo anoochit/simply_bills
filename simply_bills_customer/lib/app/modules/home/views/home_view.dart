@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:simply_bills_customer/app/modules/home/views/profile_body_view.dart';
 import '../../../data/data/bottom_nav.dart';
 import '../controllers/home_controller.dart';
 import 'bills_body_view.dart';
 import 'home_body_view.dart';
 import 'notificaion_body_view.dart';
+import 'profile_body_view.dart';
 import 'support_body_view.dart';
 
 class HomeView extends GetView<HomeController> {
