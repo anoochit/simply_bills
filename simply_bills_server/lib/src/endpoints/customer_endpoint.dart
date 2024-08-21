@@ -1,5 +1,6 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
+
 import 'package:simply_bills_server/src/generated/protocol.dart';
 
 class CustomerEndpoint extends Endpoint {

@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
 
 import '../../middlewares/load_data.dart';
@@ -12,6 +10,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/verify_account/bindings/verify_account_binding.dart';
 import '../modules/verify_account/views/verify_account_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 

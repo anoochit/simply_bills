@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import 'package:simply_bills_officer/bindings/root_binding.dart';
 import 'package:simply_bills_officer/serverpod.dart';
 

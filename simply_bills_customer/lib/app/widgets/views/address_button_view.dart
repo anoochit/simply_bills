@@ -1,11 +1,14 @@
 import 'dart:developer';
-import 'package:ai_barcode_scanner/ai_barcode_scanner.dart' as scanner;
+
 import 'package:flutter/material.dart';
+
+import 'package:ai_barcode_scanner/ai_barcode_scanner.dart' as scanner;
 import 'package:get/get.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
-import 'package:simply_bills_customer/services/serverpod_service.dart';
 
 import '../../../controllers/app_controller.dart';
+import '../../../services/serverpod_service.dart';
+import '../../modules/home/controllers/home_controller.dart';
 
 class AddressButtonView extends GetView<AppController> {
   const AddressButtonView({super.key});
@@ -39,7 +42,9 @@ class AddressButtonView extends GetView<AppController> {
     return SizedBox(
       width: size.width,
       height: size.width * 2 / 3.6,
-      child: PageView(children: children),
+      child: PageView(
+        children: children,
+      ),
     );
   }
 
@@ -60,7 +65,8 @@ class AddressButtonView extends GetView<AppController> {
         ),
       ),
       onTap: () {
-        // TODO: Implement onTap
+        // navigate to invoice tab
+        Get.find<HomeController>().navIndex.value = 1;
       },
     );
   }

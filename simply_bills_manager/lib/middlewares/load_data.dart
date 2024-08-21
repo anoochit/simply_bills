@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import 'package:simply_bills_manager/serverpod.dart';
 
 import '../services/serverpod_service.dart';

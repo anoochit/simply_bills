@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import '../../../data/data/bottom_nav.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/views/avatar_view.dart';
 import '../controllers/home_controller.dart';
 import 'address_body_view.dart';
-import 'invoice_body_view.dart';
 import 'home_body_view.dart';
+import 'invoice_body_view.dart';
 import 'notificaion_body_view.dart';
 import 'profile_body_view.dart';
 import 'report_body_view.dart';

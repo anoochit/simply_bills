@@ -1,5 +1,6 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
+
 import 'package:simply_bills_server/src/generated/faq_type.dart';
 
 import '../generated/faq.dart';

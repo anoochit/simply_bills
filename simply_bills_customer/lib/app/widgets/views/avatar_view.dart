@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gravatar/flutter_gravatar.dart';
 
+import 'package:flutter_gravatar/flutter_gravatar.dart';
 import 'package:get/get.dart';
+
 import 'package:simply_bills_customer/serverpod.dart';
 
 class AvatarView extends GetView {

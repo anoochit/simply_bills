@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:simply_bills_client/simply_bills_client.dart';
+
 import 'package:simply_bills_manager/controllers/app_controller.dart';
 
 import '../serverpod.dart';

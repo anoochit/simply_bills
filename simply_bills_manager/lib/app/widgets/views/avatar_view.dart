@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gravatar/flutter_gravatar.dart';
 
+import 'package:flutter_gravatar/flutter_gravatar.dart';
 import 'package:get/get.dart';
 
 import '../../../serverpod.dart';

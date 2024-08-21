@@ -1,10 +1,10 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart' as mo;
-import '/src/endpoints/customer_endpoint.dart' as ce;
-import 'src/generated/protocol.dart';
-import 'src/generated/endpoints.dart';
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
 
+import '/src/endpoints/customer_endpoint.dart' as ce;
+import 'src/generated/endpoints.dart';
+import 'src/generated/protocol.dart';
 import 'src/web/routes/root.dart';
 
 // This is the starting point of your Serverpod server. In most cases, you will
