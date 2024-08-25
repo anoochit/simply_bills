@@ -10,7 +10,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 
 abstract class Faq implements _i1.SerializableModel {
   Faq._({
@@ -30,7 +29,7 @@ abstract class Faq implements _i1.SerializableModel {
     required String answer,
     required _i2.FaqType type,
     required int authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     required DateTime createdAt,
     required bool publish,
   }) = _FaqImpl;
@@ -44,7 +43,7 @@ abstract class Faq implements _i1.SerializableModel {
       authorId: jsonSerialization['authorId'] as int,
       author: jsonSerialization['author'] == null
           ? null
-          : _i3.UserInfo.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -65,7 +64,7 @@ abstract class Faq implements _i1.SerializableModel {
 
   int authorId;
 
-  _i3.UserInfo? author;
+  _i2.UserData? author;
 
   DateTime createdAt;
 
@@ -77,7 +76,7 @@ abstract class Faq implements _i1.SerializableModel {
     String? answer,
     _i2.FaqType? type,
     int? authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -110,7 +109,7 @@ class _FaqImpl extends Faq {
     required String answer,
     required _i2.FaqType type,
     required int authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -141,7 +140,7 @@ class _FaqImpl extends Faq {
       answer: answer ?? this.answer,
       type: type ?? this.type,
       authorId: authorId ?? this.authorId,
-      author: author is _i3.UserInfo? ? author : this.author?.copyWith(),
+      author: author is _i2.UserData? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );

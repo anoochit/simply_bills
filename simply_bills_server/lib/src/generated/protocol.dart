@@ -235,7 +235,7 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'faq_fk_0',
           columns: ['authorId'],
-          referenceTable: 'serverpod_user_info',
+          referenceTable: 'user_data',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.setNull,
@@ -280,22 +280,10 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'billToId',
+          name: 'addressId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'billAddressId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'items',
-          columnType: _i2.ColumnType.json,
-          isNullable: true,
-          dartType: 'List<protocol:Invoice>?',
         ),
         _i2.ColumnDefinition(
           name: 'total',
@@ -310,7 +298,7 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
-          name: 'billCreatedById',
+          name: 'createdById',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -325,27 +313,17 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'invoice_fk_0',
-          columns: ['billToId'],
-          referenceTable: 'user_data',
+          columns: ['addressId'],
+          referenceTable: 'address',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'invoice_fk_1',
-          columns: ['billAddressId'],
-          referenceTable: 'address',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.setNull,
-          onDelete: _i2.ForeignKeyAction.setNull,
-          matchType: null,
-        ),
-        _i2.ForeignKeyDefinition(
-          constraintName: 'invoice_fk_2',
-          columns: ['billCreatedById'],
+          columns: ['createdById'],
           referenceTable: 'user_data',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -408,6 +386,12 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'double',
         ),
+        _i2.ColumnDefinition(
+          name: 'invoiceId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -419,7 +403,17 @@ class Protocol extends _i1.SerializationManagerServer {
           onUpdate: _i2.ForeignKeyAction.setNull,
           onDelete: _i2.ForeignKeyAction.setNull,
           matchType: null,
-        )
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'invoice_item_fk_1',
+          columns: ['invoiceId'],
+          referenceTable: 'invoice',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
       ],
       indexes: [
         _i2.IndexDefinition(
@@ -434,7 +428,24 @@ class Protocol extends _i1.SerializationManagerServer {
           type: 'btree',
           isUnique: true,
           isPrimary: true,
-        )
+        ),
+        _i2.IndexDefinition(
+          indexName: 'invoice_index_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'productId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'invoiceId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
       ],
       managed: true,
     ),
@@ -682,7 +693,20 @@ class Protocol extends _i1.SerializationManagerServer {
           type: 'btree',
           isUnique: true,
           isPrimary: true,
-        )
+        ),
+        _i2.IndexDefinition(
+          indexName: 'userdata_index_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'userInfoId',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
       ],
       managed: true,
     ),
@@ -782,6 +806,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<List<_i17.Invoice>?>()) {
       return (data != null
           ? (data as List).map((e) => deserialize<_i17.Invoice>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i17.InvoiceItem>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i17.InvoiceItem>(e)).toList()
           : null) as dynamic;
     }
     if (t == _i1.getType<List<_i17.UserAddress>?>()) {

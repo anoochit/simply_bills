@@ -5,3 +5,9 @@ fields:
   quantity: double
   unitPrice: double
   total: double
+  invoice: Invoice?, relation(name=invoice_items)
+  
+indexes:
+  invoice_index_idx:
+    fields: productId, invoiceId
+    unique: true

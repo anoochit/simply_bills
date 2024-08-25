@@ -1,12 +1,3 @@
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i7;
-
-import '../endpoints/customer_endpoint.dart' as _i2;
-import '../endpoints/example_endpoint.dart' as _i3;
-import '../endpoints/faq_endpoint.dart' as _i4;
-import '../endpoints/manager_endpoint.dart' as _i5;
-import '../endpoints/officer_endpoint.dart' as _i6;
-
 /* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
 /*   To generate run: "serverpod generate"    */
 
@@ -17,6 +8,13 @@ import '../endpoints/officer_endpoint.dart' as _i6;
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+import '../endpoints/customer_endpoint.dart' as _i2;
+import '../endpoints/example_endpoint.dart' as _i3;
+import '../endpoints/faq_endpoint.dart' as _i4;
+import '../endpoints/manager_endpoint.dart' as _i5;
+import '../endpoints/officer_endpoint.dart' as _i6;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i7;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override

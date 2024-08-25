@@ -1,8 +1,3 @@
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:serverpod_serialization/serverpod_serialization.dart';
-
-import 'protocol.dart' as _i2;
-
 /* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
 /*   To generate run: "serverpod generate"    */
 
@@ -13,6 +8,9 @@ import 'protocol.dart' as _i2;
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Address extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -22,6 +20,7 @@ abstract class Address extends _i1.TableRow
     required this.address,
     required this.address2,
     this.owners,
+    this.invoices,
   }) : super(id);
 
   factory Address({
@@ -30,6 +29,7 @@ abstract class Address extends _i1.TableRow
     required String address,
     required String address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -40,6 +40,9 @@ abstract class Address extends _i1.TableRow
       address2: jsonSerialization['address2'] as String,
       owners: (jsonSerialization['owners'] as List?)
           ?.map((e) => _i2.UserAddress.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      invoices: (jsonSerialization['invoices'] as List?)
+          ?.map((e) => _i2.Invoice.fromJson((e as Map<String, dynamic>)))
           .toList(),
     );
   }
@@ -56,6 +59,8 @@ abstract class Address extends _i1.TableRow
 
   List<_i2.UserAddress>? owners;
 
+  List<_i2.Invoice>? invoices;
+
   @override
   _i1.Table get table => t;
 
@@ -65,6 +70,7 @@ abstract class Address extends _i1.TableRow
     String? address,
     String? address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -75,6 +81,8 @@ abstract class Address extends _i1.TableRow
       'address2': address2,
       if (owners != null)
         'owners': owners?.toJson(valueToJson: (v) => v.toJson()),
+      if (invoices != null)
+        'invoices': invoices?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -87,11 +95,19 @@ abstract class Address extends _i1.TableRow
       'address2': address2,
       if (owners != null)
         'owners': owners?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      if (invoices != null)
+        'invoices': invoices?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
-  static AddressInclude include({_i2.UserAddressIncludeList? owners}) {
-    return AddressInclude._(owners: owners);
+  static AddressInclude include({
+    _i2.UserAddressIncludeList? owners,
+    _i2.InvoiceIncludeList? invoices,
+  }) {
+    return AddressInclude._(
+      owners: owners,
+      invoices: invoices,
+    );
   }
 
   static AddressIncludeList includeList({
@@ -129,12 +145,14 @@ class _AddressImpl extends Address {
     required String address,
     required String address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   }) : super._(
           id: id,
           uid: uid,
           address: address,
           address2: address2,
           owners: owners,
+          invoices: invoices,
         );
 
   @override
@@ -144,6 +162,7 @@ class _AddressImpl extends Address {
     String? address,
     String? address2,
     Object? owners = _Undefined,
+    Object? invoices = _Undefined,
   }) {
     return Address(
       id: id is int? ? id : this.id,
@@ -151,6 +170,8 @@ class _AddressImpl extends Address {
       address: address ?? this.address,
       address2: address2 ?? this.address2,
       owners: owners is List<_i2.UserAddress>? ? owners : this.owners?.clone(),
+      invoices:
+          invoices is List<_i2.Invoice>? ? invoices : this.invoices?.clone(),
     );
   }
 }
@@ -181,6 +202,10 @@ class AddressTable extends _i1.Table {
 
   _i1.ManyRelation<_i2.UserAddressTable>? _owners;
 
+  _i2.InvoiceTable? ___invoices;
+
+  _i1.ManyRelation<_i2.InvoiceTable>? _invoices;
+
   _i2.UserAddressTable get __owners {
     if (___owners != null) return ___owners!;
     ___owners = _i1.createRelationTable(
@@ -192,6 +217,19 @@ class AddressTable extends _i1.Table {
           _i2.UserAddressTable(tableRelation: foreignTableRelation),
     );
     return ___owners!;
+  }
+
+  _i2.InvoiceTable get __invoices {
+    if (___invoices != null) return ___invoices!;
+    ___invoices = _i1.createRelationTable(
+      relationFieldName: '__invoices',
+      field: Address.t.id,
+      foreignField: _i2.Invoice.t.addressId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.InvoiceTable(tableRelation: foreignTableRelation),
+    );
+    return ___invoices!;
   }
 
   _i1.ManyRelation<_i2.UserAddressTable> get owners {
@@ -212,6 +250,24 @@ class AddressTable extends _i1.Table {
     return _owners!;
   }
 
+  _i1.ManyRelation<_i2.InvoiceTable> get invoices {
+    if (_invoices != null) return _invoices!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'invoices',
+      field: Address.t.id,
+      foreignField: _i2.Invoice.t.addressId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.InvoiceTable(tableRelation: foreignTableRelation),
+    );
+    _invoices = _i1.ManyRelation<_i2.InvoiceTable>(
+      tableWithRelations: relationTable,
+      table: _i2.InvoiceTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _invoices!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
@@ -225,19 +281,31 @@ class AddressTable extends _i1.Table {
     if (relationField == 'owners') {
       return __owners;
     }
+    if (relationField == 'invoices') {
+      return __invoices;
+    }
     return null;
   }
 }
 
 class AddressInclude extends _i1.IncludeObject {
-  AddressInclude._({_i2.UserAddressIncludeList? owners}) {
+  AddressInclude._({
+    _i2.UserAddressIncludeList? owners,
+    _i2.InvoiceIncludeList? invoices,
+  }) {
     _owners = owners;
+    _invoices = invoices;
   }
 
   _i2.UserAddressIncludeList? _owners;
 
+  _i2.InvoiceIncludeList? _invoices;
+
   @override
-  Map<String, _i1.Include?> get includes => {'owners': _owners};
+  Map<String, _i1.Include?> get includes => {
+        'owners': _owners,
+        'invoices': _invoices,
+      };
 
   @override
   _i1.Table get table => Address.t;
@@ -448,6 +516,26 @@ class AddressAttachRepository {
       columns: [_i2.UserAddress.t.addressId],
     );
   }
+
+  Future<void> invoices(
+    _i1.Session session,
+    Address address,
+    List<_i2.Invoice> invoice,
+  ) async {
+    if (invoice.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $invoice =
+        invoice.map((e) => e.copyWith(addressId: address.id)).toList();
+    await session.db.update<_i2.Invoice>(
+      $invoice,
+      columns: [_i2.Invoice.t.addressId],
+    );
+  }
 }
 
 class AddressAttachRowRepository {
@@ -471,6 +559,25 @@ class AddressAttachRowRepository {
       columns: [_i2.UserAddress.t.addressId],
     );
   }
+
+  Future<void> invoices(
+    _i1.Session session,
+    Address address,
+    _i2.Invoice invoice,
+  ) async {
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+    if (address.id == null) {
+      throw ArgumentError.notNull('address.id');
+    }
+
+    var $invoice = invoice.copyWith(addressId: address.id);
+    await session.db.updateRow<_i2.Invoice>(
+      $invoice,
+      columns: [_i2.Invoice.t.addressId],
+    );
+  }
 }
 
 class AddressDetachRepository {
@@ -491,6 +598,21 @@ class AddressDetachRepository {
       columns: [_i2.UserAddress.t.addressId],
     );
   }
+
+  Future<void> invoices(
+    _i1.Session session,
+    List<_i2.Invoice> invoice,
+  ) async {
+    if (invoice.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+
+    var $invoice = invoice.map((e) => e.copyWith(addressId: null)).toList();
+    await session.db.update<_i2.Invoice>(
+      $invoice,
+      columns: [_i2.Invoice.t.addressId],
+    );
+  }
 }
 
 class AddressDetachRowRepository {
@@ -508,6 +630,21 @@ class AddressDetachRowRepository {
     await session.db.updateRow<_i2.UserAddress>(
       $userAddress,
       columns: [_i2.UserAddress.t.addressId],
+    );
+  }
+
+  Future<void> invoices(
+    _i1.Session session,
+    _i2.Invoice invoice,
+  ) async {
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+
+    var $invoice = invoice.copyWith(addressId: null);
+    await session.db.updateRow<_i2.Invoice>(
+      $invoice,
+      columns: [_i2.Invoice.t.addressId],
     );
   }
 }

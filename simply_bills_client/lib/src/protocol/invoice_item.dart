@@ -19,6 +19,8 @@ abstract class InvoiceItem implements _i1.SerializableModel {
     required this.quantity,
     required this.unitPrice,
     required this.total,
+    required this.invoiceId,
+    this.invoice,
   });
 
   factory InvoiceItem({
@@ -28,6 +30,8 @@ abstract class InvoiceItem implements _i1.SerializableModel {
     required double quantity,
     required double unitPrice,
     required double total,
+    required int invoiceId,
+    _i2.Invoice? invoice,
   }) = _InvoiceItemImpl;
 
   factory InvoiceItem.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -41,6 +45,11 @@ abstract class InvoiceItem implements _i1.SerializableModel {
       quantity: (jsonSerialization['quantity'] as num).toDouble(),
       unitPrice: (jsonSerialization['unitPrice'] as num).toDouble(),
       total: (jsonSerialization['total'] as num).toDouble(),
+      invoiceId: jsonSerialization['invoiceId'] as int,
+      invoice: jsonSerialization['invoice'] == null
+          ? null
+          : _i2.Invoice.fromJson(
+              (jsonSerialization['invoice'] as Map<String, dynamic>)),
     );
   }
 
@@ -59,6 +68,10 @@ abstract class InvoiceItem implements _i1.SerializableModel {
 
   double total;
 
+  int invoiceId;
+
+  _i2.Invoice? invoice;
+
   InvoiceItem copyWith({
     int? id,
     int? productId,
@@ -66,6 +79,8 @@ abstract class InvoiceItem implements _i1.SerializableModel {
     double? quantity,
     double? unitPrice,
     double? total,
+    int? invoiceId,
+    _i2.Invoice? invoice,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -76,6 +91,8 @@ abstract class InvoiceItem implements _i1.SerializableModel {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'total': total,
+      'invoiceId': invoiceId,
+      if (invoice != null) 'invoice': invoice?.toJson(),
     };
   }
 
@@ -95,6 +112,8 @@ class _InvoiceItemImpl extends InvoiceItem {
     required double quantity,
     required double unitPrice,
     required double total,
+    required int invoiceId,
+    _i2.Invoice? invoice,
   }) : super._(
           id: id,
           productId: productId,
@@ -102,6 +121,8 @@ class _InvoiceItemImpl extends InvoiceItem {
           quantity: quantity,
           unitPrice: unitPrice,
           total: total,
+          invoiceId: invoiceId,
+          invoice: invoice,
         );
 
   @override
@@ -112,6 +133,8 @@ class _InvoiceItemImpl extends InvoiceItem {
     double? quantity,
     double? unitPrice,
     double? total,
+    int? invoiceId,
+    Object? invoice = _Undefined,
   }) {
     return InvoiceItem(
       id: id is int? ? id : this.id,
@@ -120,6 +143,8 @@ class _InvoiceItemImpl extends InvoiceItem {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       total: total ?? this.total,
+      invoiceId: invoiceId ?? this.invoiceId,
+      invoice: invoice is _i2.Invoice? ? invoice : this.invoice?.copyWith(),
     );
   }
 }

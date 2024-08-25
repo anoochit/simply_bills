@@ -145,6 +145,11 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<_i15.Invoice>(e)).toList()
           : null) as dynamic;
     }
+    if (t == _i1.getType<List<_i15.InvoiceItem>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i15.InvoiceItem>(e)).toList()
+          : null) as dynamic;
+    }
     if (t == _i1.getType<List<_i15.UserAddress>?>()) {
       return (data != null
           ? (data as List).map((e) => deserialize<_i15.UserAddress>(e)).toList()

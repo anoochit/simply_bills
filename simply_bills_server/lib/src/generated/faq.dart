@@ -1,9 +1,3 @@
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
-import 'package:serverpod_serialization/serverpod_serialization.dart';
-
-import 'protocol.dart' as _i2;
-
 /* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
 /*   To generate run: "serverpod generate"    */
 
@@ -14,6 +8,9 @@ import 'protocol.dart' as _i2;
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
   Faq._({
@@ -33,7 +30,7 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     required String answer,
     required _i2.FaqType type,
     required int authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     required DateTime createdAt,
     required bool publish,
   }) = _FaqImpl;
@@ -47,7 +44,7 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
       authorId: jsonSerialization['authorId'] as int,
       author: jsonSerialization['author'] == null
           ? null
-          : _i3.UserInfo.fromJson(
+          : _i2.UserData.fromJson(
               (jsonSerialization['author'] as Map<String, dynamic>)),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -67,7 +64,7 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   int authorId;
 
-  _i3.UserInfo? author;
+  _i2.UserData? author;
 
   DateTime createdAt;
 
@@ -82,7 +79,7 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? answer,
     _i2.FaqType? type,
     int? authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     DateTime? createdAt,
     bool? publish,
   });
@@ -114,7 +111,7 @@ abstract class Faq extends _i1.TableRow implements _i1.ProtocolSerialization {
     };
   }
 
-  static FaqInclude include({_i3.UserInfoInclude? author}) {
+  static FaqInclude include({_i2.UserDataInclude? author}) {
     return FaqInclude._(author: author);
   }
 
@@ -153,7 +150,7 @@ class _FaqImpl extends Faq {
     required String answer,
     required _i2.FaqType type,
     required int authorId,
-    _i3.UserInfo? author,
+    _i2.UserData? author,
     required DateTime createdAt,
     required bool publish,
   }) : super._(
@@ -184,7 +181,7 @@ class _FaqImpl extends Faq {
       answer: answer ?? this.answer,
       type: type ?? this.type,
       authorId: authorId ?? this.authorId,
-      author: author is _i3.UserInfo? ? author : this.author?.copyWith(),
+      author: author is _i2.UserData? ? author : this.author?.copyWith(),
       createdAt: createdAt ?? this.createdAt,
       publish: publish ?? this.publish,
     );
@@ -228,21 +225,21 @@ class FaqTable extends _i1.Table {
 
   late final _i1.ColumnInt authorId;
 
-  _i3.UserInfoTable? _author;
+  _i2.UserDataTable? _author;
 
   late final _i1.ColumnDateTime createdAt;
 
   late final _i1.ColumnBool publish;
 
-  _i3.UserInfoTable get author {
+  _i2.UserDataTable get author {
     if (_author != null) return _author!;
     _author = _i1.createRelationTable(
       relationFieldName: 'author',
       field: Faq.t.authorId,
-      foreignField: _i3.UserInfo.t.id,
+      foreignField: _i2.UserData.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i3.UserInfoTable(tableRelation: foreignTableRelation),
+          _i2.UserDataTable(tableRelation: foreignTableRelation),
     );
     return _author!;
   }
@@ -268,11 +265,11 @@ class FaqTable extends _i1.Table {
 }
 
 class FaqInclude extends _i1.IncludeObject {
-  FaqInclude._({_i3.UserInfoInclude? author}) {
+  FaqInclude._({_i2.UserDataInclude? author}) {
     _author = author;
   }
 
-  _i3.UserInfoInclude? _author;
+  _i2.UserDataInclude? _author;
 
   @override
   Map<String, _i1.Include?> get includes => {'author': _author};
@@ -464,7 +461,7 @@ class FaqAttachRowRepository {
   Future<void> author(
     _i1.Session session,
     Faq faq,
-    _i3.UserInfo author,
+    _i2.UserData author,
   ) async {
     if (faq.id == null) {
       throw ArgumentError.notNull('faq.id');

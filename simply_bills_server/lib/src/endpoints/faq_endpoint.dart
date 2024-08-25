@@ -1,9 +1,7 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 
-import 'package:simply_bills_server/src/generated/faq_type.dart';
-
-import '../generated/faq.dart';
+import 'package:simply_bills_server/src/generated/protocol.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
 // `Endpoint` ending of the class name, but it will be removed when accessing
@@ -30,7 +28,7 @@ class FaqEndpoint extends Endpoint {
       session,
       where: (p) => (p.type.equals(FaqType.customer)),
       include: Faq.include(
-        author: UserInfo.include(),
+        author: UserData.include(userInfo: UserInfo.include()),
       ),
     );
 
@@ -43,7 +41,7 @@ class FaqEndpoint extends Endpoint {
       session,
       where: (p) => (p.type.equals(FaqType.manager)),
       include: Faq.include(
-        author: UserInfo.include(),
+        author: UserData.include(userInfo: UserInfo.include()),
       ),
     );
 
@@ -56,7 +54,7 @@ class FaqEndpoint extends Endpoint {
       session,
       where: (p) => (p.type.equals(FaqType.officer)),
       include: Faq.include(
-        author: UserInfo.include(),
+        author: UserData.include(userInfo: UserInfo.include()),
       ),
     );
 
@@ -68,7 +66,7 @@ class FaqEndpoint extends Endpoint {
     final faq = Faq.db.find(
       session,
       include: Faq.include(
-        author: UserInfo.include(),
+        author: UserData.include(userInfo: UserInfo.include()),
       ),
     );
 

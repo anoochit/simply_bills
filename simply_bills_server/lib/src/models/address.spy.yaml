@@ -5,3 +5,4 @@ fields:
   address: String
   address2: String
   owners: List<UserAddress>?, relation(name=address_useraddress)
+  invoices: List<Invoice>?, relation(name=address_invoice)

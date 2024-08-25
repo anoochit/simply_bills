@@ -18,6 +18,7 @@ abstract class Address implements _i1.SerializableModel {
     required this.address,
     required this.address2,
     this.owners,
+    this.invoices,
   });
 
   factory Address({
@@ -26,6 +27,7 @@ abstract class Address implements _i1.SerializableModel {
     required String address,
     required String address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -36,6 +38,9 @@ abstract class Address implements _i1.SerializableModel {
       address2: jsonSerialization['address2'] as String,
       owners: (jsonSerialization['owners'] as List?)
           ?.map((e) => _i2.UserAddress.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      invoices: (jsonSerialization['invoices'] as List?)
+          ?.map((e) => _i2.Invoice.fromJson((e as Map<String, dynamic>)))
           .toList(),
     );
   }
@@ -53,12 +58,15 @@ abstract class Address implements _i1.SerializableModel {
 
   List<_i2.UserAddress>? owners;
 
+  List<_i2.Invoice>? invoices;
+
   Address copyWith({
     int? id,
     String? uid,
     String? address,
     String? address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -69,6 +77,8 @@ abstract class Address implements _i1.SerializableModel {
       'address2': address2,
       if (owners != null)
         'owners': owners?.toJson(valueToJson: (v) => v.toJson()),
+      if (invoices != null)
+        'invoices': invoices?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -87,12 +97,14 @@ class _AddressImpl extends Address {
     required String address,
     required String address2,
     List<_i2.UserAddress>? owners,
+    List<_i2.Invoice>? invoices,
   }) : super._(
           id: id,
           uid: uid,
           address: address,
           address2: address2,
           owners: owners,
+          invoices: invoices,
         );
 
   @override
@@ -102,6 +114,7 @@ class _AddressImpl extends Address {
     String? address,
     String? address2,
     Object? owners = _Undefined,
+    Object? invoices = _Undefined,
   }) {
     return Address(
       id: id is int? ? id : this.id,
@@ -109,6 +122,8 @@ class _AddressImpl extends Address {
       address: address ?? this.address,
       address2: address2 ?? this.address2,
       owners: owners is List<_i2.UserAddress>? ? owners : this.owners?.clone(),
+      invoices:
+          invoices is List<_i2.Invoice>? ? invoices : this.invoices?.clone(),
     );
   }
 }

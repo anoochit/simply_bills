@@ -15,30 +15,26 @@ abstract class Invoice implements _i1.SerializableModel {
   Invoice._({
     this.id,
     required this.referenceNo,
-    required this.billToId,
-    this.billTo,
-    required this.billAddressId,
-    this.billAddress,
+    required this.addressId,
+    this.address,
     this.items,
     required this.total,
     required this.createdAt,
-    required this.billCreatedById,
-    this.billCreatedBy,
+    required this.createdById,
+    this.createdBy,
     required this.status,
   });
 
   factory Invoice({
     int? id,
     required String referenceNo,
-    required int billToId,
-    _i2.UserData? billTo,
-    required int billAddressId,
-    _i2.Address? billAddress,
-    List<_i2.Invoice>? items,
+    required int addressId,
+    _i2.Address? address,
+    List<_i2.InvoiceItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billCreatedById,
-    _i2.UserData? billCreatedBy,
+    required int createdById,
+    _i2.UserData? createdBy,
     required _i2.InvoiceStatus status,
   }) = _InvoiceImpl;
 
@@ -46,27 +42,22 @@ abstract class Invoice implements _i1.SerializableModel {
     return Invoice(
       id: jsonSerialization['id'] as int?,
       referenceNo: jsonSerialization['referenceNo'] as String,
-      billToId: jsonSerialization['billToId'] as int,
-      billTo: jsonSerialization['billTo'] == null
-          ? null
-          : _i2.UserData.fromJson(
-              (jsonSerialization['billTo'] as Map<String, dynamic>)),
-      billAddressId: jsonSerialization['billAddressId'] as int,
-      billAddress: jsonSerialization['billAddress'] == null
+      addressId: jsonSerialization['addressId'] as int,
+      address: jsonSerialization['address'] == null
           ? null
           : _i2.Address.fromJson(
-              (jsonSerialization['billAddress'] as Map<String, dynamic>)),
+              (jsonSerialization['address'] as Map<String, dynamic>)),
       items: (jsonSerialization['items'] as List?)
-          ?.map((e) => _i2.Invoice.fromJson((e as Map<String, dynamic>)))
+          ?.map((e) => _i2.InvoiceItem.fromJson((e as Map<String, dynamic>)))
           .toList(),
       total: (jsonSerialization['total'] as num).toDouble(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      billCreatedById: jsonSerialization['billCreatedById'] as int,
-      billCreatedBy: jsonSerialization['billCreatedBy'] == null
+      createdById: jsonSerialization['createdById'] as int,
+      createdBy: jsonSerialization['createdBy'] == null
           ? null
           : _i2.UserData.fromJson(
-              (jsonSerialization['billCreatedBy'] as Map<String, dynamic>)),
+              (jsonSerialization['createdBy'] as Map<String, dynamic>)),
       status:
           _i2.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
     );
@@ -79,38 +70,32 @@ abstract class Invoice implements _i1.SerializableModel {
 
   String referenceNo;
 
-  int billToId;
+  int addressId;
 
-  _i2.UserData? billTo;
+  _i2.Address? address;
 
-  int billAddressId;
-
-  _i2.Address? billAddress;
-
-  List<_i2.Invoice>? items;
+  List<_i2.InvoiceItem>? items;
 
   double total;
 
   DateTime createdAt;
 
-  int billCreatedById;
+  int createdById;
 
-  _i2.UserData? billCreatedBy;
+  _i2.UserData? createdBy;
 
   _i2.InvoiceStatus status;
 
   Invoice copyWith({
     int? id,
     String? referenceNo,
-    int? billToId,
-    _i2.UserData? billTo,
-    int? billAddressId,
-    _i2.Address? billAddress,
-    List<_i2.Invoice>? items,
+    int? addressId,
+    _i2.Address? address,
+    List<_i2.InvoiceItem>? items,
     double? total,
     DateTime? createdAt,
-    int? billCreatedById,
-    _i2.UserData? billCreatedBy,
+    int? createdById,
+    _i2.UserData? createdBy,
     _i2.InvoiceStatus? status,
   });
   @override
@@ -118,15 +103,13 @@ abstract class Invoice implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'referenceNo': referenceNo,
-      'billToId': billToId,
-      if (billTo != null) 'billTo': billTo?.toJson(),
-      'billAddressId': billAddressId,
-      if (billAddress != null) 'billAddress': billAddress?.toJson(),
+      'addressId': addressId,
+      if (address != null) 'address': address?.toJson(),
       if (items != null) 'items': items?.toJson(valueToJson: (v) => v.toJson()),
       'total': total,
       'createdAt': createdAt.toJson(),
-      'billCreatedById': billCreatedById,
-      if (billCreatedBy != null) 'billCreatedBy': billCreatedBy?.toJson(),
+      'createdById': createdById,
+      if (createdBy != null) 'createdBy': createdBy?.toJson(),
       'status': status.toJson(),
     };
   }
@@ -143,28 +126,24 @@ class _InvoiceImpl extends Invoice {
   _InvoiceImpl({
     int? id,
     required String referenceNo,
-    required int billToId,
-    _i2.UserData? billTo,
-    required int billAddressId,
-    _i2.Address? billAddress,
-    List<_i2.Invoice>? items,
+    required int addressId,
+    _i2.Address? address,
+    List<_i2.InvoiceItem>? items,
     required double total,
     required DateTime createdAt,
-    required int billCreatedById,
-    _i2.UserData? billCreatedBy,
+    required int createdById,
+    _i2.UserData? createdBy,
     required _i2.InvoiceStatus status,
   }) : super._(
           id: id,
           referenceNo: referenceNo,
-          billToId: billToId,
-          billTo: billTo,
-          billAddressId: billAddressId,
-          billAddress: billAddress,
+          addressId: addressId,
+          address: address,
           items: items,
           total: total,
           createdAt: createdAt,
-          billCreatedById: billCreatedById,
-          billCreatedBy: billCreatedBy,
+          createdById: createdById,
+          createdBy: createdBy,
           status: status,
         );
 
@@ -172,33 +151,26 @@ class _InvoiceImpl extends Invoice {
   Invoice copyWith({
     Object? id = _Undefined,
     String? referenceNo,
-    int? billToId,
-    Object? billTo = _Undefined,
-    int? billAddressId,
-    Object? billAddress = _Undefined,
+    int? addressId,
+    Object? address = _Undefined,
     Object? items = _Undefined,
     double? total,
     DateTime? createdAt,
-    int? billCreatedById,
-    Object? billCreatedBy = _Undefined,
+    int? createdById,
+    Object? createdBy = _Undefined,
     _i2.InvoiceStatus? status,
   }) {
     return Invoice(
       id: id is int? ? id : this.id,
       referenceNo: referenceNo ?? this.referenceNo,
-      billToId: billToId ?? this.billToId,
-      billTo: billTo is _i2.UserData? ? billTo : this.billTo?.copyWith(),
-      billAddressId: billAddressId ?? this.billAddressId,
-      billAddress: billAddress is _i2.Address?
-          ? billAddress
-          : this.billAddress?.copyWith(),
-      items: items is List<_i2.Invoice>? ? items : this.items?.clone(),
+      addressId: addressId ?? this.addressId,
+      address: address is _i2.Address? ? address : this.address?.copyWith(),
+      items: items is List<_i2.InvoiceItem>? ? items : this.items?.clone(),
       total: total ?? this.total,
       createdAt: createdAt ?? this.createdAt,
-      billCreatedById: billCreatedById ?? this.billCreatedById,
-      billCreatedBy: billCreatedBy is _i2.UserData?
-          ? billCreatedBy
-          : this.billCreatedBy?.copyWith(),
+      createdById: createdById ?? this.createdById,
+      createdBy:
+          createdBy is _i2.UserData? ? createdBy : this.createdBy?.copyWith(),
       status: status ?? this.status,
     );
   }

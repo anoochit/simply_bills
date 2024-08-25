@@ -1,7 +1,3 @@
-import 'package:serverpod/serverpod.dart' as _i1;
-
-import 'protocol.dart' as _i2;
-
 /* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
 /*   To generate run: "serverpod generate"    */
 
@@ -12,6 +8,8 @@ import 'protocol.dart' as _i2;
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class InvoiceItem extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -22,6 +20,8 @@ abstract class InvoiceItem extends _i1.TableRow
     required this.quantity,
     required this.unitPrice,
     required this.total,
+    required this.invoiceId,
+    this.invoice,
   }) : super(id);
 
   factory InvoiceItem({
@@ -31,6 +31,8 @@ abstract class InvoiceItem extends _i1.TableRow
     required double quantity,
     required double unitPrice,
     required double total,
+    required int invoiceId,
+    _i2.Invoice? invoice,
   }) = _InvoiceItemImpl;
 
   factory InvoiceItem.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -44,6 +46,11 @@ abstract class InvoiceItem extends _i1.TableRow
       quantity: (jsonSerialization['quantity'] as num).toDouble(),
       unitPrice: (jsonSerialization['unitPrice'] as num).toDouble(),
       total: (jsonSerialization['total'] as num).toDouble(),
+      invoiceId: jsonSerialization['invoiceId'] as int,
+      invoice: jsonSerialization['invoice'] == null
+          ? null
+          : _i2.Invoice.fromJson(
+              (jsonSerialization['invoice'] as Map<String, dynamic>)),
     );
   }
 
@@ -61,6 +68,10 @@ abstract class InvoiceItem extends _i1.TableRow
 
   double total;
 
+  int invoiceId;
+
+  _i2.Invoice? invoice;
+
   @override
   _i1.Table get table => t;
 
@@ -71,6 +82,8 @@ abstract class InvoiceItem extends _i1.TableRow
     double? quantity,
     double? unitPrice,
     double? total,
+    int? invoiceId,
+    _i2.Invoice? invoice,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -81,6 +94,8 @@ abstract class InvoiceItem extends _i1.TableRow
       'quantity': quantity,
       'unitPrice': unitPrice,
       'total': total,
+      'invoiceId': invoiceId,
+      if (invoice != null) 'invoice': invoice?.toJson(),
     };
   }
 
@@ -93,11 +108,19 @@ abstract class InvoiceItem extends _i1.TableRow
       'quantity': quantity,
       'unitPrice': unitPrice,
       'total': total,
+      'invoiceId': invoiceId,
+      if (invoice != null) 'invoice': invoice?.toJsonForProtocol(),
     };
   }
 
-  static InvoiceItemInclude include({_i2.ProductInclude? product}) {
-    return InvoiceItemInclude._(product: product);
+  static InvoiceItemInclude include({
+    _i2.ProductInclude? product,
+    _i2.InvoiceInclude? invoice,
+  }) {
+    return InvoiceItemInclude._(
+      product: product,
+      invoice: invoice,
+    );
   }
 
   static InvoiceItemIncludeList includeList({
@@ -136,6 +159,8 @@ class _InvoiceItemImpl extends InvoiceItem {
     required double quantity,
     required double unitPrice,
     required double total,
+    required int invoiceId,
+    _i2.Invoice? invoice,
   }) : super._(
           id: id,
           productId: productId,
@@ -143,6 +168,8 @@ class _InvoiceItemImpl extends InvoiceItem {
           quantity: quantity,
           unitPrice: unitPrice,
           total: total,
+          invoiceId: invoiceId,
+          invoice: invoice,
         );
 
   @override
@@ -153,6 +180,8 @@ class _InvoiceItemImpl extends InvoiceItem {
     double? quantity,
     double? unitPrice,
     double? total,
+    int? invoiceId,
+    Object? invoice = _Undefined,
   }) {
     return InvoiceItem(
       id: id is int? ? id : this.id,
@@ -161,6 +190,8 @@ class _InvoiceItemImpl extends InvoiceItem {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       total: total ?? this.total,
+      invoiceId: invoiceId ?? this.invoiceId,
+      invoice: invoice is _i2.Invoice? ? invoice : this.invoice?.copyWith(),
     );
   }
 }
@@ -183,6 +214,10 @@ class InvoiceItemTable extends _i1.Table {
       'total',
       this,
     );
+    invoiceId = _i1.ColumnInt(
+      'invoiceId',
+      this,
+    );
   }
 
   late final _i1.ColumnInt productId;
@@ -194,6 +229,10 @@ class InvoiceItemTable extends _i1.Table {
   late final _i1.ColumnDouble unitPrice;
 
   late final _i1.ColumnDouble total;
+
+  late final _i1.ColumnInt invoiceId;
+
+  _i2.InvoiceTable? _invoice;
 
   _i2.ProductTable get product {
     if (_product != null) return _product!;
@@ -208,6 +247,19 @@ class InvoiceItemTable extends _i1.Table {
     return _product!;
   }
 
+  _i2.InvoiceTable get invoice {
+    if (_invoice != null) return _invoice!;
+    _invoice = _i1.createRelationTable(
+      relationFieldName: 'invoice',
+      field: InvoiceItem.t.invoiceId,
+      foreignField: _i2.Invoice.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.InvoiceTable(tableRelation: foreignTableRelation),
+    );
+    return _invoice!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
@@ -215,6 +267,7 @@ class InvoiceItemTable extends _i1.Table {
         quantity,
         unitPrice,
         total,
+        invoiceId,
       ];
 
   @override
@@ -222,19 +275,31 @@ class InvoiceItemTable extends _i1.Table {
     if (relationField == 'product') {
       return product;
     }
+    if (relationField == 'invoice') {
+      return invoice;
+    }
     return null;
   }
 }
 
 class InvoiceItemInclude extends _i1.IncludeObject {
-  InvoiceItemInclude._({_i2.ProductInclude? product}) {
+  InvoiceItemInclude._({
+    _i2.ProductInclude? product,
+    _i2.InvoiceInclude? invoice,
+  }) {
     _product = product;
+    _invoice = invoice;
   }
 
   _i2.ProductInclude? _product;
 
+  _i2.InvoiceInclude? _invoice;
+
   @override
-  Map<String, _i1.Include?> get includes => {'product': _product};
+  Map<String, _i1.Include?> get includes => {
+        'product': _product,
+        'invoice': _invoice,
+      };
 
   @override
   _i1.Table get table => InvoiceItem.t;
@@ -436,6 +501,25 @@ class InvoiceItemAttachRowRepository {
     await session.db.updateRow<InvoiceItem>(
       $invoiceItem,
       columns: [InvoiceItem.t.productId],
+    );
+  }
+
+  Future<void> invoice(
+    _i1.Session session,
+    InvoiceItem invoiceItem,
+    _i2.Invoice invoice,
+  ) async {
+    if (invoiceItem.id == null) {
+      throw ArgumentError.notNull('invoiceItem.id');
+    }
+    if (invoice.id == null) {
+      throw ArgumentError.notNull('invoice.id');
+    }
+
+    var $invoiceItem = invoiceItem.copyWith(invoiceId: invoice.id);
+    await session.db.updateRow<InvoiceItem>(
+      $invoiceItem,
+      columns: [InvoiceItem.t.invoiceId],
     );
   }
 }

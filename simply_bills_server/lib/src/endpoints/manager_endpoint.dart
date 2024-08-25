@@ -1,10 +1,10 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 
-import 'package:simply_bills_server/src/endpoints/customer_endpoint.dart';
-
 import '../generated/address.dart';
 import '../generated/invoice.dart';
+import '../generated/user_data.dart';
+import 'customer_endpoint.dart';
 
 class ManagerEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
@@ -66,8 +66,15 @@ class ManagerEndpoint extends Endpoint {
   /// add new user with scope
   Future<UserInfo?> createUserWithScope(Session session, String userName,
       String email, String password, String userScope) async {
-    final user = await Emails.createUser(session, userName, email, password);
-    if (user != null) {
+    // create user
+    UserInfo? user =
+        await Emails.createUser(session, userName, email, password);
+
+    // create user data
+    await UserData.db.insertRow(session, UserData(userInfoId: user!.id!));
+
+    // update user scope
+    if (user.id != null) {
       switch (userScope) {
         case 'manager':
           await Users.updateUserScopes(session, user.id!, {UserScope.manager});

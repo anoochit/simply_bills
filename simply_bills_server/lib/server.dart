@@ -176,4 +176,55 @@ Future<void> initData(Serverpod pod) async {
       );
     }
   }
+
+  // if no invoice add invoice sample
+  final invoiceTotal = await Invoice.db.count(session);
+
+  if (invoiceTotal == 0) {
+    // create invoice
+    final invoice = await Invoice.db.insertRow(
+      session,
+      Invoice(
+        referenceNo: Uuid().v4(),
+        addressId: 1,
+        total: 40,
+        createdAt: DateTime.now(),
+        createdById: 1,
+        status: InvoiceStatus.unpaid,
+      ),
+    );
+
+    // create invoice item
+    final item = await InvoiceItem.db.insertRow(
+      session,
+      InvoiceItem(
+        productId: 1,
+        quantity: 1,
+        unitPrice: 40.0,
+        total: 40.0,
+        invoiceId: invoice.id!,
+      ),
+    );
+
+    // attch invoice item
+    Invoice.db.attachRow.items(session, invoice, item);
+
+    // list invoice
+    Invoice.db
+        .find(
+          session,
+          include: Invoice.include(
+            address: Address.include(),
+            createdBy: UserData.include(
+              userInfo: auth.UserInfo.include(),
+            ),
+            items: InvoiceItem.includeList(
+              include: InvoiceItem.include(
+                product: Product.include(),
+              ),
+            ),
+          ),
+        )
+        .then((v) => session.log(v.toString()));
+  }
 }
