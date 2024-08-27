@@ -52,7 +52,10 @@ class CustomerEndpoint extends Endpoint {
             address: Address.include(
               invoices: Invoice.includeList(
                 include: Invoice.include(
-                  items: InvoiceItem.includeList(),
+                  items: InvoiceItem.includeList(
+                      include: InvoiceItem.include(
+                    product: Product.include(),
+                  )),
                 ),
               ),
             ),
