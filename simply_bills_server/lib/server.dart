@@ -60,7 +60,7 @@ void run(List<String> args) async {
 
 // init future call
 initFutureCall(Serverpod pod) async {
-  // monthly wast invoice
+  // monthly waste invoice
   final session = await pod.createSession();
   DateTime nextDate = DateTime.now().day > 25
       ? DateTime(DateTime.now().year, DateTime.now().month + 1, 25, 0, 0)
@@ -81,7 +81,7 @@ Future<void> initData(Serverpod pod) async {
   if (productTotal == 0) {
     await Product.db.insertRow(
       session,
-      Product(title: 'Wast', description: 'Wast service', unitPrice: 40.0),
+      Product(title: 'Waste', description: 'Waste service', unitPrice: 40.0),
     );
   }
 

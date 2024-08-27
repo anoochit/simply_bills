@@ -15,11 +15,13 @@ class BillsBodyView extends GetView<AppController> {
           ? buildInvoiceListView(
               customer: controller.userData.first,
               address: controller.userData.first.address)
-          : Container(),
+          : const Center(
+              child: Text('No Bills'),
+            ),
     );
   }
 
-  buildInvoiceListView(
+  Widget buildInvoiceListView(
       {List<UserAddress>? address, required UserData customer}) {
     if (address!.isNotEmpty) {
       // get invoice
@@ -38,6 +40,31 @@ class BillsBodyView extends GetView<AppController> {
           return Card(
             child: ExpansionTile(
               shape: const RoundedRectangleBorder(),
+              subtitle: Row(
+                children: [
+                  Text(
+                    'Total : ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .apply(fontSizeDelta: 3),
+                  ),
+                  Text(
+                    '${invoices[index].total}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .apply(fontSizeDelta: 3),
+                  ),
+                  Text(
+                    ' THB',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .apply(fontSizeDelta: 3),
+                  ),
+                ],
+              ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -46,31 +73,6 @@ class BillsBodyView extends GetView<AppController> {
                   Text('${address[index].address?.address}'),
                   Text('${address[index].address?.address2}'),
                   const Gap(8.0),
-                  Row(
-                    children: [
-                      Text(
-                        'Total : ',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .apply(fontSizeDelta: 3),
-                      ),
-                      Text(
-                        '${invoices[index].total}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .apply(fontSizeDelta: 3),
-                      ),
-                      Text(
-                        ' THB',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .apply(fontSizeDelta: 3),
-                      ),
-                    ],
-                  ),
                 ],
               ),
               children: [
