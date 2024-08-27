@@ -3,7 +3,7 @@ import 'package:serverpod_auth_server/module.dart' as mo;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
 
 import '/src/endpoints/customer_endpoint.dart' as ce;
-import 'src/future_calls/monly_wast_invoice.dart';
+import 'src/future_calls/monthly_wast_invoice.dart';
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
 import 'src/web/routes/root.dart';
@@ -23,7 +23,7 @@ void run(List<String> args) async {
 
   // If you are using any future calls, they need to be registered here.
   // pod.registerFutureCall(ExampleFutureCall(), 'exampleFutureCall');
-  pod.registerFutureCall(MonthlyWastInvoice(), 'monthlyWastInvoice');
+  pod.registerFutureCall(MonthlyWasteInvoice(), 'monthlyWasteInvoice');
 
   // add auth config
   auth.AuthConfig.set(auth.AuthConfig(
@@ -67,7 +67,7 @@ initFutureCall(Serverpod pod) async {
       : DateTime(DateTime.now().year, DateTime.now().month, 25, 0, 0);
 
   await session.serverpod
-      .futureCallAtTime('monthlyWastInvoice', null, nextDate);
+      .futureCallAtTime('monthlyWasteInvoice', null, nextDate);
 }
 
 /// add sample data

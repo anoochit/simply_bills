@@ -42,19 +42,24 @@ class CustomerEndpoint extends Endpoint {
   Future<List<UserData>> getCustomerData(Session session) async {
     final auth = await session.authenticated;
 
-    final userData = UserData.db.find(
+    final userData = await UserData.db.find(
       session,
       where: (p) => (p.userInfoId.equals(auth!.userId)),
       include: UserData.include(
         userInfo: UserInfo.include(),
         address: UserAddress.includeList(
           include: UserAddress.include(
-            address: Address.include(),
+            address: Address.include(
+              invoices: Invoice.includeList(
+                include: Invoice.include(
+                  items: InvoiceItem.includeList(),
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
-
     return userData;
   }
 

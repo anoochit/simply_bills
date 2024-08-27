@@ -7,7 +7,7 @@ import '../generated/invoice.dart';
 import '../generated/invoice_item.dart';
 import '../generated/invoice_status.dart';
 
-class MonthlyWastInvoice extends FutureCall {
+class MonthlyWasteInvoice extends FutureCall {
   @override
   Future<void> invoke(Session session, SerializableModel? object) async {
     // create invoices
@@ -50,6 +50,6 @@ class MonthlyWastInvoice extends FutureCall {
         : DateTime(DateTime.now().year, DateTime.now().month, 25, 0, 0);
 
     await session.serverpod
-        .futureCallAtTime('monthlyWastInvoice', null, nextDate);
+        .futureCallAtTime('monthlyWasteInvoice', null, nextDate);
   }
 }
